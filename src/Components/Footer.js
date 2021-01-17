@@ -32,3 +32,10 @@ class Footer extends Component {
 }
 
 export default Footer;
+
+
+      // {
+      //   "name":"google-plus",
+      //   "url":"http://googleplus.com/tbakerx",
+      //   "className":"fa fa-google-plus"
+      // },
