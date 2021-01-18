@@ -15,7 +15,7 @@
       "zip": ""
     },
     "website": "https://stanleyluong.github.io/",
-    "resumedownload":"https://stanleyluong.github.io/",
+    "resumedownload":"https://docs.google.com/document/d/1up1Ub4COG9s1r0ydMRRVbZX9Fmns2Nj1tHCapydIL9U/export?format=pdf",
     "social":[
       {
         "name":"facebook",
@@ -50,13 +50,13 @@
       {
         "school":"Codecademy",
         "degree":"Certificate",
-        "graduated":"2021",
+        "graduated":"2020",
         "description":"Web Development"
       },
       {
         "school":"Flatiron School",
         "degree":"Certificate",
-        "graduated":"2020",
+        "graduated":"2019",
         "description":"Software Engineering"
       },
       {
@@ -83,13 +83,19 @@
         "company":"Forsla",
         "title":"Frontend Development Intern",
         "years":"December 2019 - January 2020",
-        "description":"Focused on user experience and designed responsive web based user-friendly interfaces. Troubleshot known issues and upgraded frontend features"
+        "description":"Focused on user experience and designed responsive web based user-friendly interfaces. Troubleshot known issues and upgraded frontend features."
       },
       {
         "company":"Self-Employed",
         "title":"Coding Tutor",
-        "years":"August 2019 - December 2019",
+        "years":"August 2019 - January 2020",
         "description":"Taught clients programming fundamentals and advised client based on their needs. Coached clients through project & conducted code reviews."
+      },
+      {
+        "company":"Time Mage",
+        "title":"Application Tester",
+        "years":"August 2019 - November 2019",
+        "description":"Testing, debugging, and sending feedback on a time tracking app for an independent application developer."
       },
       {
         "company":"Amazon",
@@ -241,11 +247,15 @@
     "testimonials":[
       {
         "text":"Wonderful work.",
-        "user":"Dan McCarty - CEO of Crystal Commerce"
+        "user":"Dan McCarty, CEO of Crystal Commerce"
       },
       {
         "text":"Glad he's here.",
-        "user":"Edmund Chan - Coworker"
+        "user":"Edmund Chan, Coworker"
+      },
+      {
+        "text":"So wise!",
+        "user":"Katana Tran, Former Classmate"
       }
     ]
   }
