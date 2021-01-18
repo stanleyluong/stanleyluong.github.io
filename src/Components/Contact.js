@@ -35,18 +35,23 @@ class Contact extends Component {
 
          <div className="row">
             <div className="eight columns">
-
-               <form action="" method="post" id="contactForm" name="contactForm">
+            {/* <form action="https://mailthis.to/stanleyluong" method="POST">
+               <input type="text" name="name" placeholder="Your name"/>
+               <input type="email" name="_replyto" placeholder="Your email"/>
+               <input type="submit" value="Send Email" />
+            </form> */}
+               
+               <form action="https://mailthis.to/stanleyluong" method="POST" id="contactForm" name="contactForm">
 					<fieldset>
 
                   <div>
-						   <label htmlFor="contactName">Name <span className="required">*</span></label>
-						   <input type="text" defaultValue="" size="35" id="contactName" name="contactName" onChange={this.handleChange}/>
+						   <label htmlFor="name">Name <span className="required">*</span></label>
+						   <input type="text" defaultValue="" size="35" id="name" name="name" onChange={this.handleChange}/>
                   </div>
 
                   <div>
-						   <label htmlFor="contactEmail">Email <span className="required">*</span></label>
-						   <input type="text" defaultValue="" size="35" id="contactEmail" name="contactEmail" onChange={this.handleChange}/>
+						   <label htmlFor="_replyto">Email <span className="required">*</span></label>
+						   <input type="text" defaultValue="" size="35" id="_replyto" name="_replyto" onChange={this.handleChange}/>
                   </div>
 
                   <div>
@@ -65,6 +70,7 @@ class Contact extends Component {
                         <img alt="" src="images/loader.gif" />
                      </span>
                   </div>
+                  
 					</fieldset>
 				   </form>
 
@@ -75,7 +81,7 @@ class Contact extends Component {
            </div>
 
 
-            <aside className="four columns footer-widgets">
+            {/* <aside className="four columns footer-widgets">
                <div className="widget widget_contact">
 
 					   <h4>Address and Phone</h4>
@@ -94,21 +100,21 @@ class Contact extends Component {
                         <span>
                         This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet.
                         Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum
-                        {/* <a href="#">http://t.co/CGIrdxIlI3</a> */}
+                        <a href="#">http://t.co/CGIrdxIlI3</a>
                         </span>
-                        {/* <b><a href="#">2 Days Ago</a></b> */}
+                        <b><a href="#">2 Days Ago</a></b>
                      </li>
                      <li>
                         <span>
                         Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam,
                         eaque ipsa quae ab illo inventore veritatis et quasi
-                        {/* <a href="#">http://t.co/CGIrdxIlI3</a> */}
+                        <a href="#">http://t.co/CGIrdxIlI3</a>
                         </span>
-                        {/* <b><a href="#">3 Days Ago</a></b> */}
+                        <b><a href="#">3 Days Ago</a></b>
                      </li>
                   </ul>
 		         </div>
-            </aside>
+            </aside> */}
       </div>
    </section>
     );
