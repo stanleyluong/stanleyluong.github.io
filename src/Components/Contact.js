@@ -35,11 +35,6 @@ class Contact extends Component {
 
          <div className="row">
             <div className="eight columns">
-            {/* <form action="https://mailthis.to/stanleyluong" method="POST">
-               <input type="text" name="name" placeholder="Your name"/>
-               <input type="email" name="_replyto" placeholder="Your email"/>
-               <input type="submit" value="Send Email" />
-            </form> */}
                
                <form action="https://mailthis.to/stanleyluong" method="POST" id="contactForm" name="contactForm">
 					<fieldset>
