@@ -1,16 +1,45 @@
 import React, { Component } from 'react';
-
+const moment = require('moment'); // require
+// const apiKey = "KmFsGlzJi1PoHj2oEW1RBgj64"
+// const apiSecretKey = "S8XTQKWLdGuwJvFJkwojVc2hrYTBD5wPtXxWr6l0jmLrsr82BE"
+const bearerToken = "AAAAAAAAAAAAAAAAAAAAAHDALwEAAAAAi6oVHBSmffgxsWXOdj5KO1pwDgI%3DT4ZMdbyHugE8ut873YM23T4BVfx7ZynYeo3wYFH9IjYYO0AIAA"
+const proxy = "https://cors-anywhere.herokuapp.com/"
+const userId = "2554310400"
 class Contact extends Component {
+   constructor(){
+      super()
+      this.state = {
+         tweets: []
+      }
+   }
+   componentDidMount(){
+      this.getTweets()
+   }
+
+   getTweets = async () => {
+      let res = await fetch(`${proxy}https://api.twitter.com/2/users/${userId}/tweets?tweet.fields=created_at&user.fields=created_at&max_results=5`,{
+         method: "GET",
+         headers: {
+            'Content-Type':'application/json',
+            'Authorization':'Bearer '+bearerToken
+         }
+      })
+      let json = await res.json()
+      this.setState({
+         tweets: json.data
+      })
+   }
+   
   render() {
 
     if(this.props.data){
-      var name = this.props.data.name;
-      var street = this.props.data.address.street;
-      var city = this.props.data.address.city;
-      var state = this.props.data.address.state;
-      var zip = this.props.data.address.zip;
-      var phone= this.props.data.phone;
-      // var email = this.props.data.email;
+      // var name = this.props.data.name;
+      // var street = this.props.data.address.street;
+      // var city = this.props.data.address.city;
+      // var state = this.props.data.address.state;
+      // var zip = this.props.data.address.zip;
+      // var phone= this.props.data.phone;
+      var email = this.props.data.email;
       var message = this.props.data.contactmessage;
     }
 
@@ -76,40 +105,38 @@ class Contact extends Component {
            </div>
 
 
-            {/* <aside className="four columns footer-widgets">
+            <aside className="four columns footer-widgets">
                <div className="widget widget_contact">
 
-					   <h4>Address and Phone</h4>
+					   <h4>Email</h4>
 					   <p className="address">
-						   {name}<br />
+						   {/* {name}<br />
 						   {street} <br />
 						   {city}, {state} {zip}<br />
-						   <span>{phone}</span>
+						   <span>{phone}</span> */}
+                     <span>{email}</span>
 					   </p>
 				   </div>
 
                <div className="widget widget_tweets">
                   <h4 className="widget-title">Latest Tweets</h4>
                   <ul id="twitter">
-                     <li>
-                        <span>
-                        This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet.
-                        Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum
-                        <a href="#">http://t.co/CGIrdxIlI3</a>
-                        </span>
-                        <b><a href="#">2 Days Ago</a></b>
-                     </li>
-                     <li>
-                        <span>
-                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam,
-                        eaque ipsa quae ab illo inventore veritatis et quasi
-                        <a href="#">http://t.co/CGIrdxIlI3</a>
-                        </span>
-                        <b><a href="#">3 Days Ago</a></b>
-                     </li>
+                     {this.state.tweets.map(tweet=>{
+                        let href = `https://twitter.com/stanleyluong17/status/${tweet.id}?ref_src=twsrc%5Etfw`
+                        return(
+                           <li key={tweet.id}>
+                              <blockquote className="twitter-tweet">
+                                 <p lang="en" dir="ltr">{tweet.text}</p>
+                                 &mdash; stanley luong (@stanleyluong17) <a target="_blank" rel="noreferrer" href={href}>{moment(tweet.created_at).format("MMMM DD, YYYY")}</a>
+                              </blockquote> 
+                              {/* <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> */}
+                           </li>
+                        )
+                     })}
+                    
                   </ul>
 		         </div>
-            </aside> */}
+            </aside>
       </div>
    </section>
     );
