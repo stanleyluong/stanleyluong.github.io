@@ -642,8 +642,6 @@ input[type="checkbox"] { display: inline; }
 .row .six         { width: 50%; }
 .row .seven       { width: 58.33333%; }
 .row .eight       { width: 66.66667%; }
-/* change css back after twitter api is implemented */
-/* .row .eight       { width: 100%; } */
 
 .row .nine        { width: 75%; }
 .row .ten         { width: 83.33333%; }

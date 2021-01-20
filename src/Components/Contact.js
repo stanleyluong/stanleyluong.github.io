@@ -1,34 +1,6 @@
 import React, { Component } from 'react';
-const moment = require('moment'); // require
-// const apiKey = "KmFsGlzJi1PoHj2oEW1RBgj64"
-// const apiSecretKey = "S8XTQKWLdGuwJvFJkwojVc2hrYTBD5wPtXxWr6l0jmLrsr82BE"
-const bearerToken = "AAAAAAAAAAAAAAAAAAAAAHDALwEAAAAAi6oVHBSmffgxsWXOdj5KO1pwDgI%3DT4ZMdbyHugE8ut873YM23T4BVfx7ZynYeo3wYFH9IjYYO0AIAA"
-const proxy = "https://cors-anywhere.herokuapp.com/"
-const userId = "2554310400"
+import { TwitterTimelineEmbed } from 'react-twitter-embed';
 class Contact extends Component {
-   constructor(){
-      super()
-      this.state = {
-         tweets: []
-      }
-   }
-   componentDidMount(){
-      this.getTweets()
-   }
-
-   getTweets = async () => {
-      let res = await fetch(`${proxy}https://api.twitter.com/2/users/${userId}/tweets?tweet.fields=created_at&user.fields=created_at&max_results=5`,{
-         method: "GET",
-         headers: {
-            'Content-Type':'application/json',
-            'Authorization':'Bearer '+bearerToken
-         }
-      })
-      let json = await res.json()
-      this.setState({
-         tweets: json.data
-      })
-   }
    
   render() {
 
@@ -119,21 +91,12 @@ class Contact extends Component {
 				   </div>
 
                <div className="widget widget_tweets">
-                  <h4 className="widget-title">Latest Tweets</h4>
+                  {/* <h4 className="widget-title"></h4> */}
                   <ul id="twitter">
-                     {this.state.tweets.map(tweet=>{
-                        let href = `https://twitter.com/stanleyluong17/status/${tweet.id}?ref_src=twsrc%5Etfw`
-                        return(
-                           <li key={tweet.id}>
-                              <blockquote className="twitter-tweet">
-                                 <p lang="en" dir="ltr">{tweet.text}</p>
-                                 &mdash; stanley luong (@stanleyluong17) <a target="_blank" rel="noreferrer" href={href}>{moment(tweet.created_at).format("MMMM DD, YYYY")}</a>
-                              </blockquote> 
-                              {/* <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> */}
-                           </li>
-                        )
-                     })}
-                    
+                             <TwitterTimelineEmbed
+                                 sourceType="profile"
+                                 screenName="stanleyluong17"
+                                 options={{height: 500}} />
                   </ul>
 		         </div>
             </aside>
