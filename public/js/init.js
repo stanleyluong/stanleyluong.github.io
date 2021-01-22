@@ -141,8 +141,8 @@
 
       $('#image-loader').fadeIn();
 
-      var contactName = $('#contactForm #contactName').val();
-      var contactEmail = $('#contactForm #contactEmail').val();
+      var name = $('#contactForm #name').val();
+      var _replyto = $('#contactForm #_replyto').val();
       var contactSubject = $('#contactForm #contactSubject').val();
       var contactMessage = $('#contactForm #contactMessage').val();
 
