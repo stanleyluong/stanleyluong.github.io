@@ -433,10 +433,10 @@ ul#nav li.current a { color: #e0f77d; }
 /* Portfolio Content */
 #portfolio-wrapper .columns { margin-bottom: 36px; }
 .portfolio-item .item-wrap {
-   background: #fff;
+   /* background: #fff; */
    overflow: hidden;
    position: relative;
-
+   text-align: center;
    -webkit-transition: all 0.3s ease-in-out;
 	-moz-transition: all 0.3s ease-in-out;
 	-o-transition: all 0.3s ease-in-out;
