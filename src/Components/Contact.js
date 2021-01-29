@@ -78,7 +78,7 @@ class Contact extends Component {
 
 
             <aside className="four columns footer-widgets">
-            <div className="LI-profile-badge"  data-version="v1" data-size="large" data-locale="en_US" data-type="vertical" data-theme="dark" data-vanity="stanley-luong"><a className="LI-simple-link" href='https://www.linkedin.com/in/stanley-luong?trk=profile-badge'>Stanley Luong</a></div>
+               <div className="LI-profile-badge" style={{textAlign: "center"}} data-version="v1" data-size="large" data-locale="en_US" data-type="vertical" data-theme="dark" data-vanity="stanley-luong"><a className="LI-simple-link" href='https://www.linkedin.com/in/stanley-luong?trk=profile-badge'>Stanley Luong</a></div>
                <div className="widget widget_contact">
 
 					   {/* <h4>Email</h4> */}
@@ -86,7 +86,7 @@ class Contact extends Component {
 						   {/* {name}<br />
 						   {street} <br />
 						   {city}, {state} {zip}<br />
-						   <span>{phone}</span> */}
+                  <span>{phone}</span> */}
                      {/* <span>{email}</span> */}
 					   </p>
 				   </div>
@@ -97,7 +97,7 @@ class Contact extends Component {
                              <TwitterTimelineEmbed
                                  sourceType="profile"
                                  screenName="stanleyluong17"
-                                 options={{height: 250}} />
+                                 options={{height: 270}} />
                   </ul>
 		         </div>
             </aside>
