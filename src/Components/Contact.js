@@ -78,25 +78,26 @@ class Contact extends Component {
 
 
             <aside className="four columns footer-widgets">
+            <div className="LI-profile-badge"  data-version="v1" data-size="large" data-locale="en_US" data-type="horizontal" data-theme="dark" data-vanity="stanley-luong"><a className="LI-simple-link" href='https://www.linkedin.com/in/stanley-luong?trk=profile-badge'>Stanley Luong</a></div>
                <div className="widget widget_contact">
 
-					   <h4>Email</h4>
+					   {/* <h4>Email</h4> */}
 					   <p className="address">
 						   {/* {name}<br />
 						   {street} <br />
 						   {city}, {state} {zip}<br />
 						   <span>{phone}</span> */}
-                     <span>{email}</span>
+                     {/* <span>{email}</span> */}
 					   </p>
 				   </div>
 
                <div className="widget widget_tweets">
-                  {/* <h4 className="widget-title"></h4> */}
-                  <ul id="twitter">
+                  <h4 className="widget-title"></h4>
+                  <ul id="twitter">  
                              <TwitterTimelineEmbed
                                  sourceType="profile"
                                  screenName="stanleyluong17"
-                                 options={{height: 500}} />
+                                 options={{height: 400}} />
                   </ul>
 		         </div>
             </aside>

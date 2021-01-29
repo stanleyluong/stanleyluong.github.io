@@ -223,12 +223,6 @@
         "url":"https://stanleyluong.github.io/ChoreDoor/"
       },
       {
-        "title":"PianoPlayer",
-        "category":"Music",
-        "image":"pianoplayer.png",
-        "url":"https://stanleyluong.github.io/PianoPlayer/"
-      },
-      {
         "title":"Musicon",
         "category":"Instrument Store",
         "image":"musicon.png",
@@ -239,12 +233,6 @@
         "category":"Travel",
         "image":"banastravelblog.png",
         "url":"https://stanleyluong.github.io/BanasTravelBlog/"
-      },
-      {
-        "title":"Wanderlust",
-        "category":"Travel",
-        "image":"wanderlust.png",
-        "url":"https://stanleyluong.github.io/Wanderlust/"
       }
     ]
   },
