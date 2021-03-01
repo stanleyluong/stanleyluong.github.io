@@ -120,7 +120,7 @@
       },
       {
         "name":"JavaScript",
-        "level":"80%"
+        "level":"95%"
       },
       {
         "name":"React",
@@ -249,6 +249,10 @@
       {
         "text":"So wise!",
         "user":"Katana Tran, Former Classmate"
+      },
+      {
+        "text": "Excellent teacher.",
+        "user": "Terri Nakamura, Client"
       }
     ]
   }
