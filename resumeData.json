@@ -145,6 +145,12 @@
         "url":"https://stanleyluong.github.io/SETv2/"
       },
       {
+        "title":"ChatApp",
+        "category":"A Slack Clone",
+        "image":"chatapp.png",
+        "url":"https://stanleyluong.github.io/ChatApp/"
+      },
+      {
         "title":"FoodApp",
         "category":"A Yelp clone",
         "image":"foodapp.png",
