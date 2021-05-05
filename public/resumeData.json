@@ -77,31 +77,31 @@
         "company":"Crystal Commerce",
         "title":"Developer, Technical Community Manager",
         "years":"January 2020 - Present",
-        "description":"Maintained security for hundreds of websites with SSL certificates. Automated data population of catalog for thousands of products by utilizing MTG API, Scryfall API, and DeepAI Image Similarity Photo Recognition API."
+        "description":["Maintained security for hundreds of websites with AWS ACM.","Automated data population using artificial intelligence APIs.", "Created and maintained AWS CloudFront CDNs.","Diagnosed and solved DNS issues."]
       },
       {
         "company":"Forsla",
         "title":"Frontend Development Intern",
         "years":"December 2019 - January 2020",
-        "description":"Focused on user experience and designed responsive web based user-friendly interfaces. Troubleshot known issues and upgraded frontend features."
+        "description":["Focused on user experience and designed responsive web based user-friendly interfaces.", "Troubleshot known issues and upgraded frontend features."]
       },
       {
         "company":"Self-Employed",
         "title":"Coding Tutor",
         "years":"August 2019 - January 2020",
-        "description":"Taught clients programming fundamentals and advised client based on their needs. Coached clients through project and conducted code reviews."
+        "description":["Taught clients programming fundamentals and advised client based on their needs.","Coached clients through project and conducted code reviews."]
       },
       {
         "company":"Time Mage",
         "title":"Application Tester",
         "years":"August 2019 - November 2019",
-        "description":"Testing, debugging, and sending feedback on a time tracking app for an independent application developer."
+        "description":["Testing, debugging, and sending feedback on a time tracking app for an independent application developer."]
       },
       {
         "company":"Amazon",
         "title":"Data Specialist",
         "years":"July 2018 - April 2019",
-        "description":"Preprocessing, analyzing, and annotating visual data for Amazon Halo (Project Kilo). Maintained confidentiality, trained hirees, and collaborated with peers to achieve performance goals."
+        "description":["Preprocessing, analyzing, and annotating visual data for Amazon Halo (Project Kilo).", "Maintained confidentiality, trained hirees, and collaborated with peers to achieve performance goals."]
       }
     ],
     "skills":[
