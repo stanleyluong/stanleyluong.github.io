@@ -66,6 +66,12 @@
         "description":"IT Support Professional"
       },
       {
+        "school":"SoloLearn",
+        "degree":"Certificates",
+        "graduated":"2017",
+        "description":"HTML, Javascript, CSS, SQL, Python, jQuery"
+      },
+      {
         "school":"University of Washington",
         "degree":"Bachelor's Degree",
         "graduated":"2015",
@@ -74,8 +80,14 @@
     ],
     "work":[
       {
+        "company":"Props Fantasy",
+        "title":"Software Engineer",
+        "years":"April 2021 - Present",
+        "description":["Implemented visual elements that users see and interact with in web application"]
+      },
+      {
         "company":"Crystal Commerce",
-        "title":"Developer, Technical Community Manager",
+        "title":"Developer / Technical Community Manager / Support",
         "years":"January 2020 - Present",
         "description":["Maintained security for hundreds of websites with AWS ACM.","Automated data population using artificial intelligence APIs.", "Created and maintained AWS CloudFront CDNs.","Diagnosed and solved DNS issues."]
       },
@@ -111,12 +123,12 @@
       },
       {
         "name":"Git",
-        "level":"50%"
+        "level":"55%"
       },
      
       {
         "name":"HTML5",
-        "level":"70%"
+        "level":"85%"
       },
       {
         "name":"JavaScript",
@@ -124,11 +136,11 @@
       },
       {
         "name":"React",
-        "level":"60%"
+        "level":"80%"
       },
       {
         "name":"CSS",
-        "level":"50%"
+        "level":"70%"
       },
       {
         "name":"Python",
