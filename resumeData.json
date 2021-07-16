@@ -1,4 +1,4 @@
-{
+{ 
   "main": {
     "name":"Stanley Luong",
     "occupation":"codes",
@@ -18,24 +18,9 @@
     "resumedownload":"https://docs.google.com/document/d/1up1Ub4COG9s1r0ydMRRVbZX9Fmns2Nj1tHCapydIL9U/export?format=pdf",
     "social":[
       {
-        "name":"facebook",
-        "url":"https://www.facebook.com/stanley.luong.16",
-        "className":"fa fa-facebook"
-      },
-      {
-        "name":"twitter",
-        "url":"https://twitter.com/stanleyluong17",
-        "className":"fa fa-twitter"
-      },
-      {
         "name":"linkedin",
         "url":"https://www.linkedin.com/in/stanley-luong/",
         "className":"fa fa-linkedin"
-      },
-      {
-        "name":"instagram",
-        "url":"https://www.instagram.com/stanlockl/",
-        "className":"fa fa-instagram"
       },
       {
         "name":"github",
