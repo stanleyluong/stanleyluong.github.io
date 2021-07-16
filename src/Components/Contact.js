@@ -77,17 +77,17 @@ class Contact extends Component {
            </div>
 
 
-            <aside className="four columns footer-widgets">
+            {/* <aside className="four columns footer-widgets">
                <div className="LI-profile-badge" style={{textAlign: "center"}} data-version="v1" data-size="large" data-locale="en_US" data-type="vertical" data-theme="dark" data-vanity="stanley-luong"><a className="LI-simple-link" href='https://www.linkedin.com/in/stanley-luong?trk=profile-badge'>Stanley Luong</a></div>
                <div className="widget widget_contact">
 
-					   {/* <h4>Email</h4> */}
+					   <h4>Email</h4>
 					   <p className="address">
-						   {/* {name}<br />
+						   {name}<br />
 						   {street} <br />
 						   {city}, {state} {zip}<br />
-                  <span>{phone}</span> */}
-                     {/* <span>{email}</span> */}
+                  <span>{phone}</span>
+                     <span>{email}</span>
 					   </p>
 				   </div>
 
@@ -100,7 +100,7 @@ class Contact extends Component {
                                  options={{height: 270}} />
                   </ul>
 		         </div>
-            </aside>
+            </aside> */}
       </div>
    </section>
     );
