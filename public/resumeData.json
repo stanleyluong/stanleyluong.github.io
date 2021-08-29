@@ -15,7 +15,7 @@
       "zip": ""
     },
     "website": "https://stanleyluong.github.io/",
-    "resumedownload":"https://docs.google.com/document/d/1up1Ub4COG9s1r0ydMRRVbZX9Fmns2Nj1tHCapydIL9U/export?format=pdf",
+    "resumedownload":"https://docs.google.com/document/d/1d_wXRtJMJrta7Jn2THcmNm1S5CTti3V_nBIJqG3n3ZQ/export?format=pdf",
     "social":[
       {
         "name":"linkedin",
@@ -51,12 +51,6 @@
         "description":"IT Support Professional"
       },
       {
-        "school":"SoloLearn",
-        "degree":"Certificates",
-        "graduated":"2017",
-        "description":"HTML, Javascript, CSS, SQL, Python, jQuery"
-      },
-      {
         "school":"University of Washington",
         "degree":"Bachelor's Degree",
         "graduated":"2015",
@@ -74,25 +68,13 @@
         "company":"Crystal Commerce",
         "title":"Developer / Technical Community Manager / Support",
         "years":"January 2020 - Present",
-        "description":["Maintained security for hundreds of websites with AWS ACM.","Automated data population using artificial intelligence APIs.", "Created and maintained AWS CloudFront CDNs.","Diagnosed and solved DNS issues."]
+        "description":["Maintained security for hundreds of websites with AWS ACM.","Automated data population using AI APIs.", "Created, updated, and maintained AWS CloudFront CDNs.","Diagnosed and solved DNS issues."]
       },
       {
         "company":"Forsla",
         "title":"Frontend Development Intern",
         "years":"December 2019 - January 2020",
         "description":["Focused on user experience and designed responsive web based user-friendly interfaces.", "Troubleshot known issues and upgraded frontend features."]
-      },
-      {
-        "company":"Self-Employed",
-        "title":"Coding Tutor",
-        "years":"August 2019 - January 2020",
-        "description":["Taught clients programming fundamentals and advised client based on their needs.","Coached clients through project and conducted code reviews."]
-      },
-      {
-        "company":"Time Mage",
-        "title":"Application Tester",
-        "years":"August 2019 - November 2019",
-        "description":["Testing, debugging, and sending feedback on a time tracking app for an independent application developer."]
       },
       {
         "company":"Amazon",
