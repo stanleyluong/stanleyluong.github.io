@@ -4,7 +4,7 @@
     "occupation":"codes",
     "description":"Hello World",
     "image":"profilepic.jpg",
-    "bio":"Developer with multiple areas of expertise",
+    "bio":"Javascript, React, Node.js, HTML, CSS, AWS, ACM, ELB, CloudFront, AWS CLI,  Express, Mongo, AutoHotkey, Bash",
     "contactmessage":"Contact me",
     "email": "slluong@uw.com",
     "phone": "",
@@ -15,7 +15,7 @@
       "zip": ""
     },
     "website": "https://stanleyluong.github.io/",
-    "resumedownload":"https://docs.google.com/document/d/1d_wXRtJMJrta7Jn2THcmNm1S5CTti3V_nBIJqG3n3ZQ/export?format=pdf",
+    "resumedownload":"https://docs.google.com/document/d/1up1Ub4COG9s1r0ydMRRVbZX9Fmns2Nj1tHCapydIL9U/export?format=pdf",
     "social":[
       {
         "name":"linkedin",
