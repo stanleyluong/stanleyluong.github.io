@@ -4,7 +4,7 @@
     "occupation":"codes",
     "description":"Hello World",
     "image":"profilepic.jpg",
-    "bio":"Javascript, React, Node.js, HTML, CSS, AWS, ACM, ELB, CloudFront, AWS CLI,  Express, Mongo, AutoHotkey, Bash",
+    "bio":"JavaScript, React.js, Material UI, Semantic UI, TypeScript, Node.js, HTML, CSS, AWS, ACM, ELB, CloudFront, AWS CLI,  Express, Mongo, AutoHotkey, Bash",
     "contactmessage":"Contact me",
     "email": "slluong@uw.com",
     "phone": "",
@@ -33,6 +33,12 @@
     "skillmessage":"",
     "education":[
       {
+        "school":"AWS",
+        "degree":"Certificate",
+        "graduated":"In Progress",
+        "description":"Certified Cloud Practitioner"
+      },
+      {
         "school":"Codecademy",
         "degree":"Certificate",
         "graduated":"2020",
@@ -52,9 +58,9 @@
       },
       {
         "school":"University of Washington",
-        "degree":"Bachelor's Degree",
+        "degree":"Degree",
         "graduated":"2015",
-        "description":"Film"
+        "description":"Bachelor of Arts"
       }
     ],
     "work":[
@@ -62,13 +68,13 @@
         "company":"Props Fantasy",
         "title":"Frontend Developer",
         "years":"April 2021 - Present",
-        "description":["Implemented visual elements that users see and interact with in web application"]
+        "description":["Implemented visual elements that users see and interact with within web application using React.js, TypeScript, and Material UI"]
       },
       {
         "company":"Crystal Commerce",
         "title":"Developer / Technical Community Manager / Support",
         "years":"January 2020 - Present",
-        "description":["Maintained security for hundreds of websites with AWS ACM.","Automated data population using AI APIs.", "Created, updated, and maintained AWS CloudFront CDNs.","Diagnosed and solved DNS issues."]
+        "description":["Saved the company 1000+ hours of manual work through automation by leveraging Deep AI machine learning vision API to detect the visual differences between Magic the Gathering cards from differing sets","Developed a Node.js script to populate SQL database with correct card metadata based on visual differences using the machine learning vision API", "Automated AWS ACM SSL certificate, Cloudfront CDN, and Elastic Load Balancer provisioning using AWS CLI for hundreds of client ecommerce websites saving the development team 300+ hours of manual work per year","Served as project management lead helping to oversee the technical team’s backlog and roadmap","Supported the hobby shop e-commerce solution line of business through world class customer service","Reduced AWS bills by 25% with Trusted Advisor"]
       },
       {
         "company":"Forsla",
