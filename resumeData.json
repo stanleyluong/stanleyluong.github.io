@@ -4,7 +4,7 @@
     "occupation":"codes",
     "description":"Hello World",
     "image":"profilepic.png",
-    "bio":"JavaScript, React.js, Material UI, Semantic UI, TypeScript, Node.js, HTML, CSS, AWS, ACM, ELB, CloudFront, AWS CLI,  Express, Mongo, AutoHotkey, Bash, Ruby, Ruby on Rails, SQL, Redux",
+    "bio":"Software Engineer with experience in JavaScript, React.js, Material UI, Semantic UI, TypeScript, Node.js, HTML, CSS, AWS, ACM, ELB, CloudFront, AWS CLI,  Express, Mongo, AutoHotkey, Bash, Ruby, Ruby on Rails, SQL, Redux",
     "contactmessage":"Contact me",
     "email": "slluong@uw.com",
     "phone": "",
@@ -72,7 +72,7 @@
       },
       {
         "company":"Crystal Commerce",
-        "title":"Junior Cloud Engineer / Technical Community Manager",
+        "title":"Junior Engineer",
         "years":"January 2020 - Present",
         "description":["Saved the company 1000+ hours of manual work through automation by leveraging Deep AI machine learning vision API to detect the visual differences between Magic the Gathering cards from differing sets","Developed a Node.js script to populate SQL database with correct card metadata based on visual differences using the machine learning vision API", "Automated AWS ACM SSL certificate, Cloudfront CDN, and Elastic Load Balancer provisioning using AWS CLI for hundreds of client ecommerce websites saving the development team 300+ hours of manual work per year","Served as project management lead helping to oversee the technical team’s backlog and roadmap","Supported the hobby shop e-commerce solution line of business through world class customer service","Reduced AWS bills by 25% with Trusted Advisor"]
       },
