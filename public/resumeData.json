@@ -124,6 +124,12 @@
   "portfolio":{
     "projects": [
       {
+        "title":"Video Fuse",
+        "category":"Video Fusing Player",
+        "image":"video-fuse.png",
+        "url":"https://stanleyluong.github.io/video-fuse/"
+      },
+      {
         "title":"SET",
         "category":"My favorite card game",
         "image":"set.png",
