@@ -65,20 +65,20 @@
     ],
     "work":[
       {
-        "company":"Props Fantasy",
-        "title":"Frontend Engineer",
-        "years":"April 2021 - Present",
-        "description":["Implemented visual elements that users see and interact with within web application using React.js, TypeScript, and Material UI"]
+        "company":"Crystal Commerce",
+        "title":"Software Engineer",
+        "years":"January 2020 - Present",
+        "description":["Saved the company thousands of hours of manual work through automation by leveraging Deep AI machine learning vision API to detect the visual differences between Magic the Gathering cards from differing sets","Developed a Node.js script to populate SQL database with correct card metadata based on visual differences using the machine learning vision API", "Automated AWS resource provisioning using AWS CLI for hundreds of client e-commerce websites saving the development team hundreds of hours of manual work per year", "Supported the hobby shop e-commerce solution line of business through world class customer service"]
       },
       {
-        "company":"Crystal Commerce",
-        "title":"Junior Engineer",
-        "years":"January 2020 - Present",
-        "description":["Saved the company 1000+ hours of manual work through automation by leveraging Deep AI machine learning vision API to detect the visual differences between Magic the Gathering cards from differing sets","Developed a Node.js script to populate SQL database with correct card metadata based on visual differences using the machine learning vision API", "Automated AWS ACM SSL certificate, Cloudfront CDN, and Elastic Load Balancer provisioning using AWS CLI for hundreds of client ecommerce websites saving the development team 300+ hours of manual work per year","Served as project management lead helping to oversee the technical team’s backlog and roadmap","Supported the hobby shop e-commerce solution line of business through world class customer service","Reduced AWS bills by 25% with Trusted Advisor"]
+        "company":"Props Fantasy",
+        "title":"Front-end Engineer",
+        "years":"April 2021 - October 2021",
+        "description":["Created and implemented elements that users see and interact with within a web application","Standardized output with responsive approach and strategy","Collaborated with team members to implement developments"]
       },
       {
         "company":"Forsla",
-        "title":"Frontend Development Intern",
+        "title":"Front-end Development Intern",
         "years":"December 2019 - January 2020",
         "description":["Focused on user experience and designed responsive web based user-friendly interfaces.", "Troubleshot known issues and upgraded frontend features."]
       },
