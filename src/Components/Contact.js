@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TwitterTimelineEmbed } from 'react-twitter-embed';
+// import { TwitterTimelineEmbed } from 'react-twitter-embed';
 class Contact extends Component {
    
   render() {
