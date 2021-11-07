@@ -1,10 +1,10 @@
 { 
   "main": {
     "name":"Stanley Luong",
-    "occupation":"codes",
+    "occupation":"[softwareEngineer, webDeveloper, cloudArchitect]",
     "description":"Hello World",
     "image":"profilepic.png",
-    "bio":"Software Engineer with experience in JavaScript, React.js, Material UI, Semantic UI, TypeScript, Node.js, HTML, CSS, AWS, ACM, ELB, CloudFront, AWS CLI,  Express, Mongo, AutoHotkey, Bash, Ruby, Ruby on Rails, SQL, Redux",
+    "bio":"Software Engineer with experience in front-end, back-end, and cloud architecture",
     "contactmessage":"Contact me",
     "email": "slluong@uw.com",
     "phone": "",
