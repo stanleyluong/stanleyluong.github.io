@@ -35,6 +35,12 @@
       {
         "school":"AWS",
         "degree":"Certificate",
+        "graduated":"In Progress",
+        "description":"Solutions Architect Associate"
+      },
+      {
+        "school":"AWS",
+        "degree":"Certificate",
         "graduated":"2021",
         "description":"Certified Cloud Practitioner"
       },
