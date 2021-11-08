@@ -4,7 +4,7 @@
     "occupation":"[softwareEngineer, webDeveloper, cloudArchitect]",
     "description":"Hello World",
     "image":"profilepic.png",
-    "bio":"Software Engineer with experience in front-end, back-end, and cloud architecture",
+    "bio":"Experience in front-end, back-end, and cloud",
     "contactmessage":"Contact me",
     "email": "slluong@uw.com",
     "phone": "",
@@ -51,7 +51,7 @@
         "description":"Software Engineering"
       },
       {
-        "school":"Coursera Google",
+        "school":"Google Coursera",
         "degree":"Certificate",
         "graduated":"2018",
         "description":"IT Support Professional"
@@ -60,7 +60,7 @@
         "school":"University of Washington",
         "degree":"Degree",
         "graduated":"2015",
-        "description":"Bachelor of Arts"
+        "description":"Bachelor of Arts in Film"
       }
     ],
     "work":[
