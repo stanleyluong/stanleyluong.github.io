@@ -97,12 +97,12 @@
     ],
     "skills":[
       {
-        "name":"Ruby",
-        "level":"40%"
+        "name":"AWS",
+        "level":"70%"
       },
       {
         "name":"Git",
-        "level":"55%"
+        "level":"75%"
       },
      
       {
@@ -115,15 +115,15 @@
       },
       {
         "name":"React",
-        "level":"80%"
+        "level":"85%"
       },
       {
         "name":"CSS",
-        "level":"70%"
+        "level":"75%"
       },
       {
-        "name":"Python",
-        "level":"40%"
+        "name":"Node.js",
+        "level":"70%"
       }
     ]
   },
