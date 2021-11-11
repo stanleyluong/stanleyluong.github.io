@@ -130,12 +130,6 @@
   "portfolio":{
     "projects": [
       {
-        "title":"Video Fuse",
-        "category":"Video Fusing Player",
-        "image":"video-fuse.png",
-        "url":"https://stanleyluong.github.io/video-fuse/"
-      },
-      {
         "title":"SET",
         "category":"My favorite card game",
         "image":"set.png",
@@ -158,6 +152,12 @@
         "category":"Spotify API Playlist Maker",
         "image":"museapp.png",
         "url":"https://stanleyluong.github.io/MuseApp/"
+      },
+      {
+        "title":"Video Fuse",
+        "category":"Video Fusing Player",
+        "image":"video-fuse.png",
+        "url":"https://stanleyluong.github.io/video-fuse/"
       },
       {
         "title":"Broadway Design",
