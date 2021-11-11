@@ -160,6 +160,12 @@
         "url":"https://stanleyluong.github.io/video-fuse/"
       },
       {
+        "title":"Snake",
+        "category":"Classic Snake Game",
+        "image":"snake.png",
+        "url":"https://stanleyluong.github.io/snake/"
+      },
+      {
         "title":"Broadway Design",
         "category":"Business",
         "image":"broadway.png",
