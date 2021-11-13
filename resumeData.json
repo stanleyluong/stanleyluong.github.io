@@ -130,6 +130,12 @@
   "portfolio":{
     "projects": [
       {
+        "title":"Memories",
+        "category":"My Memories",
+        "image":"memories.png",
+        "url":"https://stanleyluong.github.io/Memories/"
+      },
+      {
         "title":"SET",
         "category":"My favorite card game",
         "image":"set.png",
