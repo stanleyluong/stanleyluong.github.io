@@ -136,6 +136,12 @@
         "url":"https://stanleyluong.github.io/Memories/"
       },
       {
+        "title":"BookApp",
+        "category":"My library",
+        "image":"bookapp.png",
+        "url":"https://bookapp-stanleyluong.herokuapp.com/"
+      },
+      {
         "title":"SET",
         "category":"My favorite card game",
         "image":"set.png",
