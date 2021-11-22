@@ -130,6 +130,12 @@
   "portfolio":{
     "projects": [
       {
+        "title":"GameApp",
+        "category":"Browse Games",
+        "image":"gameapp.png",
+        "url":"https://stanleyluong.github.io/GameApp/"
+      },
+      {
         "title":"Memories",
         "category":"My Memories",
         "image":"memories.png",
