@@ -69,6 +69,98 @@
         "description":"Bachelor of Arts in Film"
       }
     ],
+    "certificates": [
+      { 
+        "school": "AWS",
+        "course": "Certified Cloud Practitioner",
+        "image": "./images/certificates/aws_ccp.pdf"
+      },
+      {
+        "school": "Flatiron School",
+        "course": "Software Engineering",
+        "image": "./images/certificates/flatiron_softwareengineering.pdf"
+      },
+      {
+        "school": "Codecademy",
+        "course": "Building Interactive JavaScript Websites",
+        "image": "./images/certificates/codecademy_javascript.pdf"
+      },
+      {
+        "school": "Codecademy",
+        "course": "Learn the Command Line",
+        "image": "./images/certificates/codecademy_cli.pdf"
+      },
+      {
+        "school": "Codecademy",
+        "course": "Learn Git",
+        "image": "./images/certificates/codecademy_git.pdf"
+      },
+      {
+        "school": "Codecademy",
+        "course": "Learn HTML",
+        "image": "./images/certificates/codecademy_html.pdf"
+      },
+      {
+        "school": "Codecademy",
+        "course": "Learn Python 2",
+        "image": "./images/certificates/codecademy_python2.pdf"
+      },
+      {
+        "school": "sololearn",
+        "course": "HTML",
+        "image": "./images/certificates/sololearn_html.pdf"
+      },
+      {
+        "school": "sololearn",
+        "course": "JavaScript",
+        "image": "./images/certificates/sololearn_javascript.pdf"
+      },
+      {
+        "school": "sololearn",
+        "course": "jQuery",
+        "image": "./images/certificates/sololearn_jquery.pdf"
+      },
+      {
+        "school": "sololearn",
+        "course": "Python Core",
+        "image": "./images/certificates/sololearn_python.pdf"
+      },
+      {
+        "school": "sololearn",
+        "course": "SQL",
+        "image": "./images/certificates/sololearn_sql.pdf"
+      },
+      {
+        "school": "Google Coursera",
+        "course": "Google IT Support",
+        "image": "./images/certificates/google_itsupport.pdf"
+      },
+      {
+        "school": "Google Coursera",
+        "course": "Tech Support Fundamentals",
+        "image": "./images/certificates/google_techsupport.pdf"
+      },
+      {
+        "school": "Google Coursera",
+        "course": "The Bits and Bytes of Computer Networking",
+        "image": "./images/certificates/google_networking.pdf"
+      },
+      {
+        "school": "Google Coursera",
+        "course": "System Administration and IT Infrastructure Services",
+        "image": "./images/certificates/google_sysadmin.pdf"
+      },
+      {
+        "school": "Google Coursera",
+        "course": "Operating Systems and You: Becoming a Power User",
+        "image": "./images/certificates/google_operatingsystems.pdf"
+      },
+      {
+        "school": "Google Coursera",
+        "course": "IT Security: Defense Against the Digital Dark Arts",
+        "image": "./images/certificates/google_itsecurity.pdf"
+      }
+    ],
     "work":[
       {
         "company":"Crystal Commerce",
@@ -97,6 +189,10 @@
     ],
     "skills":[
       {
+        "name":"TypeScript",
+        "level":"60%"
+      },
+      {
         "name":"AWS",
         "level":"70%"
       },
@@ -124,6 +220,10 @@
       {
         "name":"Node.js",
         "level":"70%"
+      },
+      {
+        "name":"Angular",
+        "level":"50%"
       }
     ]
   },

@@ -267,6 +267,22 @@ ul#nav li.current a { color: #e0f77d; }
    padding-bottom: 24px;
    border-bottom: 1px solid #E8E8E8;
 }
+
+.certificates {
+  /* margin-bottom: 48px;
+   padding-bottom: 24px;
+   border-bottom: 1px solid #E8E8E8; */
+   /* display: block; */
+}
+
+.certificate-image {
+  transition: transform .2s;
+}
+
+.certificate-image:hover{
+  transform: scale(1.5);
+}
+
 #resume .info {
    font: 16px/24px 'librebaskerville-italic', serif;
    color: #6E7881;
