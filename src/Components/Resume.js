@@ -48,7 +48,7 @@ class Resume extends Component {
               <p className="info">{certificate.course} 
                 <em className="date">{certificate.graduated}</em>
               </p>
-              <embed className="certificate-image" src={certificate.image} width="500px" height="440px"></embed>
+              <embed className="certificate-image" src={certificate.image} width="300px" height="230px"></embed>
               {/* <p>{certificate.description}</p> */}
               {/* <br></br> */}
           </div>
@@ -71,7 +71,7 @@ class Resume extends Component {
 
       <div className="row certificates">
         <div className="three columns header-col"><h1><span>Certificates</span></h1></div>
-        <div className="nine columns main-col"><div className="row item"><div className="twelve columns">{certificates}</div></div></div>
+        <div className="nine columns main-col"><div ><div>{certificates}</div></div></div>
       </div>
 
       <div className="row skill">
