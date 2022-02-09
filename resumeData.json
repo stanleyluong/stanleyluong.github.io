@@ -15,7 +15,7 @@
       "zip": ""
     },
     "website": "https://stanleyluong.github.io/",
-    "resumedownload":"https://drive.google.com/uc?export=download&id=1-_xkpR_EIT2Z8n6ZzGBG8vV5c1BzoLMQ",
+    "resumedownload":"https://resume.io/r/0VBn4NVtB",
     "social":[
       {
         "name":"linkedin",
@@ -162,6 +162,18 @@
       }
     ],
     "work":[
+      {
+        "company":"Democracy Live",
+        "title":"Full Stack Developer",
+        "years":"January 2020 - Present",
+        "description":["Completed responsive Angular front end project from start to finish for election ballot verification software",
+          "Implemented ngrx for app-wide state management",
+          "Customized pipe for language translation feature",
+          "Validated forms with ReactiveFormsModule",
+          "Routed with AppRoutingModule",
+          "Handled Http requests with HttpClientModule"
+          ]
+      },
       {
         "company":"Crystal Commerce",
         "title":"Software Engineer",
