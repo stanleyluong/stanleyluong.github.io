@@ -279,6 +279,12 @@
         "url":"https://stanleyluong.github.io/wordle/"
       },
       {
+        "title":"TubeApp",
+        "category":"YouTube Clone",
+        "image":"tubeapp.png",
+        "url":"https://stanleyluong.github.io/tubeapp/"
+      },
+      {
         "title":"GameApp",
         "category":"Browse Games",
         "image":"gameapp.png",
