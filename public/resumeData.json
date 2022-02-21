@@ -131,6 +131,11 @@
         "image": "./images/certificates/sololearn_sql.pdf"
       },
       {
+        "school": "sololearn",
+        "course": "React-Redux",
+        "image": "./images/certificates/sololearn_react-redux.pdf"
+      },
+      {
         "school": "Google Coursera",
         "course": "Google IT Support",
         "image": "./images/certificates/google_itsupport.pdf"
