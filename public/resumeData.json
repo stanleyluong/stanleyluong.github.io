@@ -117,6 +117,11 @@
       },
       {
         "school": "sololearn",
+        "course": "JavaScript",
+        "image": "./images/certificates/sololearn_javascript2.pdf"
+      },
+      {
+        "school": "sololearn",
         "course": "jQuery",
         "image": "./images/certificates/sololearn_jquery.pdf"
       },
@@ -129,6 +134,11 @@
         "school": "sololearn",
         "course": "SQL",
         "image": "./images/certificates/sololearn_sql.pdf"
+      },
+      {
+        "school": "sololearn",
+        "course": "SQL",
+        "image": "./images/certificates/sololearn_sql2.pdf"
       },
       {
         "school": "sololearn",
