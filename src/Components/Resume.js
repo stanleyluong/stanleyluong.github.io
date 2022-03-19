@@ -47,7 +47,7 @@ class Resume extends Component {
               <p className="info">{certificate.course} 
                 <em className="date">{certificate.graduated}</em>
               </p>
-              <a href={"http://localhost:3000/"+certificate.image} target="_blank" rel="noreferrer">
+              <a href={"https://www.stanleyluong.com/"+certificate.image} target="_blank" rel="noreferrer">
                 <img loading="lazy" className="certificate-image"  width="100%" src={certificate.image} alt="certificate" type="image/webp"/>
               </a>
           </div>

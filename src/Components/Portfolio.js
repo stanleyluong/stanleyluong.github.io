@@ -11,7 +11,6 @@ class Portfolio extends Component {
             <div className="item-wrap">
               <a target="_blank" rel="noreferrer" href={project.url} title={project.title}>
                   <img loading="lazy" src={projectImage} alt={project.title} type="image/webp"/>
-                  {/* {img} */}
                 <div className="overlay">
                     <div className="portfolio-item-meta">
                   <h5>{project.title}</h5>
