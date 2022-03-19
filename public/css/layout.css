@@ -300,6 +300,12 @@ ul#nav li.current a { color: #e0f77d; }
    margin-top: 6px;
 }
 
+@media only screen and (max-width: 767px) {
+  #resume .description {
+    text-align: center;
+  }
+}
+
 /*----------------------------------------------*/
 /*	Skill Bars
 /*----------------------------------------------*/
