@@ -4,23 +4,25 @@ class Portfolio extends Component {
   render() {
 
     if(this.props.data){
-      var projects = this.props.data.projects.slice(0,12).map(function(projects){
-        // console.log(projects)
-        var projectImage = 'images/portfolio/'+projects.image;
-        return <div key={projects.title} className="columns portfolio-item">
-           <div className="item-wrap">
-            <a target="_blank" rel="noreferrer" href={projects.url} title={projects.title}>
-               <img alt={projects.title} src={projectImage} />
-               <div className="overlay">
-                  <div className="portfolio-item-meta">
-                 <h5>{projects.title}</h5>
-                     <p>{projects.category}</p>
+      var portfolio = this.props.data.projects.slice(0,12).map(project => {
+        var projectImage = 'images/portfolio/'+project.image
+        return (
+          <div key={project.title} className="columns portfolio-item">
+            <div className="item-wrap">
+              <a target="_blank" rel="noreferrer" href={project.url} title={project.title}>
+                  <img loading="lazy" src={projectImage} alt={project.title} type="image/webp"/>
+                  {/* {img} */}
+                <div className="overlay">
+                    <div className="portfolio-item-meta">
+                  <h5>{project.title}</h5>
+                      <p>{project.category}</p>
+                    </div>
                   </div>
-                </div>
-              <div className="link-icon"><i className="fa fa-link"></i></div>
-            </a>
+                <div className="link-icon"><i className="fa fa-link"></i></div>
+              </a>
+            </div>
           </div>
-        </div>
+        )
       })
     }
 
@@ -34,7 +36,7 @@ class Portfolio extends Component {
             <h1>Check Out my portfolio.</h1>
 
             <div id="portfolio-wrapper" className="bgrid-fifths s-bgrid-thirds cf">
-                {projects}
+                {portfolio}
             </div>
           </div>
       </div>

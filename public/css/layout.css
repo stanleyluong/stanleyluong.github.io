@@ -277,11 +277,13 @@ ul#nav li.current a { color: #e0f77d; }
 
 .certificate-image {
   transition: transform .2s;
+  border: 2px black solid;
+  /* justify-content: center; */
 }
 
-.certificate-image:hover{
+/* .certificate-image:hover{
   transform: scale(1.5);
-}
+} */
 
 #resume .info {
    font: 16px/24px 'librebaskerville-italic', serif;

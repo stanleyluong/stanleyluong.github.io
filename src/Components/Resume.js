@@ -4,8 +4,8 @@ class Resume extends Component {
   render() {
     if(this.props.data){
       var skillmessage = this.props.data.skillmessage;  
-      var education = this.props.data.education.map(function(education){
-        return(
+      var education = this.props.data.education.map(education => {
+        return (
           <div key={education.description}>
             <h3>{education.school}</h3>
               <p className="info">{education.degree} 
@@ -13,7 +13,6 @@ class Resume extends Component {
                 <em className="date">{education.graduated}</em>
               </p>
               <p>{education.description}</p>
-              {/* <br></br> */}
           </div>
         )
       })
@@ -22,15 +21,13 @@ class Resume extends Component {
         let lines = work.description.map(line=>{
           return(
             <div key={line}>
-              <li>{line}</li>
-              {/* <br></br> */}
+              <li><span>&bull; </span>{line}</li>
             </div>
           )
         })
         return (<div key={work.company}><h3>{work.company}</h3>
                   <p className="info">{work.title}<span>&bull;</span> <em className="date">{work.years}</em></p>
                   <ul>{lines}</ul>
-                  {/* <br></br> */}
                 </div>)
       })
 
@@ -41,16 +38,18 @@ class Resume extends Component {
                   <em>{skills.name}</em>
                 </li>
       })
+
       var certificates = this.props.data.certificates.map(function(certificate){
+        
         return(
           <div key={certificate.image} >
             <h3>{certificate.school}</h3>
               <p className="info">{certificate.course} 
                 <em className="date">{certificate.graduated}</em>
               </p>
-              <embed className="certificate-image" src={certificate.image} width="300px" height="230px"></embed>
-              {/* <p>{certificate.description}</p> */}
-              {/* <br></br> */}
+              <a href={"http://localhost:3000/"+certificate.image} target="_blank" rel="noreferrer">
+                <img loading="lazy" className="certificate-image"  width="100%" src={certificate.image} alt="certificate" type="image/webp"/>
+              </a>
           </div>
         )
       })
