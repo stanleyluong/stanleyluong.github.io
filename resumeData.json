@@ -3,7 +3,7 @@
     "name":"Stanley Luong",
     "occupation":"[softwareEngineer, webDeveloper, cloudArchitect]",
     "description":"Hello World",
-    "image":"profilepic.png",
+    "image":"profilepic.webp",
     "bio":"Experience in front-end, back-end, and cloud",
     "contactmessage":"Contact me",
     "email": "slluong@uw.com",
@@ -73,107 +73,107 @@
       { 
         "school": "AWS",
         "course": "Certified Cloud Practitioner",
-        "image": "./images/certificates/aws_ccp.pdf"
+        "image": "./images/certificates/aws_ccp.webp"
       },
       {
         "school": "Flatiron School",
         "course": "Software Engineering",
-        "image": "./images/certificates/flatiron_softwareengineering.pdf"
+        "image": "./images/certificates/flatiron_softwareengineering.webp"
       },
       {
         "school": "Codecademy",
         "course": "Building Interactive JavaScript Websites",
-        "image": "./images/certificates/codecademy_javascript.pdf"
+        "image": "./images/certificates/codecademy_javascript.webp"
       },
       {
         "school": "Codecademy",
         "course": "Learn the Command Line",
-        "image": "./images/certificates/codecademy_cli.pdf"
+        "image": "./images/certificates/codecademy_cli.webp"
       },
       {
         "school": "Codecademy",
         "course": "Learn Git",
-        "image": "./images/certificates/codecademy_git.pdf"
+        "image": "./images/certificates/codecademy_git.webp"
       },
       {
         "school": "Codecademy",
         "course": "Learn HTML",
-        "image": "./images/certificates/codecademy_html.pdf"
+        "image": "./images/certificates/codecademy_html.webp"
       },
       {
         "school": "Codecademy",
         "course": "Learn Python 2",
-        "image": "./images/certificates/codecademy_python2.pdf"
+        "image": "./images/certificates/codecademy_python2.webp"
       },
       {
         "school": "sololearn",
         "course": "HTML",
-        "image": "./images/certificates/sololearn_html.pdf"
+        "image": "./images/certificates/sololearn_html.webp"
       },
       {
         "school": "sololearn",
         "course": "JavaScript",
-        "image": "./images/certificates/sololearn_javascript.pdf"
+        "image": "./images/certificates/sololearn_javascript.webp"
       },
       {
         "school": "sololearn",
         "course": "JavaScript",
-        "image": "./images/certificates/sololearn_javascript2.pdf"
+        "image": "./images/certificates/sololearn_javascript2.webp"
       },
       {
         "school": "sololearn",
         "course": "jQuery",
-        "image": "./images/certificates/sololearn_jquery.pdf"
+        "image": "./images/certificates/sololearn_jquery.webp"
       },
       {
         "school": "sololearn",
         "course": "Python Core",
-        "image": "./images/certificates/sololearn_python.pdf"
+        "image": "./images/certificates/sololearn_python.webp"
       },
       {
         "school": "sololearn",
         "course": "SQL",
-        "image": "./images/certificates/sololearn_sql.pdf"
+        "image": "./images/certificates/sololearn_sql.webp"
       },
       {
         "school": "sololearn",
         "course": "SQL",
-        "image": "./images/certificates/sololearn_sql2.pdf"
+        "image": "./images/certificates/sololearn_sql2.webp"
       },
       {
         "school": "sololearn",
         "course": "React-Redux",
-        "image": "./images/certificates/sololearn_react-redux.pdf"
+        "image": "./images/certificates/sololearn_react-redux.webp"
       },
       {
         "school": "Google Coursera",
         "course": "Google IT Support",
-        "image": "./images/certificates/google_itsupport.pdf"
+        "image": "./images/certificates/google_itsupport.webp"
       },
       {
         "school": "Google Coursera",
         "course": "Tech Support Fundamentals",
-        "image": "./images/certificates/google_techsupport.pdf"
+        "image": "./images/certificates/google_techsupport.webp"
       },
       {
         "school": "Google Coursera",
         "course": "The Bits and Bytes of Computer Networking",
-        "image": "./images/certificates/google_networking.pdf"
+        "image": "./images/certificates/google_networking.webp"
       },
       {
         "school": "Google Coursera",
         "course": "System Administration and IT Infrastructure Services",
-        "image": "./images/certificates/google_sysadmin.pdf"
+        "image": "./images/certificates/google_sysadmin.webp"
       },
       {
         "school": "Google Coursera",
         "course": "Operating Systems and You: Becoming a Power User",
-        "image": "./images/certificates/google_operatingsystems.pdf"
+        "image": "./images/certificates/google_operatingsystems.webp"
       },
       {
         "school": "Google Coursera",
         "course": "IT Security: Defense Against the Digital Dark Arts",
-        "image": "./images/certificates/google_itsecurity.pdf"
+        "image": "./images/certificates/google_itsecurity.webp"
       }
     ],
     "work":[
@@ -275,145 +275,145 @@
       {
         "title":"Wordle",
         "category":"Viral word game",
-        "image":"wordle.png",
+        "image":"wordle.webp",
         "url":"https://stanleyluong.github.io/wordle/"
       },
       {
         "title":"TubeApp",
         "category":"YouTube Clone",
-        "image":"tubeapp.png",
+        "image":"tubeapp.webp",
         "url":"https://stanleyluong.github.io/tubeapp/"
       },
       {
         "title":"GameApp",
         "category":"Browse Games",
-        "image":"gameapp.png",
+        "image":"gameapp.webp",
         "url":"https://stanleyluong.github.io/GameApp/"
       },
       {
         "title":"Memories",
         "category":"My Memories",
-        "image":"memories.png",
+        "image":"memories.webp",
         "url":"https://stanleyluong.github.io/Memories/"
       },
       {
         "title":"BookApp",
         "category":"My library",
-        "image":"bookapp.png",
+        "image":"bookapp.webp",
         "url":"https://bookapp-stanleyluong.herokuapp.com/"
       },
       {
         "title":"SET",
         "category":"My favorite card game",
-        "image":"set.png",
+        "image":"set.webp",
         "url":"https://stanleyluong.github.io/SETv2/"
       },
       {
         "title":"ChatApp",
         "category":"A Slack Clone",
-        "image":"chatapp.png",
+        "image":"chatapp.webp",
         "url":"https://stanleyluong.github.io/ChatApp/"
       },
       {
         "title":"FoodApp",
         "category":"A Yelp clone",
-        "image":"foodapp.png",
+        "image":"foodapp.webp",
         "url":"https://stanleyluong.github.io/FoodApp/"
       },
       {
         "title":"MuseApp",
         "category":"Spotify API Playlist Maker",
-        "image":"museapp.png",
+        "image":"museapp.webp",
         "url":"https://stanleyluong.github.io/MuseApp/"
       },
       {
         "title":"Video Fuse",
         "category":"Video Fusing Player",
-        "image":"video-fuse.png",
+        "image":"video-fuse.webp",
         "url":"https://stanleyluong.github.io/video-fuse/"
       },
       {
         "title":"Snake",
         "category":"Classic Snake Game",
-        "image":"snake.png",
+        "image":"snake.webp",
         "url":"https://stanleyluong.github.io/snake/"
       },
       {
         "title":"TsunamiCoffee",
         "category":"Coffee Shop",
-        "image":"tsunamicoffee.png",
+        "image":"tsunamicoffee.webp",
         "url":"https://stanleyluong.github.io/TsunamiCoffee/"
       },
       {
         "title":"Broadway Design",
         "category":"Business",
-        "image":"broadway.png",
+        "image":"broadway.webp",
         "url":"https://stanleyluong.github.io/Broadway-Design/"
       },
       {
         "title":"House Store",
         "category":"Home Improvement",
-        "image":"housestore.png",
+        "image":"housestore.webp",
         "url":"https://stanleyluong.github.io/HouseStore/"
       },
       {
         "title":"Typography",
         "category":"Font Experiments",
-        "image":"typography.png",
+        "image":"typography.webp",
         "url":"https://stanleyluong.github.io/Typography/"
       },
       {
         "title":"Aofie Conleavy",
         "category":"Travel Blog",
-        "image":"aofie.png",
+        "image":"aofie.webp",
         "url":"https://stanleyluong.github.io/AofieConleavy/"
       },
       {
         "title":"WebsiteStyleGuide",
         "category":"Styles",
-        "image":"styleguide.png",
+        "image":"styleguide.webp",
         "url":"https://stanleyluong.github.io/WebsiteStyleGuide/"
       },
       {
         "title":"Headlines",
         "category":"News",
-        "image":"headlines.png",
+        "image":"headlines.webp",
         "url":"https://stanleyluong.github.io/Headlines/"
       },
       {
         "title":"ToDoOrNotToDo",
         "category":"To-Do List",
-        "image":"todo.png",
+        "image":"todo.webp",
         "url":"https://stanleyluong.github.io/ToDoOrNotToDo/"
       },
       {
         "title":"TheLuongExperience",
         "category":"Development Consultation",
-        "image":"luongexperience.png",
+        "image":"luongexperience.webp",
         "url":"https://stanleyluong.github.io/TheLuongExperience/"
       },
       {
         "title":"TeaCozy",
         "category":"Tea Shop",
-        "image":"teacozy.png",
+        "image":"teacozy.webp",
         "url":"https://stanleyluong.github.io/TeaCozy/"
       },
       {
         "title":"ChoreDoor",
         "category":"A silly game",
-        "image":"choredoor.png",
+        "image":"choredoor.webp",
         "url":"https://stanleyluong.github.io/ChoreDoor/"
       },
       {
         "title":"Musicon",
         "category":"Instrument Store",
-        "image":"musicon.png",
+        "image":"musicon.webp",
         "url":"https://stanleyluong.github.io/Musicon/"
       },
       {
         "title":"BanasTravelBlog",
         "category":"Travel",
-        "image":"banastravelblog.png",
+        "image":"banastravelblog.webp",
         "url":"https://stanleyluong.github.io/BanasTravelBlog/"
       }
     ]
