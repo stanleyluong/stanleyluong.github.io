@@ -204,17 +204,6 @@
         ]
       },
       {
-        "company":"Crystal Commerce",
-        "title":"Software Engineer",
-        "years":"January 2020 - Present",
-        "description":[
-          "Saved the company thousands of hours of manual work through automation by leveraging Deep AI machine learning vision API to detect the visual differences between Magic the Gathering cards from differing sets",
-          "Developed a Node.js script to populate SQL database with correct card metadata based on visual differences using the machine learning vision API", 
-          "Automated AWS resource provisioning using AWS CLI for hundreds of client e-commerce websites saving the development team hundreds of hours of manual work per year", 
-          "Supported the hobby shop e-commerce solution line of business through world class customer service"
-        ]
-      },
-      {
         "company":"Props Fantasy",
         "title":"Front-end Engineer",
         "years":"April 2021 - October 2021",
@@ -225,12 +214,41 @@
         ]
       },
       {
+        "company":"Crystal Commerce",
+        "title":"Software Engineer",
+        "years":"January 2020 - July 2022",
+        "description":[
+          "Saved the company thousands of hours of manual work through automation by leveraging Deep AI machine learning vision API to detect the visual differences between Magic the Gathering cards from differing sets",
+          "Developed a Node.js script to populate SQL database with correct card metadata based on visual differences using the machine learning vision API", 
+          "Automated AWS resource provisioning using AWS CLI for hundreds of client e-commerce websites saving the development team hundreds of hours of manual work per year", 
+          "Supported the hobby shop e-commerce solution line of business through world class customer service"
+        ]
+      },
+      {
         "company":"Forsla",
         "title":"Front-end Development Intern",
         "years":"December 2019 - January 2020",
         "description":[
           "Focused on user experience and designed responsive web based user-friendly interfaces.",
           "Troubleshot known issues and upgraded frontend features."
+        ]
+      },
+      {
+        "company":"Freelance",
+        "title":"Coding Tutor",
+        "years":"August 2019 - November 2019",
+        "description":[
+          "Taught clients programming fundamentals and advised clients based on their needs",
+          "Coached clients through project & conducted code reviews"
+        ]
+      },
+      {
+        "company":"Time Mage",
+        "title":"Application Tester",
+        "years":"May 2019 - July 2019",
+        "description":[
+          "Testing and sending feedback on a time tracking app for an independent application developer",
+          "Worked well independently and on a team to solve problems."
         ]
       },
       {
@@ -440,7 +458,7 @@
         "text":"Wonderful work.",
         "user":"Dan McCarty, CEO of Crystal Commerce"
       },
-      {
+        {
         "text":"Glad he's here.",
         "user":"Edmund Chan, Coworker"
       },
