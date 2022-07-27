@@ -191,8 +191,19 @@
         ]
       },
       {
+        "company":"Crystal Commerce",
+        "title":"Software Engineer",
+        "years":"January 2020 - July 2022",
+        "description":[
+          "Saved the company thousands of hours of manual work through automation by leveraging Deep AI machine learning vision API to detect the visual differences between Magic the Gathering cards from differing sets",
+          "Developed a Node.js script to populate SQL database with correct card metadata based on visual differences using the machine learning vision API", 
+          "Automated AWS resource provisioning using AWS CLI for hundreds of client e-commerce websites saving the development team hundreds of hours of manual work per year", 
+          "Supported the hobby shop e-commerce solution line of business through world class customer service"
+        ]
+      },
+      {
         "company":"Democracy Live",
-        "title":"Full Stack Developer",
+        "title":"Full-stack Developer",
         "years":"December 2021 - March 2022",
         "description":[
           "Completed responsive Angular front end project from start to finish for election ballot verification software",
@@ -214,19 +225,8 @@
         ]
       },
       {
-        "company":"Crystal Commerce",
-        "title":"Software Engineer",
-        "years":"January 2020 - July 2022",
-        "description":[
-          "Saved the company thousands of hours of manual work through automation by leveraging Deep AI machine learning vision API to detect the visual differences between Magic the Gathering cards from differing sets",
-          "Developed a Node.js script to populate SQL database with correct card metadata based on visual differences using the machine learning vision API", 
-          "Automated AWS resource provisioning using AWS CLI for hundreds of client e-commerce websites saving the development team hundreds of hours of manual work per year", 
-          "Supported the hobby shop e-commerce solution line of business through world class customer service"
-        ]
-      },
-      {
         "company":"Forsla",
-        "title":"Front-end Development Intern",
+        "title":"Front-end Developer",
         "years":"December 2019 - January 2020",
         "description":[
           "Focused on user experience and designed responsive web based user-friendly interfaces.",
