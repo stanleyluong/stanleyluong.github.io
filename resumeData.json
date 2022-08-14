@@ -1,7 +1,7 @@
 { 
   "main": {
     "name":"Stanley Luong",
-    "occupation":"[softwareEngineer, webDeveloper, cloudArchitect]",
+    "occupation":"[softwareEngineer, webDeveloper, dataScientist, cloudArchitect]",
     "description":"Hello World",
     "image":"profilepic.webp",
     "bio":"Software engineer adept in bringing forth expertise in design, installation, testing, and maintenance of software systems. Equipped with a diverse and promising skill-set. Proficient in various platforms and languages. Experienced with the latest cutting-edge development tools and procedures.  Able to effectively self-manage during independent projects, as well as collaborate as part of a productive team.",
@@ -183,8 +183,8 @@
         "years":"March 2022 - Present",
         "description":[
           "Automated web performance testing and synthetic monitoring with Python",
-          "Extracted, transformed, and loaded (ETL) data to .xls and .json with Python and pandas",
-          "Developed frontend and rendered data with React",
+          "Extracted, transformed, and loaded (ETL) data with Python and pandas",
+          "Developed frontend and visualized data with React",
           "Presented analytics, data, and discoveries to management and engineering team",
           "Refactored existing code following industry standard conventions",
           "Wrote documentation, readmes, and created workflow diagrams for future engineers"
@@ -264,7 +264,7 @@
     "skills":[
       {
         "name":"AWS",
-        "level":"60%"
+        "level":"50%"
       },
       {
         "name":"TypeScript",
@@ -280,7 +280,7 @@
       },
       {
         "name":"HTML5",
-        "level":"90%"
+        "level":"95%"
       },
       {
         "name":"JavaScript",
