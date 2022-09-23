@@ -132,6 +132,16 @@
       },
       {
         "school": "sololearn",
+        "course": "Python Core",
+        "image": "./images/certificates/sololearn_python2.webp"
+      },
+      {
+        "school": "sololearn",
+        "course": "PHP",
+        "image": "./images/certificates/sololearn_php.webp"
+      },
+      {
+        "school": "sololearn",
         "course": "SQL",
         "image": "./images/certificates/sololearn_sql.webp"
       },
@@ -178,9 +188,17 @@
     ],
     "work":[
       {
+        "company":"Meta",
+        "title":"Software Engineer",
+        "years":"September 2022 - Present",
+        "description":[
+          "Developing internal tools for Reality Labs"
+        ]
+      },
+      {
         "company":"Nike",
         "title":"Senior Software Engineer II",
-        "years":"March 2022 - Present",
+        "years":"March 2022 - September 2022",
         "description":[
           "Automated web performance testing and synthetic monitoring with Python",
           "Extracted, transformed, and loaded (ETL) data with Python and pandas",
