@@ -10,8 +10,8 @@
     "phone": "",
     "address":{
       "street":"",
-      "city":"",
-      "state":"",
+      "city":"Seattle",
+      "state":"Washington",
       "zip": ""
     },
     "website": "https://stanleyluong.github.io/",
@@ -111,6 +111,11 @@
         "image": "./images/certificates/codecademy_ruby.webp"
       },
       {
+        "school": "Codecademy",
+        "course": "Learn PHP",
+        "image": "./images/certificates/codecademy_php.webp"
+      },
+      {
         "school": "sololearn",
         "course": "HTML",
         "image": "./images/certificates/sololearn_html.webp"
@@ -208,6 +213,7 @@
           "Automated web performance testing and synthetic monitoring with Python",
           "Extracted, transformed, and loaded (ETL) data with Python and pandas",
           "Developed frontend and visualized data with React",
+          "Reduced the cost of monthly runs by over 80% by discovering the point of diminishing returns for accurate measurements",
           "Presented analytics, data, and discoveries to management and engineering team",
           "Refactored existing code following industry standard conventions",
           "Wrote documentation, readmes, and created workflow diagrams for future engineers"
@@ -238,7 +244,7 @@
         ]
       },
       {
-        "company":"Props Fantasy",
+        "company":"Flex Fantasy",
         "title":"Front-end Engineer",
         "years":"April 2021 - October 2021",
         "description":[
