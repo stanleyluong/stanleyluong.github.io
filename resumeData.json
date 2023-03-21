@@ -16,6 +16,7 @@
     },
     "website": "https://stanleyluong.github.io/",
     "resumedownload":"https://drive.google.com/uc?export=download&id=1O_ZTRiNbFqD41JHI_z6oP3ee7qY_cvQB",
+
     "social":[
       {
         "name":"linkedin",
@@ -402,6 +403,12 @@
         "url":"https://stanleyluong.github.io/snake/"
       },
       {
+        "title":"Film Finder",
+        "category":"Film",
+        "image":"filmfinder.webp",
+        "url":"https://stanleyluong.github.io/filmfinder/"
+      },
+      {
         "title":"TsunamiCoffee",
         "category":"Coffee Shop",
         "image":"tsunamicoffee.webp",
@@ -431,12 +438,7 @@
         "image":"aofie.webp",
         "url":"https://stanleyluong.github.io/AofieConleavy/"
       },
-      {
-        "title":"WebsiteStyleGuide",
-        "category":"Styles",
-        "image":"styleguide.webp",
-        "url":"https://stanleyluong.github.io/WebsiteStyleGuide/"
-      },
+      
       {
         "title":"Headlines",
         "category":"News",
@@ -478,6 +480,12 @@
         "category":"Travel",
         "image":"banastravelblog.webp",
         "url":"https://stanleyluong.github.io/BanasTravelBlog/"
+      },
+      {
+        "title":"WebsiteStyleGuide",
+        "category":"Styles",
+        "image":"styleguide.webp",
+        "url":"https://stanleyluong.github.io/WebsiteStyleGuide/"
       }
     ]
   },
