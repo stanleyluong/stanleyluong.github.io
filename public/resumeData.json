@@ -203,7 +203,11 @@
         "title":"Software Engineer",
         "years":"September 2022 - Present",
         "description":[
-          "Developing internal tools for Reality Labs"
+          "Create a full-stack internal application using PHP, JavaScript, HTML, CSS, and MySQL.",
+          "Develop a data pipeline for the automated production of internal documents",
+          "Authenticate, request, and post data via API",
+          "Process data using python",
+          "Extract, transform, and load using pandas"
         ]
       },
       {
