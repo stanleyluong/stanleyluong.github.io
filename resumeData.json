@@ -16,7 +16,6 @@
     },
     "website": "https://stanleyluong.github.io/",
     "resumedownload":"https://drive.google.com/uc?export=download&id=1O_ZTRiNbFqD41JHI_z6oP3ee7qY_cvQB",
-
     "social":[
       {
         "name":"linkedin",
@@ -48,7 +47,7 @@
       {
         "school":"Codecademy",
         "degree":"Certificate",
-        "graduated":"2020",
+        "graduated":"2024",
         "description":"Web Development"
       },
       {
@@ -80,6 +79,11 @@
         "school": "Flatiron School",
         "course": "Software Engineering",
         "image": "./images/certificates/flatiron_softwareengineering.webp"
+      },
+      {
+        "school": "Codecademy",
+        "course": "Web Development Skill Path",
+        "image": "./images/certificates/codecademy_webdevelopmentskillpath.webp"
       },
       {
         "school": "Codecademy",
@@ -203,11 +207,8 @@
         "title":"Software Engineer",
         "years":"September 2022 - Present",
         "description":[
-          "Create a full-stack internal application using PHP, JavaScript, HTML, CSS, and MySQL.",
-          "Develop a data pipeline for the automated production of internal documents",
-          "Authenticate, request, and post data via API",
-          "Process data using python",
-          "Extract, transform, and load using pandas"
+          "Created multiple full-stack internal applications using PHP, Hack, JavaScript, TypeScript, React, HTML, XML, CSS, MySQL, XDB, GraphQL, Microsoft Graph, Python, Pandas, XDS Components, Manifold, and internal frameworks such as Ent and CRUD for Meta's Reality Labs - Environmental Health & Safety - Analytics & Engineering Solutions team (RL EHS AES).",
+          "Projects include RL AES halbot, Safety Posters, Laser Safety, Emergency Action Plans, Machine Tool Posters, and Lab Manager Inspections for the EHS Tooling Center."
         ]
       },
       {
@@ -302,11 +303,11 @@
       },
       {
         "name":"TypeScript",
-        "level":"65%"
+        "level":"90%"
       },
       {
         "name":"Python",
-        "level":"85%"
+        "level":"90%"
       },
       {
         "name":"Git",
@@ -322,19 +323,19 @@
       },
       {
         "name":"React",
-        "level":"90%"
+        "level":"95%"
       },
       {
         "name":"CSS",
-        "level":"75%"
+        "level":"85%"
       },
       {
         "name":"Node.js",
-        "level":"70%"
+        "level":"75%"
       },
       {
         "name":"Angular",
-        "level":"65%"
+        "level":"70%"
       }
     ]
   },
