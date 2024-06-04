@@ -142,13 +142,18 @@
       },
       {
         "school": "sololearn",
-        "course": "Python Core",
-        "image": "./images/certificates/sololearn_python.webp"
+        "course": "Intro to Python",
+        "image": "./images/certificates/sololearn_intro_to_python.jpg"
       },
       {
         "school": "sololearn",
         "course": "Python Core",
-        "image": "./images/certificates/sololearn_python2.webp"
+        "image": "./images/certificates/sololearn_python_core.webp"
+      },
+      {
+        "school": "sololearn",
+        "course": "Python Core",
+        "image": "./images/certificates/sololearn_python_core_2.webp"
       },
       {
         "school": "sololearn",
