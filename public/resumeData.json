@@ -347,6 +347,12 @@
   "portfolio":{
     "projects": [
       {
+        "title":"Stackline",
+        "category":"Chart and Table",
+        "image":"stackline.webp",
+        "url":"https://stanleyluong.github.io/stackline/"
+      },
+      {
         "title":"Wordle",
         "category":"Viral word game",
         "image":"wordle.webp",
