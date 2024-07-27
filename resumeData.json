@@ -82,6 +82,11 @@
       },
       {
         "school": "Codecademy",
+        "course": "Pass the Technical Interview with Python Skill Path",
+        "image": "./images/certificates/codecademy_pass_the_technical_interview_with_python.webp"
+      },
+      {
+        "school": "Codecademy",
         "course": "Web Development Skill Path",
         "image": "./images/certificates/codecademy_webdevelopmentskillpath.webp"
       },
