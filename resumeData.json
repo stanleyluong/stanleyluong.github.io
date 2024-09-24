@@ -352,6 +352,102 @@
   "portfolio":{
     "projects": [
       {
+        "title":"Safety Poster 1",
+        "category":"Meta",
+        "image":"safety_poster_1_thumbnail.webp",
+        "url":"images/portfolio/safety_poster_1.webp"
+      },
+      {
+        "title":"Machine Tool Poster 1",
+        "category":"Meta",
+        "image":"machine_tool_poster_1_thumbnail.webp",
+        "url":"images/portfolio/machine_tool_poster_1.webp"
+      },
+      {
+        "title":"Machine Tool Poster 2",
+        "category":"Meta",
+        "image":"machine_tool_poster_2_thumbnail.webp",
+        "url":"images/portfolio/machine_tool_poster_2.webp"
+      },
+      {
+        "title":"Laser Safety 1",
+        "category":"Meta",
+        "image":"laser_safety_1_thumbnail.webp",
+        "url":"images/portfolio/laser_safety_1.webp"
+      },
+      {
+        "title":"Laser Safety 2",
+        "category":"Meta",
+        "image":"laser_safety_2_thumbnail.webp",
+        "url":"images/portfolio/laser_safety_2.webp"
+      },
+      {
+        "title":"Lab Manager Inspection Mobile 1",
+        "category":"Meta",
+        "image":"lab_manager_inspection_mobile_1_thumbnail.webp",
+        "url":"images/portfolio/lab_manager_inspection_mobile_1.webp"
+      },
+      {
+        "title":"Lab Manager Inspection Mobile 2",
+        "category":"Meta",
+        "image":"lab_manager_inspection_mobile_2_thumbnail.webp",
+        "url":"images/portfolio/lab_manager_inspection_mobile_2.webp"
+      },
+      {
+        "title":"Lab Manager Inspection Mobile 3",
+        "category":"Meta",
+        "image":"lab_manager_inspection_mobile_3_thumbnail.webp",
+        "url":"images/portfolio/lab_manager_inspection_mobile_3.webp"
+      },
+      {
+        "title":"Lab Manager Inspection Mobile 4",
+        "category":"Meta",
+        "image":"lab_manager_inspection_mobile_4_thumbnail.webp",
+        "url":"images/portfolio/lab_manager_inspection_mobile_4.webp"
+      },
+      {
+        "title":"Lab Manager Inspection Mobile 5",
+        "category":"Meta",
+        "image":"lab_manager_inspection_mobile_5_thumbnail.webp",
+        "url":"images/portfolio/lab_manager_inspection_mobile_5.webp"
+      },
+      {
+        "title":"Lab Manager Inspection Mobile 6",
+        "category":"Meta",
+        "image":"lab_manager_inspection_mobile_6_thumbnail.webp",
+        "url":"images/portfolio/lab_manager_inspection_mobile_6.webp"
+      },
+      {
+        "title":"Lab Manager Inspection Desktop 1",
+        "category":"Meta",
+        "image":"lab_manager_inspection_desktop_1_thumbnail.webp",
+        "url":"images/portfolio/lab_manager_inspection_desktop_1.webp"
+      },
+      {
+        "title":"Lab Manager Inspection Desktop 2",
+        "category":"Meta",
+        "image":"lab_manager_inspection_desktop_2_thumbnail.webp",
+        "url":"images/portfolio/lab_manager_inspection_desktop_2.webp"
+      },
+      {
+        "title":"Emergency Action Plan 1",
+        "category":"Meta",
+        "image":"emergency_action_plan_1_thumbnail.webp",
+        "url":"images/portfolio/emergency_action_plan_1.webp"
+      },
+      {
+        "title":"Emergency Action Plan 2",
+        "category":"Meta",
+        "image":"emergency_action_plan_2_thumbnail.webp",
+        "url":"images/portfolio/emergency_action_plan_2.webp"
+      },
+      {
+        "title":"Emergency Action Plan 3",
+        "category":"Meta",
+        "image":"emergency_action_plan_3_thumbnail.webp",
+        "url":"images/portfolio/emergency_action_plan_3.webp"
+      },
+      {
         "title":"Stackline",
         "category":"Chart and Table",
         "image":"stackline.webp",
