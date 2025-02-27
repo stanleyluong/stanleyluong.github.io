@@ -1,61 +1,68 @@
-import React, { Component } from 'react';
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import ReactGA from 'react-ga';
-import $ from 'jquery';
-import './App.css';
-import Header from './Components/Header';
-import Footer from './Components/Footer';
+
+// Components
+import Navbar from './Components/Navbar';
+import Hero from './Components/Hero';
 import About from './Components/About';
-import Resume from './Components/Resume';
-// import Contact from './Components/Contact';
-// import Testimonials from './Components/Testimonials';
-import Portfolio from './Components/Portfolio';
+import Experience from './Components/Experience';
+import Skills from './Components/Skills'; 
+import Projects from './Components/Projects';
+import Certificates from './Components/Certificates';
+import Contact from './Components/Contact';
+import Footer from './Components/Footer';
 
-class App extends Component {
+function App() {
+  const [resumeData, setResumeData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  constructor(props){
-    super(props);
-    this.state = {
-      foo: 'bar',
-      resumeData: {}
-    };
-
+  useEffect(() => {
+    // Initialize Google Analytics
     ReactGA.initialize('UA-110570651-1');
     ReactGA.pageview(window.location.pathname);
+    
+    // Fetch resume data
+    fetch('/resumeData.json')
+      .then(response => response.json())
+      .then(data => {
+        setResumeData(data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching resume data:', error);
+        setLoading(false);
+      });
+  }, []);
 
-  }
-
-  getResumeData(){
-    $.ajax({
-      url:'/resumeData.json',
-      dataType:'json',
-      cache: false,
-      success: function(data){
-        this.setState({resumeData: data});
-      }.bind(this),
-      error: function(xhr, status, err){
-        console.log(err);
-        alert(err);
-      }
-    });
-  }
-
-  componentDidMount(){
-    this.getResumeData();
-  }
-
-  render() {
+  if (loading) {
     return (
-      <div className="App">
-        <Header data={this.state.resumeData.main}/>
-        <About data={this.state.resumeData.main}/>
-        <Portfolio data={this.state.resumeData.portfolio}/>
-        <Resume data={this.state.resumeData.resume}/>
-        {/* <Testimonials data={this.state.resumeData.testimonials}/> */}
-        {/* <Contact data={this.state.resumeData.main}/> */}
-        <Footer data={this.state.resumeData.main}/>
+      <div className="flex items-center justify-center h-screen bg-darkBlue">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-green"></div>
       </div>
     );
   }
+
+  return (
+    <div className="bg-darkBlue text-lightSlate">
+      <Navbar data={resumeData?.main} />
+      
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Hero data={resumeData?.main} />
+        <About data={resumeData?.main} />
+        <Experience data={resumeData?.resume} />
+        <Skills data={resumeData?.resume} />
+        <Projects data={resumeData?.portfolio} />
+        <Certificates data={resumeData?.resume} />
+        <Contact data={resumeData?.main} />
+        <Footer data={resumeData?.main} />
+      </motion.div>
+    </div>
+  );
 }
 
 export default App;

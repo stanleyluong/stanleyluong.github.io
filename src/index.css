@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-darkBlue text-lightSlate font-sans;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-lightestSlate font-semibold;
+  }
+
+  h1 {
+    @apply text-5xl md:text-6xl;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+
+  p {
+    @apply text-base md:text-lg;
+  }
+
+  a {
+    @apply text-green transition-all duration-300 hover:text-white;
+  }
+
+  section {
+    @apply py-24 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto;
+  }
+}
+
+@layer components {
+  .nav-link {
+    @apply py-2 px-3 text-lightSlate hover:text-green transition-all duration-300;
+  }
+
+  .btn-primary {
+    @apply px-6 py-3 text-sm font-medium rounded border border-green text-green 
+      hover:bg-green hover:bg-opacity-10 transition-all duration-300;
+  }
+
+  .section-heading {
+    @apply flex items-center w-full mb-10 whitespace-nowrap;
+  }
+
+  .section-heading::after {
+    content: "";
+    @apply ml-5 h-px w-full bg-lightBlue;
+  }
+
+  .card {
+    @apply bg-lightBlue p-6 rounded-lg hover:shadow-lg transition-all duration-300;
+  }
+
+  .social-icon {
+    @apply text-lightSlate hover:text-green transition-colors duration-300;
+  }
+}
+
+/* Animations */
+.fade-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 500ms, transform 500ms;
+}
+
+.fade-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 500ms, transform 500ms;
+}
