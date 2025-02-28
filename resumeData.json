@@ -309,7 +309,7 @@
     "skills":[
       {
         "name":"AWS",
-        "level":"50%"
+        "level":"75%"
       },
       {
         "name":"TypeScript",
@@ -346,11 +346,45 @@
       {
         "name":"Angular",
         "level":"70%"
+      },
+      {
+        "name":"PHP/Hack",
+        "level":"80%"
+      },
+      {
+        "name":"GCP",
+        "level":"75%"
+      },
+      {
+        "name":"Mercurial",
+        "level":"80%"
+      },
+      {
+        "name":"CI/CD",
+        "level":"75%"
+      },
+      {
+        "name":"GraphQL",
+        "level":"85%"
+      },
+      {
+        "name":"SQL/MySQL",
+        "level":"85%"
+      },
+      {
+        "name":"Docker",
+        "level":"70%"
       }
     ]
   },
   "portfolio":{
     "projects": [
+      {
+        "title":"SvelteTube",
+        "category":"Svelte YouTube Clone",
+        "image":"sveltetube.webp",
+        "url":"https://stanleyluong.github.io/SvelteTube"
+      },
       {
         "title":"Safety Poster 1",
         "category":"Meta",
@@ -484,7 +518,13 @@
         "url":"https://bookapp-stanleyluong.herokuapp.com/"
       },
       {
-        "title":"SET",
+        "title":"SET v3",
+        "category":"My favorite card game",
+        "image":"set_v3.webp",
+        "url":"https://stanleyluong.github.io/SETv3/"
+      },
+      {
+        "title":"SET v2",
         "category":"My favorite card game",
         "image":"set.webp",
         "url":"https://stanleyluong.github.io/SETv2/"
