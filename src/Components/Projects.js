@@ -99,13 +99,15 @@ const Projects = ({ data }) => {
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <button 
-                      onClick={() => openModal(project)}
-                      className="bg-green text-darkBlue rounded-full p-3 mx-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300"
-                      aria-label="View Details"
-                    >
-                      <FontAwesomeIcon icon={faSearch} className="h-4 w-4" />
-                    </button>
+                    {project.url.startsWith('images/') && (
+                      <button 
+                        onClick={() => openModal(project)}
+                        className="bg-green text-darkBlue rounded-full p-3 mx-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300"
+                        aria-label="View Details"
+                      >
+                        <FontAwesomeIcon icon={faSearch} className="h-4 w-4" />
+                      </button>
+                    )}
                     <a 
                       href={project.url} 
                       target="_blank" 

@@ -15,19 +15,19 @@ const Skills = ({ data }) => {
     {
       title: "Frontend",
       skills: data.skills.filter(skill => 
-        ["JavaScript", "React", "HTML5", "CSS", "TypeScript", "Angular"].includes(skill.name)
+        ["JavaScript", "React", "HTML5", "CSS", "TypeScript", "Angular", "GraphQL"].includes(skill.name)
       )
     },
     {
       title: "Backend",
       skills: data.skills.filter(skill => 
-        ["Node.js", "Python", "AWS"].includes(skill.name)
+        ["Node.js", "Python", "AWS", "GCP", "PHP/Hack", "SQL/MySQL"].includes(skill.name)
       )
     },
     {
-      title: "Tools & Others",
+      title: "Tools & DevOps",
       skills: data.skills.filter(skill => 
-        ["Git"].includes(skill.name)
+        ["Git", "Mercurial", "CI/CD", "Docker"].includes(skill.name)
       )
     }
   ];
