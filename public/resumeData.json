@@ -1,0 +1,698 @@
+{ 
+  "main": {
+    "name":"Stanley Luong",
+    "occupation":"[softwareEngineer, webDeveloper, dataScientist, cloudArchitect]",
+    "description":"Hello World",
+    "image":"profilepic.webp",
+    "bio":"Software engineer adept in bringing forth expertise in design, installation, testing, and maintenance of software systems. Equipped with a diverse and promising skill-set. Proficient in various platforms and languages. Experienced with the latest cutting-edge development tools and procedures.  Able to effectively self-manage during independent projects, as well as collaborate as part of a productive team.",
+    "contactmessage":"Contact me",
+    "email": "hello@stanleyluong.com",
+    "phone": "",
+    "address":{
+      "street":"",
+      "city":"Seattle",
+      "state":"Washington",
+      "zip": ""
+    },
+    "website": "https://stanleyluong.github.io/",
+    "resumedownload":"https://drive.google.com/uc?export=download&id=1O_ZTRiNbFqD41JHI_z6oP3ee7qY_cvQB",
+    "social":[
+      {
+        "name":"linkedin",
+        "url":"https://www.linkedin.com/in/stanley-luong/",
+        "className":"fa fa-linkedin"
+      },
+      {
+        "name":"github",
+        "url":"https://github.com/stanleyluong",
+        "className":"fa fa-github"
+      }
+    ]
+  },
+  "resume":{
+    "skillmessage":"",
+    "education":[
+      {
+        "school":"AWS",
+        "degree":"Certificate",
+        "graduated":"In Progress",
+        "description":"Solutions Architect Associate"
+      },
+      {
+        "school":"AWS",
+        "degree":"Certificate",
+        "graduated":"2021",
+        "description":"Certified Cloud Practitioner"
+      },
+      {
+        "school":"Codecademy",
+        "degree":"Certificate",
+        "graduated":"2024",
+        "description":"Web Development"
+      },
+      {
+        "school":"Flatiron School",
+        "degree":"Certificate",
+        "graduated":"2019",
+        "description":"Software Engineering"
+      },
+      {
+        "school":"Google Coursera",
+        "degree":"Certificate",
+        "graduated":"2018",
+        "description":"IT Support Professional"
+      },
+      {
+        "school":"University of Washington",
+        "degree":"Degree",
+        "graduated":"2015",
+        "description":"Bachelor of Arts in Film"
+      }
+    ],
+    "certificates": [
+      { 
+        "school": "AWS",
+        "course": "Certified Cloud Practitioner",
+        "image": "./images/certificates/aws_ccp.webp"
+      },
+      {
+        "school": "Flatiron School",
+        "course": "Software Engineering",
+        "image": "./images/certificates/flatiron_softwareengineering.webp"
+      },
+      {
+        "school": "Codecademy",
+        "course": "Pass the Technical Interview with Python Skill Path",
+        "image": "./images/certificates/codecademy_pass_the_technical_interview_with_python.webp"
+      },
+      {
+        "school": "Codecademy",
+        "course": "Web Development Skill Path",
+        "image": "./images/certificates/codecademy_webdevelopmentskillpath.webp"
+      },
+      {
+        "school": "Codecademy",
+        "course": "Building Interactive JavaScript Websites",
+        "image": "./images/certificates/codecademy_javascript.webp"
+      },
+      {
+        "school": "Codecademy",
+        "course": "Learn the Command Line",
+        "image": "./images/certificates/codecademy_cli.webp"
+      },
+      {
+        "school": "Codecademy",
+        "course": "Learn Git",
+        "image": "./images/certificates/codecademy_git.webp"
+      },
+      {
+        "school": "Codecademy",
+        "course": "Learn HTML",
+        "image": "./images/certificates/codecademy_html.webp"
+      },
+      {
+        "school": "Codecademy",
+        "course": "Learn Python 2",
+        "image": "./images/certificates/codecademy_python2.webp"
+      },
+      {
+        "school": "Codecademy",
+        "course": "Learn Ruby",
+        "image": "./images/certificates/codecademy_ruby.webp"
+      },
+      {
+        "school": "Codecademy",
+        "course": "Learn PHP",
+        "image": "./images/certificates/codecademy_php.webp"
+      },
+      {
+        "school": "sololearn",
+        "course": "HTML",
+        "image": "./images/certificates/sololearn_html.webp"
+      },
+      {
+        "school": "sololearn",
+        "course": "JavaScript",
+        "image": "./images/certificates/sololearn_javascript.webp"
+      },
+      {
+        "school": "sololearn",
+        "course": "JavaScript",
+        "image": "./images/certificates/sololearn_javascript2.webp"
+      },
+      {
+        "school": "sololearn",
+        "course": "jQuery",
+        "image": "./images/certificates/sololearn_jquery.webp"
+      },
+      {
+        "school": "sololearn",
+        "course": "Intro to Python",
+        "image": "./images/certificates/sololearn_intro_to_python.jpg"
+      },
+      {
+        "school": "sololearn",
+        "course": "Python Core",
+        "image": "./images/certificates/sololearn_python_core.webp"
+      },
+      {
+        "school": "sololearn",
+        "course": "Python Core",
+        "image": "./images/certificates/sololearn_python_core_2.webp"
+      },
+      {
+        "school": "sololearn",
+        "course": "PHP",
+        "image": "./images/certificates/sololearn_php.webp"
+      },
+      {
+        "school": "sololearn",
+        "course": "SQL",
+        "image": "./images/certificates/sololearn_sql.webp"
+      },
+      {
+        "school": "sololearn",
+        "course": "SQL",
+        "image": "./images/certificates/sololearn_sql2.webp"
+      },
+      {
+        "school": "sololearn",
+        "course": "React-Redux",
+        "image": "./images/certificates/sololearn_react-redux.webp"
+      },
+      {
+        "school": "Google Coursera",
+        "course": "Google IT Support",
+        "image": "./images/certificates/google_itsupport.webp"
+      },
+      {
+        "school": "Google Coursera",
+        "course": "Tech Support Fundamentals",
+        "image": "./images/certificates/google_techsupport.webp"
+      },
+      {
+        "school": "Google Coursera",
+        "course": "The Bits and Bytes of Computer Networking",
+        "image": "./images/certificates/google_networking.webp"
+      },
+      {
+        "school": "Google Coursera",
+        "course": "System Administration and IT Infrastructure Services",
+        "image": "./images/certificates/google_sysadmin.webp"
+      },
+      {
+        "school": "Google Coursera",
+        "course": "Operating Systems and You: Becoming a Power User",
+        "image": "./images/certificates/google_operatingsystems.webp"
+      },
+      {
+        "school": "Google Coursera",
+        "course": "IT Security: Defense Against the Digital Dark Arts",
+        "image": "./images/certificates/google_itsecurity.webp"
+      }
+    ],
+    "work":[
+      {
+        "company":"Meta",
+        "title":"Software Engineer",
+        "years":"September 2022 - Present",
+        "description":[
+          "Created multiple full-stack internal applications using PHP, Hack, JavaScript, TypeScript, React, HTML, XML, CSS, MySQL, XDB, GraphQL, Microsoft Graph, Python, Pandas, XDS Components, Manifold, and internal frameworks such as Ent and CRUD for Meta's Reality Labs - Environmental Health & Safety - Analytics & Engineering Solutions team (RL EHS AES).",
+          "Projects include RL AES halbot, Safety Posters, Laser Safety, Emergency Action Plans, Machine Tool Posters, and Lab Manager Inspections for the EHS Tooling Center."
+        ]
+      },
+      {
+        "company":"Nike",
+        "title":"Senior Software Engineer II",
+        "years":"March 2022 - September 2022",
+        "description":[
+          "Automated web performance testing and synthetic monitoring with Python",
+          "Extracted, transformed, and loaded (ETL) data with Python and pandas",
+          "Developed frontend and visualized data with React",
+          "Reduced the cost of monthly runs by over 80% by discovering the point of diminishing returns for accurate measurements",
+          "Presented analytics, data, and discoveries to management and engineering team",
+          "Refactored existing code following industry standard conventions",
+          "Wrote documentation, readmes, and created workflow diagrams for future engineers"
+        ]
+      },
+      {
+        "company":"Crystal Commerce",
+        "title":"Software Engineer",
+        "years":"January 2020 - July 2022",
+        "description":[
+          "Saved the company thousands of hours of manual work through automation by leveraging Deep AI machine learning vision API to detect the visual differences between Magic the Gathering cards from differing sets",
+          "Developed a Node.js script to populate SQL database with correct card metadata based on visual differences using the machine learning vision API", 
+          "Automated AWS resource provisioning using AWS CLI for hundreds of client e-commerce websites saving the development team hundreds of hours of manual work per year", 
+          "Supported the hobby shop e-commerce solution line of business through world class customer service"
+        ]
+      },
+      {
+        "company":"Democracy Live",
+        "title":"Full-stack Developer",
+        "years":"December 2021 - March 2022",
+        "description":[
+          "Completed responsive Angular front end project from start to finish for election ballot verification software",
+          "Implemented ngrx for app-wide state management",
+          "Customized pipe for language translation feature",
+          "Validated forms with ReactiveFormsModule",
+          "Routed with AppRoutingModule",
+          "Handled Http requests with HttpClientModule"
+        ]
+      },
+      {
+        "company":"Flex Fantasy",
+        "title":"Front-end Engineer",
+        "years":"April 2021 - October 2021",
+        "description":[
+          "Created and implemented elements that users see and interact with within a web application",
+          "Standardized output with responsive approach and strategy",
+          "Collaborated with team members to implement developments"
+        ]
+      },
+      {
+        "company":"Forsla",
+        "title":"Front-end Developer",
+        "years":"December 2019 - January 2020",
+        "description":[
+          "Focused on user experience and designed responsive web based user-friendly interfaces.",
+          "Troubleshot known issues and upgraded frontend features."
+        ]
+      },
+      {
+        "company":"Freelance",
+        "title":"Coding Tutor",
+        "years":"August 2019 - November 2019",
+        "description":[
+          "Taught clients programming fundamentals and advised clients based on their needs",
+          "Coached clients through project & conducted code reviews"
+        ]
+      },
+      {
+        "company":"Time Mage",
+        "title":"Application Tester",
+        "years":"May 2019 - July 2019",
+        "description":[
+          "Testing and sending feedback on a time tracking app for an independent application developer",
+          "Worked well independently and on a team to solve problems."
+        ]
+      },
+      {
+        "company":"Amazon",
+        "title":"Data Specialist",
+        "years":"July 2018 - April 2019",
+        "description":[
+          "Preprocessing, analyzing, and annotating visual data for Amazon Halo (Project Kilo).", 
+          "Maintained confidentiality, trained hirees, and collaborated with peers to achieve performance goals."
+        ]
+      }
+    ],
+    "skills":[
+      {
+        "name":"AWS",
+        "level":"75%"
+      },
+      {
+        "name":"TypeScript",
+        "level":"90%"
+      },
+      {
+        "name":"Python",
+        "level":"90%"
+      },
+      {
+        "name":"Git",
+        "level":"90%"
+      },
+      {
+        "name":"HTML5",
+        "level":"95%"
+      },
+      {
+        "name":"JavaScript",
+        "level":"95%"
+      },
+      {
+        "name":"React",
+        "level":"95%"
+      },
+      {
+        "name":"Svelte",
+        "level":"50%"
+      },
+      {
+        "name":"CSS",
+        "level":"85%"
+      },
+      {
+        "name":"Node.js",
+        "level":"75%"
+      },
+      {
+        "name":"Angular",
+        "level":"70%"
+      },
+      {
+        "name":"PHP/Hack",
+        "level":"80%"
+      },
+      {
+        "name":"GCP",
+        "level":"75%"
+      },
+      {
+        "name":"Firebase",
+        "level":"80%"
+      },
+      {
+        "name":"MongoDB",
+        "level":"80%"
+      },
+      {
+        "name":"Vercel",
+        "level":"80%"
+      },
+      {
+        "name":"Mercurial",
+        "level":"80%"
+      },
+      {
+        "name":"CI/CD",
+        "level":"75%"
+      },
+      {
+        "name":"GraphQL",
+        "level":"85%"
+      },
+      {
+        "name":"SQL/MySQL",
+        "level":"85%"
+      },
+      {
+        "name":"Docker",
+        "level":"70%"
+      }
+    ]
+  },
+  "portfolio":{
+    "projects": [
+      {
+        "title":"TaskApp",
+        "category":"Task Management App",
+        "image":"taskapp_dashboard.webp",
+        "url":"https://taskapp.stanleyluong.com",
+        "images": [
+          "taskapp_dashboard.webp",
+          "taskapp_tasks.webp",
+          "taskapp_categories.webp",
+          "taskapp_signin.webp",
+          "taskapp_register.webp"
+        ]
+      },
+      {
+        "title":"SvelteTube",
+        "category":"Svelte YouTube Clone",
+        "image":"sveltetube.webp",
+        "url":"https://stanleyluong.github.io/SvelteTube"
+      },
+      {
+        "title":"Safety Poster 1",
+        "category":"Meta",
+        "image":"safety_poster_1_thumbnail.webp",
+        "url":"images/portfolio/safety_poster_1.webp"
+      },
+      {
+        "title":"Machine Tool Poster 1",
+        "category":"Meta",
+        "image":"machine_tool_poster_1_thumbnail.webp",
+        "url":"images/portfolio/machine_tool_poster_1.webp"
+      },
+      {
+        "title":"Machine Tool Poster 2",
+        "category":"Meta",
+        "image":"machine_tool_poster_2_thumbnail.webp",
+        "url":"images/portfolio/machine_tool_poster_2.webp"
+      },
+      {
+        "title":"Laser Safety 1",
+        "category":"Meta",
+        "image":"laser_safety_1_thumbnail.webp",
+        "url":"images/portfolio/laser_safety_1.webp"
+      },
+      {
+        "title":"Laser Safety 2",
+        "category":"Meta",
+        "image":"laser_safety_2_thumbnail.webp",
+        "url":"images/portfolio/laser_safety_2.webp"
+      },
+      {
+        "title":"Lab Manager Inspection Mobile 1",
+        "category":"Meta",
+        "image":"lab_manager_inspection_mobile_1_thumbnail.webp",
+        "url":"images/portfolio/lab_manager_inspection_mobile_1.webp"
+      },
+      {
+        "title":"Lab Manager Inspection Mobile 2",
+        "category":"Meta",
+        "image":"lab_manager_inspection_mobile_2_thumbnail.webp",
+        "url":"images/portfolio/lab_manager_inspection_mobile_2.webp"
+      },
+      {
+        "title":"Lab Manager Inspection Mobile 3",
+        "category":"Meta",
+        "image":"lab_manager_inspection_mobile_3_thumbnail.webp",
+        "url":"images/portfolio/lab_manager_inspection_mobile_3.webp"
+      },
+      {
+        "title":"Lab Manager Inspection Mobile 4",
+        "category":"Meta",
+        "image":"lab_manager_inspection_mobile_4_thumbnail.webp",
+        "url":"images/portfolio/lab_manager_inspection_mobile_4.webp"
+      },
+      {
+        "title":"Lab Manager Inspection Mobile 5",
+        "category":"Meta",
+        "image":"lab_manager_inspection_mobile_5_thumbnail.webp",
+        "url":"images/portfolio/lab_manager_inspection_mobile_5.webp"
+      },
+      {
+        "title":"Lab Manager Inspection Mobile 6",
+        "category":"Meta",
+        "image":"lab_manager_inspection_mobile_6_thumbnail.webp",
+        "url":"images/portfolio/lab_manager_inspection_mobile_6.webp"
+      },
+      {
+        "title":"Lab Manager Inspection Desktop 1",
+        "category":"Meta",
+        "image":"lab_manager_inspection_desktop_1_thumbnail.webp",
+        "url":"images/portfolio/lab_manager_inspection_desktop_1.webp"
+      },
+      {
+        "title":"Lab Manager Inspection Desktop 2",
+        "category":"Meta",
+        "image":"lab_manager_inspection_desktop_2_thumbnail.webp",
+        "url":"images/portfolio/lab_manager_inspection_desktop_2.webp"
+      },
+      {
+        "title":"Emergency Action Plan 1",
+        "category":"Meta",
+        "image":"emergency_action_plan_1_thumbnail.webp",
+        "url":"images/portfolio/emergency_action_plan_1.webp"
+      },
+      {
+        "title":"Emergency Action Plan 2",
+        "category":"Meta",
+        "image":"emergency_action_plan_2_thumbnail.webp",
+        "url":"images/portfolio/emergency_action_plan_2.webp"
+      },
+      {
+        "title":"Emergency Action Plan 3",
+        "category":"Meta",
+        "image":"emergency_action_plan_3_thumbnail.webp",
+        "url":"images/portfolio/emergency_action_plan_3.webp"
+      },
+      {
+        "title":"Stackline",
+        "category":"Chart and Table",
+        "image":"stackline.webp",
+        "url":"https://stanleyluong.github.io/stackline/"
+      },
+      {
+        "title":"Wordle",
+        "category":"Viral word game",
+        "image":"wordle.webp",
+        "url":"https://stanleyluong.github.io/wordle/"
+      },
+      {
+        "title":"TubeApp",
+        "category":"YouTube Clone",
+        "image":"tubeapp.webp",
+        "url":"https://stanleyluong.github.io/tubeapp/"
+      },
+      {
+        "title":"GameApp",
+        "category":"Browse Games",
+        "image":"gameapp.webp",
+        "url":"https://stanleyluong.github.io/GameApp/"
+      },
+      {
+        "title":"Memories",
+        "category":"My Memories",
+        "image":"memories.webp",
+        "url":"https://stanleyluong.github.io/Memories/"
+      },
+      {
+        "title":"BookApp",
+        "category":"My library",
+        "image":"bookapp.webp",
+        "url":"https://bookapp-stanleyluong.herokuapp.com/"
+      },
+      {
+        "title":"SET v3",
+        "category":"My favorite card game",
+        "image":"set_v3.webp",
+        "url":"https://stanleyluong.github.io/SETv3/"
+      },
+      {
+        "title":"SET v2",
+        "category":"My favorite card game",
+        "image":"set.webp",
+        "url":"https://stanleyluong.github.io/SETv2/"
+      },
+      {
+        "title":"ChatApp",
+        "category":"A Slack Clone",
+        "image":"chatapp.webp",
+        "url":"https://stanleyluong.github.io/ChatApp/"
+      },
+      {
+        "title":"FoodApp",
+        "category":"A Yelp clone",
+        "image":"foodapp.webp",
+        "url":"https://stanleyluong.github.io/FoodApp/"
+      },
+      {
+        "title":"MuseApp",
+        "category":"Spotify API Playlist Maker",
+        "image":"museapp.webp",
+        "url":"https://stanleyluong.github.io/MuseApp/"
+      },
+      {
+        "title":"Video Fuse",
+        "category":"Video Fusing Player",
+        "image":"video-fuse.webp",
+        "url":"https://stanleyluong.github.io/video-fuse/"
+      },
+      {
+        "title":"Snake",
+        "category":"Classic Snake Game",
+        "image":"snake.webp",
+        "url":"https://stanleyluong.github.io/snake/"
+      },
+      {
+        "title":"Film Finder",
+        "category":"Film",
+        "image":"filmfinder.webp",
+        "url":"https://stanleyluong.github.io/filmfinder/"
+      },
+      {
+        "title":"TsunamiCoffee",
+        "category":"Coffee Shop",
+        "image":"tsunamicoffee.webp",
+        "url":"https://stanleyluong.github.io/TsunamiCoffee/"
+      },
+      {
+        "title":"Broadway Design",
+        "category":"Business",
+        "image":"broadway.webp",
+        "url":"https://stanleyluong.github.io/Broadway-Design/"
+      },
+      {
+        "title":"House Store",
+        "category":"Home Improvement",
+        "image":"housestore.webp",
+        "url":"https://stanleyluong.github.io/HouseStore/"
+      },
+      {
+        "title":"Typography",
+        "category":"Font Experiments",
+        "image":"typography.webp",
+        "url":"https://stanleyluong.github.io/Typography/"
+      },
+      {
+        "title":"Aofie Conleavy",
+        "category":"Travel Blog",
+        "image":"aofie.webp",
+        "url":"https://stanleyluong.github.io/AofieConleavy/"
+      },
+      
+      {
+        "title":"Headlines",
+        "category":"News",
+        "image":"headlines.webp",
+        "url":"https://stanleyluong.github.io/Headlines/"
+      },
+      {
+        "title":"ToDoOrNotToDo",
+        "category":"To-Do List",
+        "image":"todo.webp",
+        "url":"https://stanleyluong.github.io/ToDoOrNotToDo/"
+      },
+      {
+        "title":"TheLuongExperience",
+        "category":"Development Consultation",
+        "image":"luongexperience.webp",
+        "url":"https://stanleyluong.github.io/TheLuongExperience/"
+      },
+      {
+        "title":"TeaCozy",
+        "category":"Tea Shop",
+        "image":"teacozy.webp",
+        "url":"https://stanleyluong.github.io/TeaCozy/"
+      },
+      {
+        "title":"ChoreDoor",
+        "category":"A silly game",
+        "image":"choredoor.webp",
+        "url":"https://stanleyluong.github.io/ChoreDoor/"
+      },
+      {
+        "title":"Musicon",
+        "category":"Instrument Store",
+        "image":"musicon.webp",
+        "url":"https://stanleyluong.github.io/Musicon/"
+      },
+      {
+        "title":"BanasTravelBlog",
+        "category":"Travel",
+        "image":"banastravelblog.webp",
+        "url":"https://stanleyluong.github.io/BanasTravelBlog/"
+      },
+      {
+        "title":"WebsiteStyleGuide",
+        "category":"Styles",
+        "image":"styleguide.webp",
+        "url":"https://stanleyluong.github.io/WebsiteStyleGuide/"
+      }
+    ]
+  },
+  "testimonials":{
+    "testimonials":[
+      {
+        "text":"Wonderful work.",
+        "user":"Dan McCarty, CEO of Crystal Commerce"
+      },
+        {
+        "text":"Glad he's here.",
+        "user":"Edmund Chan, Coworker"
+      },
+      {
+        "text":"So wise!",
+        "user":"Katana Tran, Former Classmate"
+      },
+      {
+        "text": "Excellent teacher.",
+        "user": "Terri Nakamura, Client"
+      }
+    ]
+  }
+}
