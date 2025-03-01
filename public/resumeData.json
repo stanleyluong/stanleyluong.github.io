@@ -336,6 +336,10 @@
         "level":"95%"
       },
       {
+        "name":"Svelte",
+        "level":"50%"
+      },
+      {
         "name":"CSS",
         "level":"85%"
       },
@@ -354,6 +358,18 @@
       {
         "name":"GCP",
         "level":"75%"
+      },
+      {
+        "name":"Firebase",
+        "level":"80%"
+      },
+      {
+        "name":"MongoDB",
+        "level":"80%"
+      },
+      {
+        "name":"Vercel",
+        "level":"80%"
       },
       {
         "name":"Mercurial",
@@ -379,6 +395,19 @@
   },
   "portfolio":{
     "projects": [
+      {
+        "title":"TaskApp",
+        "category":"Task Management App",
+        "image":"taskapp_dashboard.webp",
+        "url":"https://taskapp.stanleyluong.com",
+        "images": [
+          "taskapp_dashboard.webp",
+          "taskapp_tasks.webp",
+          "taskapp_categories.webp",
+          "taskapp_signin.webp",
+          "taskapp_register.webp"
+        ]
+      },
       {
         "title":"SvelteTube",
         "category":"Svelte YouTube Clone",

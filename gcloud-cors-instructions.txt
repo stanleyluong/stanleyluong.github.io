@@ -1,0 +1,80 @@
+# Setting up CORS with gcloud (Google Cloud CLI)
+
+## Install Google Cloud CLI
+If you don't have gcloud installed:
+- Visit: https://cloud.google.com/sdk/docs/install
+- Follow the installation instructions for your OS
+
+## Login to Google Cloud
+```
+gcloud auth login
+```
+
+## Set CORS for your Firebase Storage bucket
+1. Create the CORS configuration file:
+
+```json
+[
+  {
+    "origin": ["*"],
+    "method": ["GET", "HEAD", "PUT", "POST", "DELETE", "OPTIONS"],
+    "responseHeader": ["Content-Type", "Content-Length", "Content-Encoding", 
+                       "Content-Disposition", "Authorization", "X-Requested-With"],
+    "maxAgeSeconds": 3600
+  }
+]
+```
+
+2. Save this as cors.json
+
+3. Set the CORS configuration:
+```
+gcloud storage buckets update gs://stanleyluong-1377a.appspot.com --cors-file=cors.json
+```
+
+4. Verify the CORS configuration:
+```
+gcloud storage buckets describe gs://stanleyluong-1377a.appspot.com --format=json
+```
+
+## Alternative: Use Firebase Hosting for local development
+Using Firebase Hosting for local development can help avoid CORS issues:
+
+1. Install Firebase CLI:
+```
+npm install -g firebase-tools
+```
+
+2. Initialize Firebase in your project:
+```
+firebase init
+```
+- Select Hosting
+- Select your project
+
+3. Configure firebase.json:
+```json
+{
+  "hosting": {
+    "public": "build",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
+```
+
+4. Run the local server:
+```
+firebase serve
+```
+
+This approach helps bypass CORS issues during development.

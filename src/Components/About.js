@@ -10,7 +10,16 @@ const About = ({ data }) => {
 
   if (!data) return null;
 
-  const profilePic = '/images/' + data.image;
+  // Handle both Firebase and local image paths
+  console.log('About component - profile image data:', data.image);
+  
+  const profilePic = data.image && data.image.startsWith('http') 
+    ? data.image 
+    : data.image && data.image.startsWith('/') 
+      ? data.image 
+      : '/images/' + (data.image || 'profilepic.webp');
+  
+  console.log('About component - using profile image path:', profilePic);
   
   return (
     <section id="about" className="relative py-24">

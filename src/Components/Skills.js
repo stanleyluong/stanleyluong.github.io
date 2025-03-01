@@ -8,54 +8,50 @@ const Skills = ({ data }) => {
     triggerOnce: true
   });
   
-  if (!data || !data.skills) return null;
+  console.log("Skills data received:", data);
+  if (!data || !data.skills) {
+    console.log("No skills data found");
+    return null;
+  }
   
-  // Group skills into categories for a more organized display
-  const skillCategories = [
-    {
-      title: "Frontend",
-      skills: data.skills.filter(skill => 
-        ["JavaScript", "React", "HTML5", "CSS", "TypeScript", "Angular", "GraphQL"].includes(skill.name)
-      )
-    },
-    {
-      title: "Backend",
-      skills: data.skills.filter(skill => 
-        ["Node.js", "Python", "AWS", "GCP", "PHP/Hack", "SQL/MySQL"].includes(skill.name)
-      )
-    },
-    {
-      title: "Tools & DevOps",
-      skills: data.skills.filter(skill => 
-        ["Git", "Mercurial", "CI/CD", "Docker"].includes(skill.name)
-      )
+  // First organize by the provided category if it exists
+  let organizedCategories = {};
+  
+  data.skills.forEach(skill => {
+    // Use the category from Firebase if available
+    const category = skill.category || determineCategory(skill.name);
+    
+    if (!organizedCategories[category]) {
+      organizedCategories[category] = [];
     }
-  ];
+    
+    organizedCategories[category].push(skill);
+  });
   
-  // Filter out any empty categories
-  const filteredCategories = skillCategories.filter(category => category.skills.length > 0);
+  // Convert to array format for rendering
+  const filteredCategories = Object.keys(organizedCategories).map(category => ({
+    title: category,
+    skills: organizedCategories[category]
+  }));
   
-  // Add any uncategorized skills to the "Others" section
-  const categorizedSkillNames = skillCategories.flatMap(category => 
-    category.skills.map(skill => skill.name)
-  );
-  
-  const uncategorizedSkills = data.skills.filter(
-    skill => !categorizedSkillNames.includes(skill.name)
-  );
-  
-  if (uncategorizedSkills.length > 0) {
-    filteredCategories.push({
-      title: "Other Skills",
-      skills: uncategorizedSkills
-    });
+  // Helper function to determine category based on skill name
+  function determineCategory(skillName) {
+    const frontendSkills = ["JavaScript", "React", "HTML5", "CSS", "TypeScript", "Angular", "GraphQL", "Svelte"];
+    const backendSkills = ["Node.js", "Python", "PHP/Hack", "SQL/MySQL", "MongoDB", "Firebase"];
+    const devOpsSkills = ["Git", "Mercurial", "CI/CD", "Docker", "Vercel", "AWS", "GCP"];
+    
+    if (frontendSkills.includes(skillName)) return "Frontend";
+    if (backendSkills.includes(skillName)) return "Backend";
+    if (devOpsSkills.includes(skillName)) return "Tools & DevOps";
+    
+    return "Other Skills";
   }
 
   return (
     <section id="skills" className="relative py-24">
       <motion.div
         ref={ref}
-        className="max-w-6xl mx-auto px-6 md:px-12"
+        className="max-w-7xl mx-auto px-6 md:px-12"
       >
         <motion.h2 
           variants={fadeIn('', '', 0.1, 1)}

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import ReactGA from 'react-ga';
+import useFirebaseData from './hooks/useFirebaseData';
 
 // Components
 import Navbar from './Components/Navbar';
@@ -12,27 +13,58 @@ import Projects from './Components/Projects';
 import Certificates from './Components/Certificates';
 import Contact from './Components/Contact';
 import Footer from './Components/Footer';
+import DataSourceIndicator from './Components/DataSourceIndicator';
 
 function App() {
+  const { data: firebaseData, loading: firebaseLoading, error: firebaseError } = useFirebaseData();
+  const [jsonData, setJsonData] = useState(null);
+  const [jsonLoading, setJsonLoading] = useState(true);
   const [resumeData, setResumeData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [dataSource, setDataSource] = useState('json');
+
+  // Fetch JSON data as fallback
+  useEffect(() => {
+    fetch('/resumeData.json')
+      .then(response => response.json())
+      .then(data => {
+        setJsonData(data);
+        setJsonLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching JSON data:', error);
+        setJsonLoading(false);
+      });
+  }, []);
+
+  // Determine which data to use (Firebase or JSON)
+  useEffect(() => {
+    // Wait for both data sources to resolve
+    if (!firebaseLoading && !jsonLoading) {
+      // If Firebase data is available and valid, use it
+      if (firebaseData && 
+          (firebaseData.main || 
+           firebaseData.resume || 
+           firebaseData.portfolio)) {
+        console.log('Using Firebase data:', firebaseData);
+        setResumeData(firebaseData);
+        setDataSource('firebase');
+      }
+      // Otherwise fall back to JSON data
+      else if (jsonData) {
+        console.log('Using JSON data:', jsonData);
+        setResumeData(jsonData);
+        setDataSource('json');
+      }
+      // Data is ready (from whichever source)
+      setLoading(false);
+    }
+  }, [firebaseData, firebaseLoading, jsonData, jsonLoading]);
 
   useEffect(() => {
     // Initialize Google Analytics
     ReactGA.initialize('UA-110570651-1');
     ReactGA.pageview(window.location.pathname);
-    
-    // Fetch resume data
-    fetch('/resumeData.json')
-      .then(response => response.json())
-      .then(data => {
-        setResumeData(data);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error('Error fetching resume data:', error);
-        setLoading(false);
-      });
   }, []);
 
   if (loading) {
@@ -61,6 +93,9 @@ function App() {
         <Contact data={resumeData?.main} />
         <Footer data={resumeData?.main} />
       </motion.div>
+      
+      {/* Debug indicator to show data source and allow toggling */}
+      <DataSourceIndicator dataSource={dataSource} />
     </div>
   );
 }

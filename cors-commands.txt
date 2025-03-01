@@ -1,0 +1,20 @@
+Firebase Storage CORS Configuration Commands
+
+The correct bucket for your Firebase project is:
+gs://stanleyluong-1377a.firebasestorage.app
+
+To set CORS configuration, run:
+gcloud storage buckets update gs://stanleyluong-1377a.firebasestorage.app --cors-file=cors.json
+
+To check current CORS configuration:
+gcloud storage buckets describe gs://stanleyluong-1377a.firebasestorage.app --format=json
+
+Alternative approach via Firebase Console:
+1. Go to https://console.cloud.google.com/storage/browser/stanleyluong-1377a.firebasestorage.app
+2. Select your bucket
+3. Go to the "CORS" tab
+4. Add a new CORS configuration with:
+   - Origin: *
+   - Method: GET, HEAD, PUT, POST, DELETE, OPTIONS
+   - Response headers: Content-Type, Content-Length, Content-Encoding, Content-Disposition, Authorization, X-Requested-With
+   - Max age: 3600

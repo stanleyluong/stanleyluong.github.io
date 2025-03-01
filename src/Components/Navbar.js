@@ -66,7 +66,7 @@ const Navbar = ({ data }) => {
                   smooth={true}
                   offset={-70}
                   duration={500}
-                  className="nav-link cursor-pointer font-mono text-sm"
+                  className="nav-link cursor-pointer font-mono text-base"
                 >
                   <span className="text-green mr-1">{index + 1}.</span> {item.name}
                 </Link>
@@ -79,7 +79,7 @@ const Navbar = ({ data }) => {
               href={resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary ml-4 font-mono text-sm"
+              className="btn-primary ml-4 font-mono text-base"
             >
               Resume
             </a>
@@ -115,7 +115,7 @@ const Navbar = ({ data }) => {
                   smooth={true}
                   offset={-70}
                   duration={500}
-                  className="nav-link text-xl font-mono"
+                  className="nav-link text-2xl font-mono"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   <span className="text-green mr-2">{index + 1}.</span> {item.name}

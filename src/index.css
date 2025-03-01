@@ -5,6 +5,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    font-size: 18px; /* Increase base font size from default 16px to 18px */
   }
   
   body {
@@ -12,10 +13,12 @@
     margin: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6; /* Improved line height for better readability */
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply text-lightestSlate font-semibold;
+    line-height: 1.3; /* Tighter line height for headings */
   }
 
   h1 {
@@ -23,15 +26,19 @@
   }
 
   h2 {
-    @apply text-3xl md:text-4xl;
+    @apply text-3xl md:text-5xl; /* Increased from text-4xl to text-5xl */
   }
 
   h3 {
-    @apply text-2xl md:text-3xl;
+    @apply text-2xl md:text-4xl; /* Increased from text-3xl to text-4xl */
+  }
+
+  h4 {
+    @apply text-xl md:text-2xl; /* Added h4 styling */
   }
 
   p {
-    @apply text-base md:text-lg;
+    @apply text-lg md:text-xl; /* Increased from text-base/text-lg to text-lg/text-xl */
   }
 
   a {
@@ -45,16 +52,16 @@
 
 @layer components {
   .nav-link {
-    @apply py-2 px-3 text-lightSlate hover:text-green transition-all duration-300;
+    @apply py-2 px-4 text-base text-lightSlate hover:text-green transition-all duration-300;
   }
 
   .btn-primary {
-    @apply px-6 py-3 text-sm font-medium rounded border border-green text-green 
+    @apply px-7 py-3 text-base font-medium rounded border border-green text-green 
       hover:bg-green hover:bg-opacity-10 transition-all duration-300;
   }
 
   .section-heading {
-    @apply flex items-center w-full mb-10 whitespace-nowrap;
+    @apply flex items-center w-full mb-12 whitespace-nowrap;
   }
 
   .section-heading::after {
@@ -67,7 +74,7 @@
   }
 
   .social-icon {
-    @apply text-lightSlate hover:text-green transition-colors duration-300;
+    @apply text-xl text-lightSlate hover:text-green transition-colors duration-300;
   }
 }
 
