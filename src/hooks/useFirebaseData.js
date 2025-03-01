@@ -42,6 +42,8 @@ export const useFirebaseData = () => {
 
       try {
         console.log('Attempting to fetch data from Firebase...');
+        
+        // Remove the unused timeout promise that's causing errors
         const result = {};
 
         // Fetch main profile data
@@ -174,13 +176,39 @@ export const useFirebaseData = () => {
         }
       } catch (err) {
         console.error('Error fetching data from Firebase:', err);
+        // Log specific Firebase error info
+        if (err.code) {
+          console.error(`Firebase error code: ${err.code}`);
+        }
         setError(err);
+        
+        // Force fallback to JSON data by ensuring loading is complete
+        console.log('Falling back to local JSON data due to Firebase error');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
+    // Add a fallback timeout in case Firebase operations hang
+    // Ensure we don't have a race condition with the loading state
+    let isMounted = true;
+    const timeoutId = setTimeout(() => {
+      if (isMounted && loading) {  // Only set if component is mounted and still loading
+        console.log('Firebase data fetch timeout - forcing fallback to JSON data');
+        setLoading(false);
+      }
+    }, 8000);  // Reduced timeout to ensure it happens before App.js timeout
+
+    fetchData().finally(() => {
+      // Clear timeout to prevent memory leaks
+      clearTimeout(timeoutId);
+    });
+    
+    // Cleanup on unmount
+    return () => {
+      isMounted = false;
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   return { data, loading, error };

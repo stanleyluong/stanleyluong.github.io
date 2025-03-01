@@ -59,7 +59,20 @@ function App() {
       // Data is ready (from whichever source)
       setLoading(false);
     }
-  }, [firebaseData, firebaseLoading, jsonData, jsonLoading]);
+    
+    // If Firebase takes too long, proceed with JSON data
+    // This serves as a backup to the timeout in useFirebaseData
+    const timeoutId = setTimeout(() => {
+      if (loading && jsonData && !jsonLoading) {
+        console.log('Using JSON data due to Firebase timeout');
+        setResumeData(jsonData);
+        setDataSource('json');
+        setLoading(false);
+      }
+    }, 12000);
+    
+    return () => clearTimeout(timeoutId);
+  }, [firebaseData, firebaseLoading, jsonData, jsonLoading, loading]);
 
   useEffect(() => {
     // Initialize Google Analytics
