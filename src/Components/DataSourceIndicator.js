@@ -17,11 +17,18 @@ const DataSourceIndicator = ({ dataSource }) => {
     setUseLocalDataOnly(!isLocalData);
   };
 
+  // Show a more visible indicator in production when using JSON data
+  const isProduction = window.location.hostname !== 'localhost' && 
+                      window.location.hostname !== '127.0.0.1';
+  const showProductionWarning = isProduction && dataSource === 'json';
+
   return (
     <div className="fixed bottom-5 right-5 z-50">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-lightBlue bg-opacity-80 text-white p-2 rounded-full shadow-lg hover:bg-opacity-100"
+        className={`${dataSource === 'firebase' ? 'bg-lightBlue' : 'bg-amber-500'} 
+                   bg-opacity-90 text-white p-2 rounded-full shadow-lg hover:bg-opacity-100
+                   ${showProductionWarning ? 'animate-pulse' : ''}`}
         title="Data Source Info"
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -30,13 +37,21 @@ const DataSourceIndicator = ({ dataSource }) => {
       </button>
       
       {isOpen && (
-        <div className="absolute bottom-12 right-0 bg-darkBlue bg-opacity-95 text-white p-4 rounded-lg shadow-xl w-64">
+        <div className="absolute bottom-12 right-0 bg-darkBlue bg-opacity-95 text-white p-4 rounded-lg shadow-xl w-72">
           <h3 className="text-lg font-semibold mb-2">Data Source</h3>
-          <p className="mb-3 text-sm">
-            Currently using: <span className="font-bold text-green">
+          <p className="mb-2 text-sm">
+            Currently using: <span className={`font-bold ${dataSource === 'firebase' ? 'text-green' : 'text-amber-500'}`}>
               {dataSource === 'firebase' ? 'Firebase' : 'Local JSON'}
             </span>
           </p>
+          
+          {showProductionWarning && (
+            <div className="mb-3 p-2 bg-amber-500 bg-opacity-20 border border-amber-500 rounded text-xs">
+              <p className="font-semibold">Note: Using local data in production</p>
+              <p>Firebase connection failed or timed out.</p>
+            </div>
+          )}
+          
           <button
             onClick={toggleLocalData}
             className="w-full py-2 px-3 bg-green text-darkBlue rounded hover:bg-opacity-80 text-sm"

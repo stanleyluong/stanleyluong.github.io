@@ -40,11 +40,55 @@ try {
   localStorage.removeItem('firebase_config');
 }
 
-// Initialize Firebase
-const app = initializeApp(configToUse);
-const db = getFirestore(app);
-const storage = getStorage(app);
-const auth = getAuth(app);
+// Initialize Firebase with some safety checks first
+let app;
+try {
+  // Check if we have the minimum required configuration
+  if (!configToUse.apiKey || configToUse.apiKey === "YOUR_API_KEY" || 
+      !configToUse.projectId || configToUse.projectId === "YOUR_PROJECT_ID") {
+    console.warn('Firebase config is missing required fields or using placeholder values');
+    throw new Error('Invalid Firebase configuration');
+  }
+  
+  // Try to initialize the app
+  app = initializeApp(configToUse);
+  console.log('Firebase app initialized successfully with project:', configToUse.projectId);
+} catch (error) {
+  console.error('Failed to initialize Firebase app:', error);
+  // Create a dummy app to prevent crashes
+  app = { name: 'dummy-app-placeholder' };
+}
+
+// Initialize services with additional error handling
+let db, storage, auth;
+
+try {
+  db = getFirestore(app);
+  console.log('Firestore initialized');
+} catch (error) {
+  console.error('Failed to initialize Firestore:', error);
+  // Create a dummy Firestore object that will fail gracefully
+  db = {
+    collection: () => ({ get: () => Promise.reject(new Error('Firestore not available')) }),
+    doc: () => ({ get: () => Promise.reject(new Error('Firestore not available')) })
+  };
+}
+
+try {
+  storage = getStorage(app);
+  console.log('Firebase Storage initialized');
+} catch (error) {
+  console.error('Failed to initialize Firebase Storage:', error);
+  storage = {};
+}
+
+try {
+  auth = getAuth(app);
+  console.log('Firebase Auth initialized');
+} catch (error) {
+  console.error('Failed to initialize Firebase Auth:', error);
+  auth = {};
+}
 
 // Connect to emulators in development environment if needed
 // Uncomment these lines to use Firebase emulators for local development
