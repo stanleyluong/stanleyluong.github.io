@@ -21,6 +21,23 @@
     <!-- Buy Me A Coffee Widget -->
     <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="stanleyluong" data-description="Support me on Buy me a coffee!" data-message="" data-color="#64ffda" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 
+    <!-- Script for GitHub Pages SPA routing -->
+    <script type="text/javascript">
+      // Single Page Apps for GitHub Pages
+      // MIT License
+      // https://github.com/rafgraph/spa-github-pages
+      (function(l) {
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location))
+    </script>
+
     <title>Stanley Luong | Software Engineer</title>
   </head>
 
