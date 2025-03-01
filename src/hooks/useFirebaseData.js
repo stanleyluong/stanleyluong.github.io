@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { db } from '../firebase/config';
-import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, query, orderBy } from 'firebase/firestore';
 
 // Global flag to disable Firebase fetching
 let useLocalDataOnly = false;
@@ -124,14 +124,41 @@ export const useFirebaseData = () => {
 
         try {
           // Fetch portfolio projects
-          const projectsSnapshot = await getDocs(collection(db, 'projects'));
-          result.portfolio = {
-            projects: projectsSnapshot.docs.map(doc => ({
-              id: doc.id,
-              ...doc.data()
-            }))
-          };
-          console.log(`Projects data: ${projectsSnapshot.docs.length} records`);
+          const projectsCollection = collection(db, 'projects');
+          const projectsSnapshot = await getDocs(projectsCollection);
+          
+          // Extract projects and sort them manually
+          const projects = projectsSnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+          }));
+          
+          // Sort projects by displayOrder if available (lowest first), 
+          // or by createdAt (newest first) as fallback
+          projects.sort((a, b) => {
+            // If both have displayOrder, use it (lowest first)
+            if (a.displayOrder !== undefined && b.displayOrder !== undefined) {
+              return a.displayOrder - b.displayOrder;
+            }
+            
+            // If only one has displayOrder, prioritize the one with displayOrder
+            if (a.displayOrder !== undefined) return -1;
+            if (b.displayOrder !== undefined) return 1;
+            
+            // Fallback to createdAt if neither has displayOrder
+            if (a.createdAt && b.createdAt) {
+              // Handle both Firestore timestamps and string timestamps
+              const timeA = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(a.createdAt || 0);
+              const timeB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(b.createdAt || 0); 
+              return timeB - timeA; // Sort descending (newest first)
+            }
+            
+            // Final fallback - keep original order
+            return 0;
+          });
+          
+          result.portfolio = { projects };
+          console.log(`Projects data: ${projects.length} records`);
         } catch (err) {
           console.error('Error fetching projects data:', err);
         }

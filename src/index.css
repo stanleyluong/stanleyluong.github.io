@@ -52,7 +52,7 @@
 
 @layer components {
   .nav-link {
-    @apply py-2 px-4 text-base text-lightSlate hover:text-green transition-all duration-300;
+    @apply py-2 px-2 text-sm text-lightSlate hover:text-green transition-all duration-300;
   }
 
   .btn-primary {

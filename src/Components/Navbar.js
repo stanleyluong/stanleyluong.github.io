@@ -55,8 +55,8 @@ const Navbar = ({ data }) => {
         </div>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center space-x-1">
-          <ul className="flex space-x-1">
+        <div className="hidden md:flex items-center">
+          <ul className="flex">
             {navItems.map((item, index) => (
               <li key={item.name}>
                 <Link
@@ -79,9 +79,9 @@ const Navbar = ({ data }) => {
               href={resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary ml-4 font-mono text-base"
+              className="btn-primary ml-2 px-4 py-2 font-mono text-sm text-center"
             >
-              Resume
+              Download Resume
             </a>
           )}
         </div>
@@ -129,9 +129,9 @@ const Navbar = ({ data }) => {
               href={resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary text-center font-mono"
+              className="btn-primary text-center font-mono px-4 py-3"
             >
-              Resume
+              Download Resume
             </a>
           )}
         </div>
