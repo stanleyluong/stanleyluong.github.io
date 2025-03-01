@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fadeIn } from '../utils/motion';
 import { useInView } from 'react-intersection-observer';
@@ -112,8 +112,7 @@ const Projects = ({ data }) => {
               return img.startsWith('/') ? img : `/images/portfolio/${img}`;
             };
             
-            // Get the main image path
-            const mainImagePath = getImagePath(projectImage);
+            // Prepare the display image
             
             return (
               <motion.div

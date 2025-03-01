@@ -16,7 +16,7 @@ import Footer from './Components/Footer';
 import DataSourceIndicator from './Components/DataSourceIndicator';
 
 function App() {
-  const { data: firebaseData, loading: firebaseLoading, error: firebaseError } = useFirebaseData();
+  const { data: firebaseData, loading: firebaseLoading } = useFirebaseData();
   const [jsonData, setJsonData] = useState(null);
   const [jsonLoading, setJsonLoading] = useState(true);
   const [resumeData, setResumeData] = useState(null);

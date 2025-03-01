@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { db, storage } from '../firebase/config';
 import { 
@@ -13,7 +13,7 @@ import {
   orderBy,
   setDoc
 } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { setFirebaseConfig } from '../firebase/config';
 
 const Admin = () => {
@@ -96,7 +96,7 @@ const Admin = () => {
   const auth = getAuth();
   
   // Function to load all data types with proper error handling
-  const loadAllData = async () => {
+  const loadAllData = useCallback(async () => {
     if (!user) {
       console.log("No user, can't load data");
       return;
@@ -108,7 +108,6 @@ const Admin = () => {
     try {
       // Track loading state
       let successCount = 0;
-      let failCount = 0;
       const totalDataTypes = 5; // Number of data types to load
       
       // Load projects
@@ -119,7 +118,7 @@ const Admin = () => {
       } catch (err) {
         console.error("Projects fetch failed:", err);
         showMessage("Error loading projects: " + err.message, "error");
-        failCount++;
+        // Track error but variable not needed elsewhere
       }
       
       // Load certificates
@@ -130,7 +129,7 @@ const Admin = () => {
       } catch (err) {
         console.error("Certificates fetch failed:", err);
         showMessage("Error loading certificates: " + err.message, "error");
-        failCount++;
+        // Track error but variable not needed elsewhere
       }
       
       // Load profile
@@ -141,7 +140,7 @@ const Admin = () => {
       } catch (err) {
         console.error("Profile fetch failed:", err);
         showMessage("Error loading profile: " + err.message, "error");
-        failCount++;
+        // Track error but variable not needed elsewhere
       }
       
       // Load skills
@@ -152,7 +151,7 @@ const Admin = () => {
       } catch (err) {
         console.error("Skills fetch failed:", err);
         showMessage("Error loading skills: " + err.message, "error");
-        failCount++;
+        // Track error but variable not needed elsewhere
       }
       
       // Load work experience
@@ -163,7 +162,7 @@ const Admin = () => {
       } catch (err) {
         console.error("Work experience fetch failed:", err);
         showMessage("Error loading work experience: " + err.message, "error");
-        failCount++;
+        // Track error but variable not needed elsewhere
       }
       
       // Load education if function exists
@@ -194,7 +193,7 @@ const Admin = () => {
       console.error("Global error loading data:", error);
       showMessage("Error loading data: " + error.message, "error");
     }
-  };
+  }, [user, fetchProjects, fetchCertificates, fetchProfile, fetchSkills, fetchWorkExperience, fetchEducation, showMessage]);
 
   // Handle authentication and initial data loading
   useEffect(() => {
@@ -217,7 +216,7 @@ const Admin = () => {
       console.log("Admin component unmounting, unsubscribing from auth");
       unsubscribe();
     };
-  }, []); // Remove auth dependency since getAuth() doesn't change
+  }, [auth, loadAllData]);
   
   // Fetch projects from Firestore
   const fetchProjects = async () => {
@@ -405,14 +404,14 @@ const Admin = () => {
     }
   };
 
-  const showMessage = (msg, type) => {
+  const showMessage = useCallback((msg, type) => {
     setMessage(msg);
     setMessageType(type);
     setTimeout(() => {
       setMessage('');
       setMessageType('');
     }, 5000);
-  };
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -1143,10 +1142,8 @@ const Admin = () => {
         }
       }
       
-      // Process image URL
-      if (profile.image && !profile.image.startsWith('http')) {
-        profile.image = profile.image;
-      }
+      // Process image URL if needed
+      // (no processing needed here but keeping the section for future modifications)
       
       // Add to Firestore with timestamps
       const profileData = {
@@ -3003,11 +3000,11 @@ service firebase.storage {
         <div className="flex flex-col md:flex-row gap-6">
           {/* Messages shown at the top on mobile */}
           {message && (
-            <div className="md:hidden w-full p-4 mb-2 rounded-lg ${
+            <div className={`md:hidden w-full p-4 mb-2 rounded-lg ${
               messageType === 'success' ? 'bg-green bg-opacity-20 text-green-300' : 
               messageType === 'info' ? 'bg-blue-900 bg-opacity-30 text-blue-300' :
               'bg-red-900 bg-opacity-30 text-red-300'
-            }">
+            }`}>
               {message}
             </div>
           )}
@@ -3019,11 +3016,11 @@ service firebase.storage {
           <div className="flex-grow">
             {/* Messages shown on the right on desktop */}
             {message && (
-              <div className="hidden md:block p-4 mb-6 rounded-lg ${
+              <div className={`hidden md:block p-4 mb-6 rounded-lg ${
                 messageType === 'success' ? 'bg-green bg-opacity-20 text-green-300' : 
                 messageType === 'info' ? 'bg-blue-900 bg-opacity-30 text-blue-300' :
                 'bg-red-900 bg-opacity-30 text-red-300'
-              }">
+              }`}>
                 {message}
               </div>
             )}

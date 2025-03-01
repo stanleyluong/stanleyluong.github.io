@@ -10,7 +10,6 @@ const Experience = ({ data }) => {
   });
   
   // Initialize state hooks first (before any conditional returns)
-  const [activeTab, setActiveTab] = useState(0);
   const [sortedActiveTab, setSortedActiveTab] = useState(0);
   
   console.log("Experience data received:", data);
