@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { fadeIn } from '../utils/motion';
 import { useInView } from 'react-intersection-observer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExternalLinkAlt, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faExternalLinkAlt, faSearch, faTimes, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 const Projects = ({ data }) => {
   const [ref, inView] = useInView({
@@ -17,6 +17,7 @@ const Projects = ({ data }) => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [hoverProject, setHoverProject] = useState(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
   if (!data || !data.projects || data.projects.length === 0) return null;
 
@@ -58,22 +59,42 @@ const Projects = ({ data }) => {
     setSelectedProject(project);
     setModalOpen(true);
     setSelectedImage(null);
+    setCurrentImageIndex(0);
   };
   
   const closeModal = () => {
     setModalOpen(false);
     setSelectedImage(null);
+    setCurrentImageIndex(0);
     setTimeout(() => setSelectedProject(null), 300);
   };
   
-  const openImageView = (imageSrc, event) => {
+  const openImageView = (imageSrc, index, event) => {
     event.stopPropagation();
     setSelectedImage(imageSrc);
+    setCurrentImageIndex(index);
   };
   
   const closeImageView = (event) => {
     event.stopPropagation();
     setSelectedImage(null);
+  };
+  
+  const navigateImage = (direction, event) => {
+    if (!selectedProject || !selectedProject.images) return;
+    event.stopPropagation();
+    
+    const imagesCount = selectedProject.images.length;
+    let newIndex;
+    
+    if (direction === 'next') {
+      newIndex = (currentImageIndex + 1) % imagesCount;
+    } else {
+      newIndex = (currentImageIndex - 1 + imagesCount) % imagesCount;
+    }
+    
+    setCurrentImageIndex(newIndex);
+    setSelectedImage(selectedProject.images[newIndex]);
   };
 
   return (
@@ -269,20 +290,50 @@ const Projects = ({ data }) => {
               {selectedProject.images ? (
                 <div>
                   {selectedImage ? (
-                    <div className="relative w-full flex justify-center bg-black p-6">
+                    <div className="relative w-full flex justify-center items-center bg-black p-6">
                       <button
                         className="absolute top-4 right-4 z-20 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80 transition-all"
                         onClick={closeImageView}
                       >
                         <FontAwesomeIcon icon={faTimes} className="h-5 w-5" />
                       </button>
+                      
+                      {/* Navigation arrows - only show if there are multiple images */}
+                      {selectedProject.images && selectedProject.images.length > 1 && (
+                        <>
+                          <button
+                            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-80 transition-all z-20"
+                            onClick={(e) => navigateImage('prev', e)}
+                            aria-label="Previous image"
+                          >
+                            <FontAwesomeIcon icon={faChevronLeft} className="h-5 w-5" />
+                          </button>
+                          
+                          <button
+                            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-80 transition-all z-20"
+                            onClick={(e) => navigateImage('next', e)}
+                            aria-label="Next image"
+                          >
+                            <FontAwesomeIcon icon={faChevronRight} className="h-5 w-5" />
+                          </button>
+                        </>
+                      )}
+                      
                       <motion.img 
+                        key={selectedImage} // Key helps remount the component on image change
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         src={selectedImage.startsWith('http') ? selectedImage : `/images/portfolio/${selectedImage}`}
                         alt={selectedProject.title}
                         className="w-auto h-auto max-h-[70vh] object-contain bg-black"
                       />
+                      
+                      {/* Image counter */}
+                      {selectedProject.images && selectedProject.images.length > 1 && (
+                        <div className="absolute bottom-6 left-0 right-0 text-center text-white text-sm">
+                          {currentImageIndex + 1} / {selectedProject.images.length}
+                        </div>
+                      )}
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-6 bg-black bg-opacity-90">
@@ -302,7 +353,7 @@ const Projects = ({ data }) => {
                           }}
                           whileHover={{ scale: 1.05, zIndex: 10 }}
                           className="overflow-hidden rounded-lg aspect-video bg-black cursor-pointer shadow-lg hover:shadow-xl transition-all"
-                          onClick={(e) => openImageView(img, e)}
+                          onClick={(e) => openImageView(img, index, e)}
                         >
                           <img 
                             src={img.startsWith('http') ? img : `/images/portfolio/${img}`}

@@ -28,11 +28,16 @@ const Skills = ({ data }) => {
     organizedCategories[category].push(skill);
   });
   
-  // Convert to array format for rendering
-  const filteredCategories = Object.keys(organizedCategories).map(category => ({
-    title: category,
-    skills: organizedCategories[category]
-  }));
+  // Define the desired order of categories
+  const categoryOrder = ["Frontend", "Backend", "Tools & DevOps", "Other Skills"];
+  
+  // Convert to array format for rendering in the specific order
+  const filteredCategories = categoryOrder
+    .filter(category => organizedCategories[category]) // Only include categories that have skills
+    .map(category => ({
+      title: category,
+      skills: organizedCategories[category]
+    }));
   
   // Helper function to determine category based on skill name
   function determineCategory(skillName) {
@@ -78,9 +83,8 @@ const Skills = ({ data }) => {
               <div className="space-y-6">
                 {category.skills.map((skill, index) => (
                   <div key={index} className="space-y-2">
-                    <div className="flex justify-between items-center">
+                    <div className="flex items-center">
                       <span className="text-lightestSlate">{skill.name}</span>
-                      <span className="text-green text-sm">{skill.level}</span>
                     </div>
                     <div className="w-full bg-lightBlue h-2 rounded-full overflow-hidden">
                       <div 
