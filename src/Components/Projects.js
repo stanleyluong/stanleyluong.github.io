@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fadeIn } from '../utils/motion';
 import { useInView } from 'react-intersection-observer';
@@ -18,6 +18,7 @@ const Projects = ({ data }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [hoverProject, setHoverProject] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const projectsGridRef = useRef(null);
   
   if (!data || !data.projects || data.projects.length === 0) return null;
 
@@ -54,6 +55,22 @@ const Projects = ({ data }) => {
   
   // Limit initial display to 6 projects
   const displayProjects = expanded ? filteredProjects : filteredProjects.slice(0, 6);
+  
+  // Scroll to projects when tag is clicked
+  const handleTagClick = (tag) => {
+    setActiveFilter(tag);
+    
+    // Small delay to ensure state updates before scrolling
+    setTimeout(() => {
+      if (projectsGridRef.current) {
+        // Scroll to significantly above the element to account for fixed header and filter indicator
+        window.scrollTo({
+          top: projectsGridRef.current.getBoundingClientRect().top + window.pageYOffset - 180,
+          behavior: 'smooth'
+        });
+      }
+    }, 100);
+  };
   
   const openModal = (project) => {
     setSelectedProject(project);
@@ -122,7 +139,7 @@ const Projects = ({ data }) => {
           {tags.map(([tag, count], index) => (
             <button
               key={index}
-              onClick={() => setActiveFilter(tag)}
+              onClick={() => handleTagClick(tag)}
               className={`py-2 px-4 rounded-full font-mono text-base transition-all duration-300 ${
                 activeFilter === tag 
                   ? 'bg-green text-darkBlue' 
@@ -134,8 +151,19 @@ const Projects = ({ data }) => {
           ))}
         </motion.div>
         
+        {/* Filter Indicator */}
+        {activeFilter !== 'all' && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-6 px-4 py-2 bg-green bg-opacity-10 border-l-4 border-green rounded text-green max-w-fit mx-auto"
+          >
+            <span className="font-mono">Showing projects tagged with "{activeFilter}"</span>
+          </motion.div>
+        )}
+        
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div ref={projectsGridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {displayProjects.map((project, index) => {
             // Use thumbnail if available, fallback to image
             const projectImage = project.thumbnail || project.image;
@@ -161,7 +189,7 @@ const Projects = ({ data }) => {
                 variants={fadeIn('up', 'tween', 0.2 + (index * 0.1), 0.6)}
                 initial="hidden"
                 animate={inView ? "show" : "hidden"}
-                className="bg-lightestBlue bg-opacity-10 rounded-lg overflow-hidden shadow-lg transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl group"
+                className={`bg-lightestBlue bg-opacity-10 rounded-lg overflow-hidden shadow-lg transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl group ${activeFilter !== 'all' ? 'project-highlight' : ''}`}
               >
                 <div 
                   className="relative overflow-hidden h-48"

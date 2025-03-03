@@ -83,3 +83,23 @@ div.slick-slider .slick-dots li.slick-active button:before {
 .project-image-transition {
   transition: all 0.5s ease;
 }
+
+/* Project highlight animation for filtered projects */
+@keyframes projectHighlight {
+  0% {
+    transform: translateY(0);
+    box-shadow: 0 0 0 rgba(100, 255, 218, 0);
+  }
+  50% {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(100, 255, 218, 0.3);
+  }
+  100% {
+    transform: translateY(0);
+    box-shadow: 0 5px 15px rgba(100, 255, 218, 0.2);
+  }
+}
+
+.project-highlight {
+  animation: projectHighlight 1s ease-out forwards;
+}
