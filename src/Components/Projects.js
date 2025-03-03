@@ -20,15 +20,35 @@ const Projects = ({ data }) => {
   
   if (!data || !data.projects || data.projects.length === 0) return null;
 
-  // Get unique categories for filtering
-  const categories = ['all', ...new Set(data.projects.map(project => 
-    project.category.toLowerCase().split(' ')[0])
-  )];
+  // Get unique tags and count their occurrences
+  const tagCounts = new Map();
+  tagCounts.set('all', data.projects.length); // All projects count
+  
+  // Count occurrences of each tag
+  data.projects.forEach(project => {
+    if (project.tags && Array.isArray(project.tags)) {
+      project.tags.forEach(tag => {
+        const currentCount = tagCounts.get(tag) || 0;
+        tagCounts.set(tag, currentCount + 1);
+      });
+    }
+  });
+  
+  // Convert Map to Array and sort by frequency (descending)
+  // Keep 'all' at the beginning regardless of count
+  const tags = Array.from(tagCounts.entries())
+    .sort((a, b) => {
+      // Always keep 'all' first
+      if (a[0] === 'all') return -1;
+      if (b[0] === 'all') return 1;
+      // Sort others by count (descending)
+      return b[1] - a[1];
+    });
   
   // Filter projects based on activeFilter
   const filteredProjects = data.projects.filter(project => 
     activeFilter === 'all' || 
-    project.category.toLowerCase().includes(activeFilter.toLowerCase())
+    (project.tags && Array.isArray(project.tags) && project.tags.includes(activeFilter))
   );
   
   // Limit initial display to 6 projects
@@ -78,17 +98,17 @@ const Projects = ({ data }) => {
           animate={inView ? "show" : "hidden"}
           className="flex flex-wrap justify-center gap-3 mb-12"
         >
-          {categories.map((category, index) => (
+          {tags.map(([tag, count], index) => (
             <button
               key={index}
-              onClick={() => setActiveFilter(category)}
+              onClick={() => setActiveFilter(tag)}
               className={`py-2 px-4 rounded-full font-mono text-base transition-all duration-300 ${
-                activeFilter === category 
+                activeFilter === tag 
                   ? 'bg-green text-darkBlue' 
                   : 'border border-green text-green hover:bg-green hover:bg-opacity-10'
               }`}
             >
-              {category.charAt(0).toUpperCase() + category.slice(1)}
+              {tag.charAt(0).toUpperCase() + tag.slice(1)} ({count})
             </button>
           ))}
         </motion.div>
@@ -176,7 +196,23 @@ const Projects = ({ data }) => {
                 </div>
                 <div className="p-5">
                   <h3 className="text-lightestSlate text-2xl font-semibold mb-2">{project.title}</h3>
-                  <p className="text-slate text-lg mb-3">{project.category}</p>
+                  {project.tags && Array.isArray(project.tags) ? (
+                    <div className="flex flex-wrap gap-1 mb-2">
+                      {project.tags.slice(0, 3).map((tag, index) => (
+                        <span 
+                          key={index} 
+                          className="px-2 py-0.5 text-xs bg-green bg-opacity-20 text-green rounded-full"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                      {project.tags.length > 3 && (
+                        <span className="text-xs text-slate">+{project.tags.length - 3} more</span>
+                      )}
+                    </div>
+                  ) : (
+                    <p className="text-slate text-lg mb-3">{project.category}</p>
+                  )}
                 </div>
               </motion.div>
             );
@@ -289,7 +325,20 @@ const Projects = ({ data }) => {
               )}
               <div className="p-6">
                 <h2 className="text-2xl font-bold text-lightestSlate mb-2">{selectedProject.title}</h2>
-                <p className="text-green mb-4">{selectedProject.category}</p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {selectedProject.tags && Array.isArray(selectedProject.tags) ? (
+                    selectedProject.tags.map((tag, index) => (
+                      <span 
+                        key={index} 
+                        className="px-2 py-1 text-xs bg-green bg-opacity-20 text-green rounded-full"
+                      >
+                        {tag}
+                      </span>
+                    ))
+                  ) : (
+                    <p className="text-green">{selectedProject.category}</p>
+                  )}
+                </div>
                 <p className="text-lightSlate mb-6">
                   A showcase of the {selectedProject.title} project featuring modern design and functionality.
                 </p>
