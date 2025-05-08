@@ -1,19 +1,19 @@
-import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import ReactGA from 'react-ga';
 import useFirebaseData from './hooks/useFirebaseData';
 
 // Components
-import Navbar from './Components/Navbar';
-import Hero from './Components/Hero';
 import About from './Components/About';
-import Experience from './Components/Experience';
-import Skills from './Components/Skills'; 
-import Projects from './Components/Projects';
 import Certificates from './Components/Certificates';
 import Contact from './Components/Contact';
-import Footer from './Components/Footer';
 import DataSourceIndicator from './Components/DataSourceIndicator';
+import Experience from './Components/Experience';
+import Footer from './Components/Footer';
+import Hero from './Components/Hero';
+import Navbar from './Components/Navbar';
+import Projects from './Components/Projects';
+import Skills from './Components/Skills';
 
 function App() {
   const { data: firebaseData, loading: firebaseLoading } = useFirebaseData();
@@ -61,7 +61,6 @@ function App() {
     }
     
     // If Firebase takes too long, proceed with JSON data
-    // This serves as a backup to the timeout in useFirebaseData
     const timeoutId = setTimeout(() => {
       if (loading && jsonData && !jsonLoading) {
         console.log('Using JSON data due to Firebase timeout');
@@ -77,7 +76,7 @@ function App() {
   useEffect(() => {
     // Initialize Google Analytics
     ReactGA.initialize('UA-110570651-1');
-    ReactGA.pageview(window.location.pathname);
+    // ReactGA.pageview(window.location.pathname); // This might need adjustment depending on how HashRouter tracks page views
   }, []);
 
   if (loading) {
@@ -88,6 +87,7 @@ function App() {
     );
   }
 
+  // App component now just returns its content, without Router or Routes
   return (
     <div className="bg-darkBlue text-lightSlate">
       <Navbar data={resumeData?.main} />
@@ -104,10 +104,9 @@ function App() {
         <Projects data={resumeData?.portfolio} />
         <Certificates data={resumeData?.resume} />
         <Contact data={resumeData?.main} />
-        <Footer data={resumeData?.main} />
       </motion.div>
       
-      {/* Debug indicator to show data source and allow toggling */}
+      <Footer data={resumeData?.main} />
       <DataSourceIndicator dataSource={dataSource} />
     </div>
   );

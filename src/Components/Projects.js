@@ -1,9 +1,9 @@
-import { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { fadeIn } from '../utils/motion';
-import { useInView } from 'react-intersection-observer';
+import { faChevronLeft, faChevronRight, faExternalLinkAlt, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExternalLinkAlt, faSearch, faTimes, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useRef, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { fadeIn } from '../utils/motion';
 
 const Projects = ({ data }) => {
   const [ref, inView] = useInView({
@@ -185,7 +185,7 @@ const Projects = ({ data }) => {
             
             return (
               <motion.div
-                key={project.title}
+                key={project.title + '-' + index}
                 variants={fadeIn('up', 'tween', 0.2 + (index * 0.1), 0.6)}
                 initial="hidden"
                 animate={inView ? "show" : "hidden"}

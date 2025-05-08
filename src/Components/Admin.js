@@ -1,20 +1,19 @@
-import { useState, useEffect, useCallback } from 'react';
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { db, storage } from '../firebase/config';
-import { 
-  collection, 
-  getDocs, 
-  getDoc,
-  addDoc, 
-  updateDoc, 
-  doc, 
+import {
+  addDoc,
+  collection,
   deleteDoc,
-  query,
+  doc,
+  getDoc,
+  getDocs,
   orderBy,
-  setDoc
+  query,
+  setDoc,
+  updateDoc
 } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { setFirebaseConfig } from '../firebase/config';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { useCallback, useEffect, useState } from 'react';
+import { db, setFirebaseConfig, storage } from '../firebase/config';
 
 const Admin = () => {
   const [email, setEmail] = useState('');
@@ -95,6 +94,199 @@ const Admin = () => {
   // Get auth instance with persistence
   const auth = getAuth();
   
+  const showMessage = useCallback((msg, type) => {
+    setMessage(msg);
+    setMessageType(type);
+    setTimeout(() => {
+      setMessage('');
+      setMessageType('');
+    }, 5000);
+  }, []);
+ // Fetch projects from Firestore
+ const fetchProjects = useCallback(async () => {
+  setProjectsLoading(true);
+  try {
+    console.log('Fetching projects from Firestore...');
+    console.log('Firebase config:', db._app.options);
+    console.log('Current user:', auth.currentUser?.email || 'No user');
+    
+    // Verify database connection
+    try {
+      const testDoc = await addDoc(collection(db, "connection_test"), {
+        timestamp: new Date(),
+        message: "Testing connection"
+      });
+      console.log("Database connection test successful:", testDoc.id);
+      // Delete test doc to keep database clean
+      await deleteDoc(doc(db, "connection_test", testDoc.id));
+    } catch (connError) {
+      console.error("Database connection test failed:", connError);
+      throw new Error(`Database connection failed: ${connError.message}`);
+    }
+    
+    const projectsCollection = collection(db, 'projects');
+    console.log('Projects collection reference:', projectsCollection);
+    
+    // First try to get all projects without ordering
+    const simpleSnapshot = await getDocs(projectsCollection);
+    console.log('Got projects snapshot, empty?', simpleSnapshot.empty, 'size:', simpleSnapshot.size);
+    
+    let projectsList = [];
+    
+    // Now try with ordering if we have data
+    if (!simpleSnapshot.empty) {
+      try {
+        const projectsQuery = query(projectsCollection, orderBy('createdAt', 'desc'));
+        const snapshot = await getDocs(projectsQuery);
+        projectsList = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        console.log('Projects with ordering:', projectsList.length);
+      } catch (orderError) {
+        console.warn('Error ordering projects by createdAt - using unordered data instead:', orderError);
+        projectsList = simpleSnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+      }
+    } else {
+      console.warn('No projects found in the collection. Collection might be empty or permissions issue.');
+    }
+    
+    console.log('Setting projects state:', projectsList);
+    setProjects(projectsList);
+    return projectsList; // Return the data for chaining
+  } catch (error) {
+    console.error('Error fetching projects:', error);
+    showMessage('Error loading projects: ' + error.message, 'error');
+    throw error; // Re-throw to be caught by the caller
+  } finally {
+    setProjectsLoading(false);
+  }
+},[auth.currentUser?.email, showMessage]);
+
+// Fetch certificates from Firestore
+const fetchCertificates = useCallback(async () => {
+  setCertificatesLoading(true);
+  try {
+    const certificatesQuery = query(collection(db, 'certificates'), orderBy('createdAt', 'desc'));
+    const snapshot = await getDocs(certificatesQuery);
+    const certificatesList = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+    setCertificates(certificatesList);
+  } catch (error) {
+    console.error('Error fetching certificates:', error);
+    showMessage('Error loading certificates: ' + error.message, 'error');
+  } finally {
+    setCertificatesLoading(false);
+  }
+}, [showMessage]);
+
+// Fetch profile from Firestore
+const fetchProfile = useCallback(async () => {
+  setProfileLoading(true);
+  try {
+    const profileDoc = await getDoc(doc(db, 'main', 'profile'));
+    if (profileDoc.exists()) {
+      setProfile(profileDoc.data());
+    } else {
+      console.log('No profile document found');
+    }
+  } catch (error) {
+    console.error('Error fetching profile:', error);
+    showMessage('Error loading profile: ' + error.message, 'error');
+  } finally {
+    setProfileLoading(false);
+  }
+},[showMessage]);
+
+// Fetch skills from Firestore
+const fetchSkills = useCallback(async () => {
+  setSkillsLoading(true);
+  try {
+    const skillsQuery = query(collection(db, 'skills'), orderBy('category', 'asc'));
+    const snapshot = await getDocs(skillsQuery);
+    const skillsList = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+    setSkills(skillsList);
+  } catch (error) {
+    console.error('Error fetching skills:', error);
+    showMessage('Error loading skills: ' + error.message, 'error');
+  } finally {
+    setSkillsLoading(false);
+  }
+},[showMessage]);
+
+// Fetch work experience from Firestore
+const fetchWorkExperience = useCallback(async () => {
+  setWorkLoading(true);
+  try {
+    const workQuery = query(collection(db, 'work'), orderBy('years', 'desc'));
+    const snapshot = await getDocs(workQuery);
+    const workList = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+    setWorkExperience(workList);
+  } catch (error) {
+    console.error('Error fetching work experience:', error);
+    showMessage('Error loading work experience: ' + error.message, 'error');
+  } finally {
+    setWorkLoading(false);
+  }
+},[showMessage]);
+
+// Fetch education from Firestore
+const fetchEducation = useCallback(async () => {
+  setEducationLoading(true);
+  try {
+    // Try with 'graduated' field first
+    let educationQuery;
+    try {
+      educationQuery = query(collection(db, 'education'), orderBy('graduated', 'desc'));
+    } catch (e) {
+      // If ordering by 'graduated' fails, fetch without ordering
+      educationQuery = collection(db, 'education');
+    }
+    
+    const snapshot = await getDocs(educationQuery);
+    if (snapshot.empty) {
+      console.log('No education documents found');
+      setEducation([]);
+    } else {
+      const educationList = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      
+      // Sort client-side if we couldn't sort in the query
+      const sortedList = educationList.sort((a, b) => {
+        // If both have 'graduated' field
+        if (a.graduated && b.graduated) {
+          return String(b.graduated).localeCompare(String(a.graduated));
+        }
+        // Ensure items with missing 'graduated' field appear at the end
+        if (!a.graduated) return 1;
+        if (!b.graduated) return -1;
+        return 0;
+      });
+      
+      setEducation(sortedList);
+      console.log(`Education data: ${educationList.length} records`);
+    }
+  } catch (error) {
+    console.error('Error fetching education:', error);
+    showMessage('Error loading education: ' + error.message, 'error');
+    setEducation([]); // Set to empty array to avoid undefined errors
+  } finally {
+    setEducationLoading(false);
+  }
+},[showMessage]);
   // Function to load all data types with proper error handling
   const loadAllData = useCallback(async () => {
     if (!user) {
@@ -218,200 +410,7 @@ const Admin = () => {
     };
   }, [auth, loadAllData]);
   
-  // Fetch projects from Firestore
-  const fetchProjects = async () => {
-    setProjectsLoading(true);
-    try {
-      console.log('Fetching projects from Firestore...');
-      console.log('Firebase config:', db._app.options);
-      console.log('Current user:', auth.currentUser?.email || 'No user');
-      
-      // Verify database connection
-      try {
-        const testDoc = await addDoc(collection(db, "connection_test"), {
-          timestamp: new Date(),
-          message: "Testing connection"
-        });
-        console.log("Database connection test successful:", testDoc.id);
-        // Delete test doc to keep database clean
-        await deleteDoc(doc(db, "connection_test", testDoc.id));
-      } catch (connError) {
-        console.error("Database connection test failed:", connError);
-        throw new Error(`Database connection failed: ${connError.message}`);
-      }
-      
-      const projectsCollection = collection(db, 'projects');
-      console.log('Projects collection reference:', projectsCollection);
-      
-      // First try to get all projects without ordering
-      const simpleSnapshot = await getDocs(projectsCollection);
-      console.log('Got projects snapshot, empty?', simpleSnapshot.empty, 'size:', simpleSnapshot.size);
-      
-      let projectsList = [];
-      
-      // Now try with ordering if we have data
-      if (!simpleSnapshot.empty) {
-        try {
-          const projectsQuery = query(projectsCollection, orderBy('createdAt', 'desc'));
-          const snapshot = await getDocs(projectsQuery);
-          projectsList = snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-          }));
-          console.log('Projects with ordering:', projectsList.length);
-        } catch (orderError) {
-          console.warn('Error ordering projects by createdAt - using unordered data instead:', orderError);
-          projectsList = simpleSnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-          }));
-        }
-      } else {
-        console.warn('No projects found in the collection. Collection might be empty or permissions issue.');
-      }
-      
-      console.log('Setting projects state:', projectsList);
-      setProjects(projectsList);
-      return projectsList; // Return the data for chaining
-    } catch (error) {
-      console.error('Error fetching projects:', error);
-      showMessage('Error loading projects: ' + error.message, 'error');
-      throw error; // Re-throw to be caught by the caller
-    } finally {
-      setProjectsLoading(false);
-    }
-  };
-  
-  // Fetch certificates from Firestore
-  const fetchCertificates = async () => {
-    setCertificatesLoading(true);
-    try {
-      const certificatesQuery = query(collection(db, 'certificates'), orderBy('createdAt', 'desc'));
-      const snapshot = await getDocs(certificatesQuery);
-      const certificatesList = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setCertificates(certificatesList);
-    } catch (error) {
-      console.error('Error fetching certificates:', error);
-      showMessage('Error loading certificates: ' + error.message, 'error');
-    } finally {
-      setCertificatesLoading(false);
-    }
-  };
-  
-  // Fetch profile from Firestore
-  const fetchProfile = async () => {
-    setProfileLoading(true);
-    try {
-      const profileDoc = await getDoc(doc(db, 'main', 'profile'));
-      if (profileDoc.exists()) {
-        setProfile(profileDoc.data());
-      } else {
-        console.log('No profile document found');
-      }
-    } catch (error) {
-      console.error('Error fetching profile:', error);
-      showMessage('Error loading profile: ' + error.message, 'error');
-    } finally {
-      setProfileLoading(false);
-    }
-  };
-  
-  // Fetch skills from Firestore
-  const fetchSkills = async () => {
-    setSkillsLoading(true);
-    try {
-      const skillsQuery = query(collection(db, 'skills'), orderBy('category', 'asc'));
-      const snapshot = await getDocs(skillsQuery);
-      const skillsList = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setSkills(skillsList);
-    } catch (error) {
-      console.error('Error fetching skills:', error);
-      showMessage('Error loading skills: ' + error.message, 'error');
-    } finally {
-      setSkillsLoading(false);
-    }
-  };
-  
-  // Fetch work experience from Firestore
-  const fetchWorkExperience = async () => {
-    setWorkLoading(true);
-    try {
-      const workQuery = query(collection(db, 'work'), orderBy('years', 'desc'));
-      const snapshot = await getDocs(workQuery);
-      const workList = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setWorkExperience(workList);
-    } catch (error) {
-      console.error('Error fetching work experience:', error);
-      showMessage('Error loading work experience: ' + error.message, 'error');
-    } finally {
-      setWorkLoading(false);
-    }
-  };
-  
-  // Fetch education from Firestore
-  const fetchEducation = async () => {
-    setEducationLoading(true);
-    try {
-      // Try with 'graduated' field first
-      let educationQuery;
-      try {
-        educationQuery = query(collection(db, 'education'), orderBy('graduated', 'desc'));
-      } catch (e) {
-        // If ordering by 'graduated' fails, fetch without ordering
-        educationQuery = collection(db, 'education');
-      }
-      
-      const snapshot = await getDocs(educationQuery);
-      if (snapshot.empty) {
-        console.log('No education documents found');
-        setEducation([]);
-      } else {
-        const educationList = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
-        
-        // Sort client-side if we couldn't sort in the query
-        const sortedList = educationList.sort((a, b) => {
-          // If both have 'graduated' field
-          if (a.graduated && b.graduated) {
-            return String(b.graduated).localeCompare(String(a.graduated));
-          }
-          // Ensure items with missing 'graduated' field appear at the end
-          if (!a.graduated) return 1;
-          if (!b.graduated) return -1;
-          return 0;
-        });
-        
-        setEducation(sortedList);
-        console.log(`Education data: ${educationList.length} records`);
-      }
-    } catch (error) {
-      console.error('Error fetching education:', error);
-      showMessage('Error loading education: ' + error.message, 'error');
-      setEducation([]); // Set to empty array to avoid undefined errors
-    } finally {
-      setEducationLoading(false);
-    }
-  };
-
-  const showMessage = useCallback((msg, type) => {
-    setMessage(msg);
-    setMessageType(type);
-    setTimeout(() => {
-      setMessage('');
-      setMessageType('');
-    }, 5000);
-  }, []);
+ 
 
   const handleLogin = async (e) => {
     e.preventDefault();
