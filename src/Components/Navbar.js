@@ -1,3 +1,5 @@
+import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-scroll';
 
@@ -89,14 +91,18 @@ const Navbar = ({ data }) => {
             aria-label="Toggle dark mode"
             title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
           >
-            {dark ? '🌙' : '☀️'}
+            {dark ? (
+              <FontAwesomeIcon icon={faMoon} className="text-green" />
+            ) : (
+              <FontAwesomeIcon icon={faSun} className="text-yellow-500" />
+            )}
           </button>
           {resumeUrl && (
             <a
               href={resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className={`hidden md:flex btn-primary px-5 py-2 font-mono text-base items-center h-10 ${dark ? '' : 'border-teal-700 text-teal-700 hover:bg-teal-50'}`}
+              className={`hidden md:flex btn-primary px-5 py-2 font-mono text-base items-center h-10 text-teal-700 border-teal-700 dark:text-green dark:border-green`}
             >
               Download Resume
             </a>

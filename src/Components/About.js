@@ -65,7 +65,7 @@ const About = ({ data }) => {
                 href={data.resumedownload}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary inline-block"
+                className="btn-primary inline-block text-teal-700 border-teal-700 dark:text-green dark:border-green"
               >
                 Download Resume
               </a>

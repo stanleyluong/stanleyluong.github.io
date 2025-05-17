@@ -12,7 +12,6 @@ const Projects = ({ data }) => {
   });
   
   const [activeFilter, setActiveFilter] = useState('all');
-  const [expanded, setExpanded] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -54,7 +53,7 @@ const Projects = ({ data }) => {
   );
   
   // Limit initial display to 6 projects
-  const displayProjects = expanded ? filteredProjects : filteredProjects.slice(0, 6);
+  const displayProjects = filteredProjects;
   
   // Scroll to projects when tag is clicked
   const handleTagClick = (tag) => {
@@ -267,23 +266,6 @@ const Projects = ({ data }) => {
             );
           })}
         </div>
-        
-        {/* Show More Button */}
-        {filteredProjects.length > 6 && (
-          <motion.div 
-            variants={fadeIn('up', 'tween', 0.3, 1)}
-            initial="hidden"
-            animate={inView ? "show" : "hidden"}
-            className="flex justify-center mt-12"
-          >
-            <button
-              onClick={() => setExpanded(!expanded)}
-              className="btn-primary border-teal-700 text-teal-700 hover:bg-teal-100 dark:border-green dark:text-green dark:hover:bg-green/10 font-bold"
-            >
-              {expanded ? 'Show Less' : 'Show More Projects'}
-            </button>
-          </motion.div>
-        )}
       </motion.div>
       
       {/* Project Modal */}

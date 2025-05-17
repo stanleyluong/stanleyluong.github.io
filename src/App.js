@@ -88,6 +88,9 @@ function App() {
   }
 
   // App component now just returns its content, without Router or Routes
+  console.log('resumeData:', resumeData);
+  console.log('resumeData.resume:', resumeData?.resume);
+  console.log('resumeData.resume.certificates:', resumeData?.resume?.certificates);
   return (
     <div className="min-h-screen bg-white text-black dark:bg-darkBlue dark:text-lightestSlate">
       <Navbar data={resumeData?.main} />

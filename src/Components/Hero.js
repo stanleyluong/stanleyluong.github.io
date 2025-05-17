@@ -1,3 +1,4 @@
+import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
@@ -8,13 +9,8 @@ import { fadeIn, textVariant } from '../utils/motion';
 const Hero = ({ data }) => {
   if (!data) return null;
 
-  // Convert occupation string to array for animation
-  const occupationString = data.occupation || "[softwareEngineer]";
-  const occupationArray = occupationString
-    .replace(/[[\]]/g, '')
-    .split(', ')
-    .map(item => item.trim());
-
+  // Use the occupation array directly from data
+  const occupationArray = Array.isArray(data.occupation) ? data.occupation : [];
   // Create the sequence for TypeAnimation
   const typeSequence = [];
   occupationArray.forEach(occupation => {
@@ -74,18 +70,24 @@ const Hero = ({ data }) => {
           </p>
           
           <div className="flex justify-center space-x-6">
-            {data.social && data.social.map((network, index) => (
-              <a 
-                key={index} 
-                href={network.url} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="social-icon text-2xl hover:scale-110 transition-transform text-gray-700 dark:text-green hover:text-teal-700 dark:hover:text-green"
-                aria-label={network.name}
-              >
-                <i className={network.className}></i>
-              </a>
-            ))}
+            {data.social && data.social.map((network, index) => {
+              let icon;
+              if (network.name.toLowerCase().includes('github')) icon = faGithub;
+              else if (network.name.toLowerCase().includes('linkedin')) icon = faLinkedin;
+              else icon = null;
+              return (
+                <a
+                  key={index}
+                  href={network.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="social-icon text-2xl hover:scale-110 transition-transform text-gray-700 dark:text-green hover:text-teal-700 dark:hover:text-green"
+                  aria-label={network.name}
+                >
+                  {icon ? <FontAwesomeIcon icon={icon} /> : null}
+                </a>
+              );
+            })}
             <a
               href="https://www.buymeacoffee.com/stanleyluong"
               target="_blank"
@@ -113,7 +115,7 @@ const Hero = ({ data }) => {
           to="about"
           smooth={true}
           duration={500}
-          className="cursor-pointer text-green animate-bounce"
+          className="cursor-pointer text-teal-700 dark:text-green animate-bounce"
         >
           <FontAwesomeIcon icon={faChevronDown} className="h-8 w-8" />
         </Link>

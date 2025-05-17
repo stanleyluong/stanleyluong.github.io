@@ -17,7 +17,7 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply text-lightestSlate font-semibold;
+    @apply text-gray-800 dark:text-lightestSlate font-semibold;
     line-height: 1.3; /* Tighter line height for headings */
   }
 

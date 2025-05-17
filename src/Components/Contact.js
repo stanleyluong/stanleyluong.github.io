@@ -59,7 +59,7 @@ const Contact = ({ data }) => {
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
-              <label htmlFor="name" className="block font-medium mb-2 !text-gray-800 dark:text-lightestSlate">Name</label>
+              <label htmlFor="name" className="block font-bold mb-2 text-gray-800 dark:text-lightestSlate">Name</label>
               <input
                 type="text"
                 id="name"
@@ -67,11 +67,11 @@ const Contact = ({ data }) => {
                 required
                 value={formState.name}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-gray-100 dark:bg-lightBlue border border-lightBlue rounded focus:border-teal-700 focus:outline-none text-gray-800 dark:text-lightestSlate"
+                className="w-full px-4 py-2 bg-gray-100 dark:bg-slate-800 border border-lightBlue dark:border-slate-600 rounded focus:border-teal-700 focus:outline-none text-gray-800 dark:text-lightestSlate placeholder-gray-400 dark:placeholder-lightestSlate"
               />
             </div>
             <div>
-              <label htmlFor="email" className="block font-medium mb-2 !text-gray-800 dark:text-lightestSlate">Email</label>
+              <label htmlFor="email" className="block font-bold mb-2 text-gray-800 dark:text-lightestSlate">Email</label>
               <input
                 type="email"
                 id="email"
@@ -79,12 +79,12 @@ const Contact = ({ data }) => {
                 required
                 value={formState.email}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-gray-100 dark:bg-lightBlue border border-lightBlue rounded focus:border-teal-700 focus:outline-none text-gray-800 dark:text-lightestSlate"
+                className="w-full px-4 py-2 bg-gray-100 dark:bg-slate-800 border border-lightBlue dark:border-slate-600 rounded focus:border-teal-700 focus:outline-none text-gray-800 dark:text-lightestSlate placeholder-gray-400 dark:placeholder-lightestSlate"
               />
             </div>
           </div>
           <div className="mb-6">
-            <label htmlFor="subject" className="block font-medium mb-2 !text-gray-800 dark:text-lightestSlate">Subject</label>
+            <label htmlFor="subject" className="block font-bold mb-2 text-gray-800 dark:text-lightestSlate">Subject</label>
             <input
               type="text"
               id="subject"
@@ -92,11 +92,11 @@ const Contact = ({ data }) => {
               required
               value={formState.subject}
               onChange={handleChange}
-              className="w-full px-4 py-2 bg-gray-100 dark:bg-lightBlue border border-lightBlue rounded focus:border-teal-700 focus:outline-none text-gray-800 dark:text-lightestSlate"
+              className="w-full px-4 py-2 bg-gray-100 dark:bg-slate-800 border border-lightBlue dark:border-slate-600 rounded focus:border-teal-700 focus:outline-none text-gray-800 dark:text-lightestSlate placeholder-gray-400 dark:placeholder-lightestSlate"
             />
           </div>
           <div className="mb-6">
-            <label htmlFor="message" className="block font-medium mb-2 !text-gray-800 dark:text-lightestSlate">Message</label>
+            <label htmlFor="message" className="block font-bold mb-2 text-gray-800 dark:text-lightestSlate">Message</label>
             <textarea
               id="message"
               name="message"
@@ -104,7 +104,7 @@ const Contact = ({ data }) => {
               required
               value={formState.message}
               onChange={handleChange}
-              className="w-full px-4 py-2 bg-gray-100 dark:bg-lightBlue border border-lightBlue rounded focus:border-teal-700 focus:outline-none text-gray-800 dark:text-lightestSlate resize-none"
+              className="w-full px-4 py-2 bg-gray-100 dark:bg-slate-800 border border-lightBlue dark:border-slate-600 rounded focus:border-teal-700 focus:outline-none text-gray-800 dark:text-lightestSlate placeholder-gray-400 dark:placeholder-lightestSlate resize-none"
             ></textarea>
           </div>
           <div className="flex justify-end">
