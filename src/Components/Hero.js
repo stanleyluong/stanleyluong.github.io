@@ -1,9 +1,9 @@
-import { motion } from 'framer-motion';
-import { TypeAnimation } from 'react-type-animation';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { motion } from 'framer-motion';
 import { Link } from 'react-scroll';
-import { textVariant, fadeIn } from '../utils/motion';
+import { TypeAnimation } from 'react-type-animation';
+import { fadeIn, textVariant } from '../utils/motion';
 
 const Hero = ({ data }) => {
   if (!data) return null;
@@ -22,8 +22,8 @@ const Hero = ({ data }) => {
   });
 
   return (
-    <section id="hero" className="relative h-screen flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0 bg-darkBlue bg-gradient-to-b from-darkBlue to-lightBlue opacity-80"></div>
+    <section id="hero" className="relative h-screen flex items-center justify-center overflow-hidden bg-white text-black dark:bg-darkBlue dark:text-lightestSlate">
+      <div className="absolute inset-0 bg-white bg-gradient-to-b from-white to-slate-200 dark:bg-darkBlue dark:from-darkBlue dark:to-lightBlue opacity-80"></div>
       
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
         <motion.div
@@ -31,7 +31,7 @@ const Hero = ({ data }) => {
           initial="hidden"
           animate="show"
         >
-          <h4 className="font-mono text-green mb-5 md:text-lg">Hi, my name is</h4>
+          <h4 className="font-mono mb-5 md:text-lg text-teal-700 dark:text-green">Hi, my name is</h4>
         </motion.div>
         
         <motion.div
@@ -39,7 +39,7 @@ const Hero = ({ data }) => {
           initial="hidden"
           animate="show"
         >
-          <h1 className="text-lightestSlate font-bold text-5xl sm:text-6xl lg:text-7xl mb-2">
+          <h1 className="font-bold text-5xl sm:text-6xl lg:text-7xl mb-2 text-black dark:text-lightestSlate">
             {data.name}
           </h1>
         </motion.div>
@@ -50,9 +50,9 @@ const Hero = ({ data }) => {
           animate="show"
           className="h-16"
         >
-          <h2 className="text-slate text-3xl sm:text-4xl lg:text-5xl mb-8">
+          <h2 className="text-gray-800 dark:text-slate text-3xl sm:text-4xl lg:text-5xl mb-8">
             I'm a{' '}
-            <span className="text-green">
+            <span className="text-teal-700 dark:text-green">
               <TypeAnimation
                 sequence={typeSequence}
                 wrapper="span"
@@ -69,7 +69,7 @@ const Hero = ({ data }) => {
           animate="show"
           className="mt-16"
         >
-          <p className="text-slate max-w-2xl mx-auto mb-12 text-lg">
+          <p className="text-slate-700 dark:text-slate max-w-2xl mx-auto mb-12 text-lg">
             {data.bio}
           </p>
           
@@ -80,7 +80,7 @@ const Hero = ({ data }) => {
                 href={network.url} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="social-icon text-2xl hover:scale-110 transition-transform"
+                className="social-icon text-2xl hover:scale-110 transition-transform text-gray-700 dark:text-green hover:text-teal-700 dark:hover:text-green"
                 aria-label={network.name}
               >
                 <i className={network.className}></i>

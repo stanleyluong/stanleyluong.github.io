@@ -18,11 +18,10 @@
 
 ===================================================================== */
 
-/* ------------------------------------------------------------------ */
-/* a. General Styles
-/* ------------------------------------------------------------------ */
+/* --- CLEANED UP FOR TAILWIND ---
+Removed or commented out legacy CSS that conflicts with Tailwind for headings, backgrounds, and text. */
 
-body { background: #0f0f0f !important; }
+/* body { background: #0f0f0f !important; } */
 
 /* ------------------------------------------------------------------ */
 /* b. Header Styles
@@ -187,7 +186,7 @@ ul#nav li.current a { color: #e0f77d; }
 /* c. About Section
 /* ------------------------------------------------------------------ */
 
-#about {
+/* #about {
    background: #2B2B2B;
    padding-top: 96px;
    padding-bottom: 66px;
@@ -230,13 +229,14 @@ ul#nav li.current a { color: #e0f77d; }
    margin-right: 15px;
    font-size: 20px;
 }
+*/
 
 
 /* ------------------------------------------------------------------ */
 /* d. Resume Section
 /* ------------------------------------------------------------------ */
 
-#resume {
+/* #resume {
    background: #fff;
    padding-top: 90px;
    padding-bottom: 72px;
@@ -436,12 +436,13 @@ ul#nav li.current a { color: #e0f77d; }
   0%   { width: 0px;  }
   100% { width: 80%;  }
 }  */
+*/
 
 /* ------------------------------------------------------------------ */
 /* e. Portfolio Section
 /* ------------------------------------------------------------------ */
 
-#portfolio {
+/* #portfolio {
    background: #ebeeee;
    padding-top: 90px;
    padding-bottom: 60px;
@@ -454,6 +455,7 @@ ul#nav li.current a { color: #e0f77d; }
    margin-bottom: 48px;
    color: #95A3A3;
 }
+*/
 
 /* Portfolio Content */
 #portfolio-wrapper .columns { margin-bottom: 36px; }
@@ -818,7 +820,7 @@ call-to-action .button {
 /* h. Contact Section
 /* ------------------------------------------------------------------ */
 
-#contact {
+/* #contact {
    background: #191919;
    padding-top: 96px;
    padding-bottom: 102px;

@@ -115,7 +115,7 @@ const Projects = ({ data }) => {
   };
 
   return (
-    <section id="projects" className="relative py-24 bg-lightBlue bg-opacity-20">
+    <section id="projects" className="relative py-24 bg-slate-100 dark:bg-darkBlue font-sans">
       <motion.div
         ref={ref}
         className="max-w-7xl mx-auto px-6 md:px-12"
@@ -124,9 +124,9 @@ const Projects = ({ data }) => {
           variants={fadeIn('', '', 0.1, 1)}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
-          className="section-heading font-mono text-3xl text-lightestSlate font-bold mb-8"
+          className="section-heading mb-8"
         >
-          <span className="text-green">04.</span> My Projects
+          <span className="text-teal-700 dark:text-green">05.</span> My Projects
         </motion.h2>
         
         {/* Filter Buttons */}
@@ -142,8 +142,8 @@ const Projects = ({ data }) => {
               onClick={() => handleTagClick(tag)}
               className={`py-2 px-4 rounded-full font-mono text-base transition-all duration-300 ${
                 activeFilter === tag 
-                  ? 'bg-green text-darkBlue' 
-                  : 'border border-green text-green hover:bg-green hover:bg-opacity-10'
+                  ? 'bg-teal-700 text-white dark:bg-green dark:text-darkBlue' 
+                  : 'border border-teal-700 text-teal-700 hover:bg-teal-50 dark:border-green dark:text-green dark:hover:bg-green/10'
               }`}
             >
               {tag.charAt(0).toUpperCase() + tag.slice(1)} ({count})
@@ -156,7 +156,7 @@ const Projects = ({ data }) => {
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-6 px-4 py-2 bg-green bg-opacity-10 border-l-4 border-green rounded text-green max-w-fit mx-auto"
+            className="mb-6 px-4 py-2 bg-teal-50 border-l-4 border-teal-700 rounded text-teal-700 max-w-fit mx-auto dark:bg-green/10 dark:border-green dark:text-green"
           >
             <span className="font-mono">Showing projects tagged with "{activeFilter}"</span>
           </motion.div>
@@ -189,7 +189,7 @@ const Projects = ({ data }) => {
                 variants={fadeIn('up', 'tween', 0.2 + (index * 0.1), 0.6)}
                 initial="hidden"
                 animate={inView ? "show" : "hidden"}
-                className={`bg-lightestBlue bg-opacity-10 rounded-lg overflow-hidden shadow-lg transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl group ${activeFilter !== 'all' ? 'project-highlight' : ''}`}
+                className={`bg-white dark:bg-lightestBlue dark:bg-opacity-10 rounded-lg overflow-hidden shadow-lg transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl group ${activeFilter !== 'all' ? 'project-highlight' : ''}`}
               >
                 <div 
                   className="relative overflow-hidden h-48"
@@ -222,7 +222,7 @@ const Projects = ({ data }) => {
                     {(project.url.startsWith('images/') || project.url.includes('firebasestorage') || project.images) && (
                       <button 
                         onClick={() => openModal(project)}
-                        className="bg-green text-darkBlue rounded-full p-3 mx-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300"
+                        className="bg-teal-700 text-white rounded-full p-3 mx-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300"
                         aria-label="View Details"
                       >
                         <FontAwesomeIcon icon={faSearch} className="h-4 w-4" />
@@ -235,7 +235,7 @@ const Projects = ({ data }) => {
                         href={project.url} 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="bg-green text-darkBlue rounded-full p-3 mx-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300"
+                        className="bg-teal-700 text-white rounded-full p-3 mx-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300"
                         aria-label="Visit Project"
                       >
                         <FontAwesomeIcon icon={faExternalLinkAlt} className="h-4 w-4" />
@@ -244,23 +244,23 @@ const Projects = ({ data }) => {
                   </div>
                 </div>
                 <div className="p-5">
-                  <h3 className="text-lightestSlate text-2xl font-semibold mb-2">{project.title}</h3>
+                  <h3 className="text-2xl font-semibold mb-2 text-gray-800 dark:text-lightestSlate font-sans">{project.title}</h3>
                   {project.tags && Array.isArray(project.tags) ? (
                     <div className="flex flex-wrap gap-1 mb-2">
                       {project.tags.slice(0, 3).map((tag, index) => (
                         <span 
                           key={index} 
-                          className="px-2 py-0.5 text-xs bg-green bg-opacity-20 text-green rounded-full"
+                          className="px-2 py-0.5 text-xs bg-teal-50 text-teal-700 rounded-full dark:bg-green/10 dark:text-green"
                         >
                           {tag}
                         </span>
                       ))}
                       {project.tags.length > 3 && (
-                        <span className="text-xs text-slate">+{project.tags.length - 3} more</span>
+                        <span className="text-xs text-gray-600 dark:text-slate">+{project.tags.length - 3} more</span>
                       )}
                     </div>
                   ) : (
-                    <p className="text-slate text-lg mb-3">{project.category}</p>
+                    <p className="text-teal-700 dark:text-green text-lg mb-3">{project.category}</p>
                   )}
                 </div>
               </motion.div>
@@ -278,7 +278,7 @@ const Projects = ({ data }) => {
           >
             <button
               onClick={() => setExpanded(!expanded)}
-              className="btn-primary"
+              className="btn-primary border-teal-700 text-teal-700 hover:bg-teal-100 dark:border-green dark:text-green dark:hover:bg-green/10 font-bold"
             >
               {expanded ? 'Show Less' : 'Show More Projects'}
             </button>
@@ -409,13 +409,13 @@ const Projects = ({ data }) => {
                     selectedProject.tags.map((tag, index) => (
                       <span 
                         key={index} 
-                        className="px-2 py-1 text-xs bg-green bg-opacity-20 text-green rounded-full"
+                        className="px-2 py-1 text-xs bg-teal-50 text-teal-700 rounded-full dark:bg-green/10 dark:text-green"
                       >
                         {tag}
                       </span>
                     ))
                   ) : (
-                    <p className="text-green">{selectedProject.category}</p>
+                    <p className="text-teal-700 dark:text-green">{selectedProject.category}</p>
                   )}
                 </div>
                 <p className="text-lightSlate mb-6">

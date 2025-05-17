@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
-import { fadeIn } from '../utils/motion';
 import { useInView } from 'react-intersection-observer';
+import { fadeIn } from '../utils/motion';
 
 const Skills = ({ data }) => {
   const [ref, inView] = useInView({
@@ -52,8 +52,16 @@ const Skills = ({ data }) => {
     return "Other Skills";
   }
 
+  // Icon mapping for categories
+  const categoryIcons = {
+    "Frontend": "🖥️",
+    "Backend": "🗄️",
+    "Tools & DevOps": "⚙️",
+    "Other Skills": "🌟"
+  };
+
   return (
-    <section id="skills" className="relative py-24">
+    <section id="skills" className="relative py-24 bg-slate-100 dark:bg-darkBlue font-sans">
       <motion.div
         ref={ref}
         className="max-w-7xl mx-auto px-6 md:px-12"
@@ -62,9 +70,9 @@ const Skills = ({ data }) => {
           variants={fadeIn('', '', 0.1, 1)}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
-          className="section-heading font-mono text-3xl text-lightestSlate font-bold mb-16"
+          className="section-heading mb-16"
         >
-          <span className="text-green">03.</span> Skills
+          <span className="text-teal-700 dark:text-green">04.</span> Skills
         </motion.h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -74,26 +82,19 @@ const Skills = ({ data }) => {
               variants={fadeIn('up', 'spring', 0.2 + (categoryIndex * 0.1), 0.8)}
               initial="hidden"
               animate={inView ? "show" : "hidden"}
-              className="bg-lightBlue bg-opacity-30 p-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+              className="bg-white dark:bg-lightestBlue dark:bg-opacity-10 p-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
             >
-              <h3 className="text-xl font-semibold text-lightestSlate border-b border-green pb-3 mb-6">
+              <h3 className="text-xl font-semibold text-gray-800 dark:text-lightestSlate border-b border-teal-700 dark:border-green pb-3 mb-6 flex items-center gap-2">
+                <span className="text-2xl">{categoryIcons[category.title]}</span>
                 {category.title}
               </h3>
               
               <div className="space-y-6">
-                {category.skills.map((skill, index) => (
-                  <div key={index} className="space-y-2">
-                    <div className="flex items-center">
-                      <span className="text-lightestSlate">{skill.name}</span>
-                    </div>
-                    <div className="w-full bg-lightBlue h-2 rounded-full overflow-hidden">
-                      <div 
-                        className="bg-green h-full rounded-full"
-                        style={{ width: skill.level }}
-                      ></div>
-                    </div>
-                  </div>
-                ))}
+                <ul className="space-y-2">
+                  {category.skills.map((skill, index) => (
+                    <li key={index} className="text-gray-800 dark:text-lightestSlate font-sans text-base">{skill.name}</li>
+                  ))}
+                </ul>
               </div>
             </motion.div>
           ))}

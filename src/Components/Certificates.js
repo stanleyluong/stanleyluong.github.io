@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { faChevronLeft, faChevronRight, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
-import { fadeIn } from '../utils/motion';
+import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import Slider from 'react-slick';
-import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
+import "slick-carousel/slick/slick.css";
+import { fadeIn } from '../utils/motion';
 
 const Certificates = ({ data }) => {
   const [ref, inView] = useInView({
@@ -120,7 +120,7 @@ const Certificates = ({ data }) => {
   };
 
   return (
-    <section id="certificates" className="relative py-24">
+    <section id="certificates" className="relative py-24 bg-slate-100 dark:bg-darkBlue font-sans">
       <motion.div
         ref={ref}
         className="max-w-7xl mx-auto px-6 md:px-12"
@@ -129,9 +129,9 @@ const Certificates = ({ data }) => {
           variants={fadeIn('', '', 0.1, 1)}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
-          className="section-heading font-mono text-3xl text-lightestSlate font-bold mb-16"
+          className="section-heading mb-16"
         >
-          <span className="text-green">05.</span> Certifications
+          <span className="text-teal-700 dark:text-green">06.</span> Certifications
         </motion.h2>
         
         <motion.div
@@ -144,7 +144,7 @@ const Certificates = ({ data }) => {
             {data.certificates.map((certificate, index) => (
               <div key={index} className="px-3 pb-8"> {/* Adjusted horizontal padding */}
                 <div 
-                  className="bg-lightBlue bg-opacity-30 rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl h-72 group w-full mx-auto" // Slightly reduced height
+                  className="bg-white dark:bg-lightBlue dark:bg-opacity-30 rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl h-72 group w-full mx-auto"
                   onClick={() => openModal(certificate, index)}
                 >
                   <div className="relative h-48 overflow-hidden cursor-pointer"> {/* Slightly reduced height */}
@@ -158,10 +158,10 @@ const Certificates = ({ data }) => {
                     </div>
                   </div>
                   <div className="p-4">
-                    <h3 className="text-lightestSlate text-xl font-semibold truncate"> {/* Increased font size */}
+                    <h3 className="text-xl font-semibold truncate text-gray-800 dark:text-lightestSlate font-sans"> {/* Increased font size */}
                       {certificate.course}
                     </h3>
-                    <p className="text-green text-base">{certificate.school}</p> {/* Increased font size */}
+                    <p className="text-teal-700 dark:text-green text-base font-semibold">{certificate.school}</p>
                   </div>
                 </div>
               </div>
@@ -181,7 +181,7 @@ const Certificates = ({ data }) => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ type: 'spring', duration: 0.4 }}
-            className="bg-lightBlue rounded-lg overflow-hidden max-w-4xl w-full max-h-[90vh] overflow-y-auto relative"
+            className="bg-white dark:bg-lightBlue rounded-lg overflow-hidden max-w-4xl w-full max-h-[90vh] overflow-y-auto relative"
             onClick={e => e.stopPropagation()}
           >
             {/* Navigation arrows */}
@@ -220,7 +220,7 @@ const Certificates = ({ data }) => {
             
             <div className="p-6 flex justify-between items-center">
               <div>
-                <h2 className="text-3xl font-bold text-lightestSlate mb-2">{selectedCertificate.course}</h2>
+                <h2 className="text-3xl font-bold mb-2 text-black dark:text-lightestSlate">{selectedCertificate.course}</h2>
                 <p className="text-green text-xl mb-4">{selectedCertificate.school}</p>
               </div>
               <div className="text-lightSlate">

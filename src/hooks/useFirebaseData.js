@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
 import { db } from '../firebase/config';
-import { collection, getDocs, doc, getDoc, query, orderBy } from 'firebase/firestore';
 
 // Global flag to disable Firebase fetching
 let useLocalDataOnly = false;
@@ -209,7 +209,7 @@ export const useFirebaseData = () => {
       isMounted = false;
       clearTimeout(timeoutId);
     };
-  }, []);
+  }, [loading]);
 
   return { data, loading, error };
 };

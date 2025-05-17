@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
-import { fadeIn } from '../utils/motion';
 import { useInView } from 'react-intersection-observer';
+import { fadeIn } from '../utils/motion';
 
 const About = ({ data }) => {
   const [ref, inView] = useInView({
@@ -22,7 +22,7 @@ const About = ({ data }) => {
   console.log('About component - using profile image path:', profilePic);
   
   return (
-    <section id="about" className="relative py-24">
+    <section id="about" className="relative py-24 bg-slate-100 dark:bg-darkBlue font-sans">
       <motion.div
         ref={ref}
         className="max-w-6xl mx-auto px-6 md:px-12"
@@ -31,9 +31,9 @@ const About = ({ data }) => {
           variants={fadeIn('', '', 0.1, 1)}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
-          className="section-heading font-mono text-3xl text-lightestSlate font-bold mb-16"
+          className="section-heading text-3xl md:text-5xl mb-16"
         >
-          <span className="text-green">01.</span> About Me
+          <span className="text-teal-700 dark:text-green">02.</span> About Me
         </motion.h2>
         
         <div className="grid md:grid-cols-3 gap-12 items-center">
@@ -43,17 +43,17 @@ const About = ({ data }) => {
             animate={inView ? "show" : "hidden"}
             className="md:col-span-2"
           >
-            <p className="mb-4">
-              {data.bio}
+            <p className="mb-4 text-gray-800 dark:text-lightestSlate font-sans">
+              Software engineer with proven expertise in the design, installation, testing, and maintenance of software systems. Skilled across a wide range of platforms and languages, and experienced with modern development tools and best practices. Adept at both independent work and effective collaboration within high-performing teams.
             </p>
             
-            <p className="mb-4">
+            <p className="mb-4 text-gray-800 dark:text-lightestSlate font-sans">
               I'm a versatile and innovative software engineer based in {data.address?.city}, {data.address?.state}, 
               passionate about building exceptional digital experiences that live at the 
               intersection of design and technology.
             </p>
             
-            <p>
+            <p className="text-gray-800 dark:text-lightestSlate font-sans">
               Whether I'm working on frontend interfaces or backend systems, I apply 
               the same level of attention to detail and commitment to quality. I believe 
               that well-crafted code is not only functional and efficient but also elegant 
@@ -79,11 +79,11 @@ const About = ({ data }) => {
             className="relative mx-auto"
           >
             <div className="relative w-64 h-64 md:w-72 md:h-72 rounded-md overflow-hidden">
-              <div className="absolute inset-0 bg-green opacity-20 z-10 rounded-md"></div>
+              <div className="absolute inset-0 z-10 rounded-md dark:bg-green dark:opacity-20"></div>
               <img 
                 src={profilePic} 
                 alt={data.name} 
-                className="absolute inset-0 w-full h-full object-cover z-0 rounded-md filter grayscale hover:filter-none transition-all duration-500"
+                className="absolute inset-0 w-full h-full object-cover z-0 rounded-md dark:filter dark:grayscale dark:hover:filter-none transition-all duration-500"
               />
               <div className="absolute inset-0 border-2 border-green rounded-md transform translate-x-4 translate-y-4 -z-10"></div>
             </div>

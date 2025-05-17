@@ -1,6 +1,6 @@
-import { motion } from 'framer-motion';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { motion } from 'framer-motion';
 import { Link } from 'react-scroll';
 
 const Footer = ({ data }) => {
@@ -9,7 +9,7 @@ const Footer = ({ data }) => {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="bg-darkBlue py-10">
+    <footer className="bg-slate-200 text-black dark:bg-darkBlue dark:text-lightSlate py-10">
       <div className="max-w-6xl mx-auto px-6 md:px-12">
         <div className="flex flex-col items-center">
           {/* Social Links */}

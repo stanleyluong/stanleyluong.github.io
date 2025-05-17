@@ -89,7 +89,7 @@ function App() {
 
   // App component now just returns its content, without Router or Routes
   return (
-    <div className="bg-darkBlue text-lightSlate">
+    <div className="min-h-screen bg-white text-black dark:bg-darkBlue dark:text-lightestSlate">
       <Navbar data={resumeData?.main} />
       
       <motion.div

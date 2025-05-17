@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { fadeIn } from '../utils/motion';
+import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { fadeIn } from '../utils/motion';
 
 const Experience = ({ data }) => {
   const [ref, inView] = useInView({
@@ -83,7 +83,7 @@ const Experience = ({ data }) => {
   };
 
   return (
-    <section id="experience" className="relative py-24 bg-lightBlue bg-opacity-20">
+    <section id="experience" className="relative py-24 bg-slate-100 dark:bg-darkBlue font-sans">
       <motion.div
         ref={ref}
         className="max-w-6xl mx-auto px-6 md:px-12"
@@ -92,9 +92,9 @@ const Experience = ({ data }) => {
           variants={fadeIn('', '', 0.1, 1)}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
-          className="section-heading font-mono text-3xl text-lightestSlate font-bold mb-16"
+          className="section-heading mb-16"
         >
-          <span className="text-green">02.</span> Where I've Worked
+          <span className="text-teal-700 dark:text-green">03.</span> Where I've Worked
         </motion.h2>
         
         <div className="grid md:grid-cols-4 gap-8">
@@ -111,8 +111,8 @@ const Experience = ({ data }) => {
                 onClick={() => handleTabClick(index)}
                 className={`whitespace-nowrap md:whitespace-normal py-3 px-4 font-mono text-sm text-left border-b-2 md:border-b-0 md:border-l-2 transition-all duration-300 ${
                   sortedActiveTab === index 
-                    ? 'text-green border-green bg-green bg-opacity-5' 
-                    : 'text-lightSlate border-lightBlue hover:text-green hover:border-green'
+                    ? 'text-teal-700 dark:text-green border-teal-700 dark:border-green bg-teal-50 dark:bg-green/10' 
+                    : 'text-gray-800 dark:text-lightSlate border-gray-200 dark:border-lightBlue hover:text-teal-700 dark:hover:text-green hover:border-teal-700 dark:hover:border-green'
                 }`}
               >
                 {job.company}
@@ -134,32 +134,32 @@ const Experience = ({ data }) => {
                   sortedActiveTab === index ? 'opacity-100' : 'hidden'
                 }`}
               >
-                <h3 className="text-2xl font-semibold text-lightestSlate">
-                  {job.title} <span className="text-green">@ {job.company}</span>
+                <h3 className="text-2xl font-semibold text-gray-800 dark:text-lightestSlate font-sans">
+                  {job.title} <span className="text-teal-700 dark:text-green">@ {job.company}</span>
                 </h3>
-                <p className="font-mono text-sm text-lightSlate mb-6">{job.years}</p>
+                <p className="font-mono text-sm text-gray-600 dark:text-lightSlate mb-6">{job.years}</p>
                 
                 <ul className="space-y-4">
                   {typeof job.description === 'string' ? (
                     // If it's a string, split by newlines or bullet points
                     job.description.split(/\n|•/).filter(item => item.trim()).map((desc, i) => (
-                      <li key={i} className="flex items-start">
-                        <span className="text-green mr-2 mt-1.5">▹</span>
+                      <li key={i} className="flex items-center">
+                        <span className="text-teal-700 dark:text-green mr-2">▹</span>
                         <span>{desc.trim().startsWith('•') ? desc.trim().substring(1).trim() : desc.trim()}</span>
                       </li>
                     ))
                   ) : Array.isArray(job.description) ? (
                     // If it's an array, map each item
                     job.description.map((desc, i) => (
-                      <li key={i} className="flex items-start">
-                        <span className="text-green mr-2 mt-1.5">▹</span>
+                      <li key={i} className="flex items-center">
+                        <span className="text-teal-700 dark:text-green mr-2">▹</span>
                         <span>{typeof desc === 'string' && desc.trim().startsWith('•') ? desc.trim().substring(1).trim() : desc}</span>
                       </li>
                     ))
                   ) : (
                     // Fallback for any other case
-                    <li className="flex items-start">
-                      <span className="text-green mr-2 mt-1.5">▹</span>
+                    <li className="flex items-center">
+                      <span className="text-teal-700 dark:text-green mr-2">▹</span>
                       <span>No description available</span>
                     </li>
                   )}
