@@ -64,7 +64,7 @@ const Navbar = ({ data }) => {
 
         {/* Center: Nav Links */}
         <div className="flex-1 flex justify-center">
-          <ul className="hidden md:flex gap-x-8 items-center">
+          <ul className="hidden xl:flex gap-x-8 items-center">
             {navItems.map((item, idx) => (
               <li key={item.name}>
                 <Link
@@ -102,14 +102,14 @@ const Navbar = ({ data }) => {
               href={resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className={`hidden md:flex btn-primary px-5 py-2 font-mono text-base items-center h-10 text-teal-700 border-teal-700 dark:text-green dark:border-green`}
+              className={`hidden xl:flex btn-primary px-5 py-2 font-mono text-base items-center h-10 text-teal-700 border-teal-700 dark:text-green dark:border-green`}
             >
               Download Resume
             </a>
           )}
           {/* Hamburger for mobile */}
           <button
-            className="md:hidden ml-2 p-2 rounded focus:outline-none"
+            className="xl:hidden ml-2 p-2 rounded focus:outline-none"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Open menu"
           >
@@ -122,7 +122,7 @@ const Navbar = ({ data }) => {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden fixed inset-0 bg-darkBlue bg-opacity-95 z-40 flex flex-col items-center justify-center transition-all duration-300">
+        <div className="xl:hidden fixed inset-0 bg-darkBlue bg-opacity-95 z-40 flex flex-col items-center justify-center transition-all duration-300">
           <button
             className="absolute top-6 right-6 text-3xl text-lightSlate"
             onClick={() => setMenuOpen(false)}
