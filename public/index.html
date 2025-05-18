@@ -6,37 +6,14 @@
     <meta name="theme-color" content="#0a192f">
     <meta name="description" content="Stanley Luong - Software Engineer Portfolio">
     
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
     <link rel="shortcut icon" href="%PUBLIC_URL%/images/favicon_fixed.ico">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- Legacy CSS (will be phased out) -->
-    <link rel="stylesheet" href="%PUBLIC_URL%/css/default.css">
-    <link rel="stylesheet" href="%PUBLIC_URL%/css/layout.css">
-    <link rel="stylesheet" href="%PUBLIC_URL%/css/media-queries.css">
-    <link rel="stylesheet" href="%PUBLIC_URL%/css/magnific-popup.css">
     
     <!-- Buy Me A Coffee Widget -->
     <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="stanleyluong" data-description="Support me on Buy me a coffee!" data-message="" data-color="#64ffda" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
-
-    <!-- Script for GitHub Pages SPA routing -->
-    <script type="text/javascript">
-      // Single Page Apps for GitHub Pages
-      // MIT License
-      // https://github.com/rafgraph/spa-github-pages
-      (function(l) {
-        if (l.search[1] === '/' ) {
-          var decoded = l.search.slice(1).split('&').map(function(s) { 
-            return s.replace(/~and~/g, '&')
-          }).join('?');
-          window.history.replaceState(null, null,
-              l.pathname.slice(0, -1) + decoded + l.hash
-          );
-        }
-      }(window.location))
-    </script>
 
     <script>
       // Set dark mode class on <html> before React loads, based on user or system preference
@@ -71,9 +48,5 @@
       You need to enable JavaScript to run this app.
     </noscript>
     <div id="root"></div>
-
-    <!-- Legacy Scripts (will be phased out) -->
-    <!-- Removed all legacy public/js script tags -->
-    <script type="text/javascript" src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
   </body>
 </html>
