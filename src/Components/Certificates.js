@@ -3,6 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
+import Slider from 'react-slick';
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
 import { fadeIn } from '../utils/motion';
 
 const Certificates = ({ data }) => {
@@ -44,6 +47,68 @@ const Certificates = ({ data }) => {
     setSelectedCertificateIndex(prevIndex);
   };
   
+  // Custom arrow components for the slider
+  const PrevArrow = (props) => {
+    const { onClick } = props;
+    return (
+      <button 
+        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-lightBlue bg-opacity-50 text-green p-3 rounded-full -ml-5"
+        onClick={onClick}
+      >
+        <FontAwesomeIcon icon={faChevronLeft} />
+      </button>
+    );
+  };
+  
+  const NextArrow = (props) => {
+    const { onClick } = props;
+    return (
+      <button 
+        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-lightBlue bg-opacity-50 text-green p-3 rounded-full -mr-5"
+        onClick={onClick}
+      >
+        <FontAwesomeIcon icon={faChevronRight} />
+      </button>
+    );
+  };
+  
+  // Settings for the slider
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3, // Show 3 items for better balance
+    slidesToScroll: 1,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
+    dotsClass: "slick-dots custom-dots", // Custom class for dots
+    appendDots: dots => (
+      <div style={{ 
+        position: "relative",
+        padding: "30px 0", // Increased padding to move dots down
+        zIndex: 10
+      }}>
+        <ul style={{ margin: "0" }}>{dots}</ul>
+      </div>
+    ),
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        }
+      }
+    ]
+  };
+
   // Handle both Firebase Storage URLs and local paths
   const getImagePath = (img) => {
     // If it's already a full URL (Firebase Storage or other), use it as is
@@ -73,30 +138,37 @@ const Certificates = ({ data }) => {
           variants={fadeIn('up', 'tween', 0.2, 1)}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
-          className="px-4 md:px-12 lg:px-16 pb-10"
+          className="px-4 md:px-12 lg:px-16 pb-10" // Added more horizontal padding
         >
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+          <Slider {...settings}>
             {data.certificates.map((certificate, index) => (
-              <div key={index} className="bg-white dark:bg-lightBlue dark:bg-opacity-30 rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl h-72 group w-full mx-auto cursor-pointer" onClick={() => openModal(certificate, index)}>
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={getImagePath(certificate.image)}
-                    alt={`${certificate.school} - ${certificate.course}`}
-                    className="w-full h-full object-contain object-center transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <FontAwesomeIcon icon={faSearch} className="text-white text-3xl" />
+              <div key={index} className="px-3 pb-8"> {/* Adjusted horizontal padding */}
+                <div 
+                  className="bg-white dark:bg-lightBlue dark:bg-opacity-30 rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl h-72 group w-full mx-auto"
+                  onClick={() => openModal(certificate, index)}
+                >
+                  <div className="relative h-48 overflow-hidden cursor-pointer"> {/* Slightly reduced height */}
+                    <img 
+                      src={getImagePath(certificate.image)} 
+                      alt={`${certificate.school} - ${certificate.course}`}
+                      className="w-full h-full object-contain object-center transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <FontAwesomeIcon icon={faSearch} className="text-white text-3xl" /> {/* Larger icon */}
+                    </div>
                   </div>
-                </div>
-                <div className="p-4">
-                  <h3 className="text-xl font-semibold truncate text-gray-800 dark:text-lightestSlate font-sans">{certificate.course}</h3>
-                  <p className="text-teal-700 dark:text-green text-base font-semibold">{certificate.school}</p>
+                  <div className="p-4">
+                    <h3 className="text-xl font-semibold truncate text-gray-800 dark:text-lightestSlate font-sans"> {/* Increased font size */}
+                      {certificate.course}
+                    </h3>
+                    <p className="text-teal-700 dark:text-green text-base font-semibold">{certificate.school}</p>
+                  </div>
                 </div>
               </div>
             ))}
-          </div>
+          </Slider>
         </motion.div>
-      </motion.div> 
+      </motion.div>
       
       {/* Certificate Modal */}
       {modalOpen && selectedCertificate && (

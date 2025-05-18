@@ -2,30 +2,6 @@ import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { db } from '../firebase/config';
 
-// Global flag to disable Firebase fetching
-let useLocalDataOnly = false;
-
-export const setUseLocalDataOnly = (value) => {
-  useLocalDataOnly = value;
-  localStorage.setItem('useLocalDataOnly', value ? 'true' : 'false');
-  // Force reload to apply the change
-  window.location.reload();
-};
-
-// Check local storage on load and reset to false if needed
-try {
-  const localStorageValue = localStorage.getItem('useLocalDataOnly');
-  useLocalDataOnly = localStorageValue === 'true';
-  // Reset to false if it was true, to ensure data is fetched
-  if (useLocalDataOnly) {
-    console.log('Resetting useLocalDataOnly to false to enable Firebase data fetching');
-    localStorage.setItem('useLocalDataOnly', 'false');
-    useLocalDataOnly = false;
-  }
-} catch (e) {
-  console.error('Error accessing localStorage:', e);
-}
-
 export const useFirebaseData = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -33,17 +9,8 @@ export const useFirebaseData = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Skip Firebase if using local data only
-      if (useLocalDataOnly) {
-        console.log('Firebase data fetch skipped - using local data only');
-        setLoading(false);
-        return;
-      }
-
       try {
         console.log('Attempting to fetch data from Firebase...');
-        
-        // Remove the unused timeout promise that's causing errors
         const result = {};
 
         // Fetch main profile data
@@ -176,41 +143,30 @@ export const useFirebaseData = () => {
         }
       } catch (err) {
         console.error('Error fetching data from Firebase:', err);
-        // Log specific Firebase error info
         if (err.code) {
           console.error(`Firebase error code: ${err.code}`);
         }
         setError(err);
-        
-        // Force fallback to JSON data by ensuring loading is complete
         console.log('Falling back to local JSON data due to Firebase error');
       } finally {
         setLoading(false);
       }
     };
-
-    // Add a fallback timeout in case Firebase operations hang
-    // Ensure we don't have a race condition with the loading state
     let isMounted = true;
     const timeoutId = setTimeout(() => {
-      if (isMounted && loading) {  // Only set if component is mounted and still loading
+      if (isMounted && loading) {
         console.log('Firebase data fetch timeout - forcing fallback to JSON data');
         setLoading(false);
       }
-    }, 8000);  // Reduced timeout to ensure it happens before App.js timeout
-
+    }, 8000);
     fetchData().finally(() => {
-      // Clear timeout to prevent memory leaks
       clearTimeout(timeoutId);
     });
-    
-    // Cleanup on unmount
     return () => {
       isMounted = false;
       clearTimeout(timeoutId);
     };
-  }, [loading]);
-
+  }, []);
   return { data, loading, error };
 };
 

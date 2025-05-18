@@ -18,12 +18,6 @@ const firebaseConfig = {
 // Check for stored config in localStorage (for development purposes)
 let configToUse = firebaseConfig;
 try {
-  // Clear any useLocalDataOnly flag that might be interfering with Firebase
-  if (localStorage.getItem('useLocalDataOnly') === 'true') {
-    console.log('Resetting useLocalDataOnly flag to ensure Firebase connectivity');
-    localStorage.setItem('useLocalDataOnly', 'false');
-  }
-  
   const storedConfig = localStorage.getItem('firebase_config');
   if (storedConfig) {
     const parsedConfig = JSON.parse(storedConfig);

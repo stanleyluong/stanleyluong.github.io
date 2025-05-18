@@ -5,18 +5,20 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-scroll';
 import { TypeAnimation } from 'react-type-animation';
 import { fadeIn, textVariant } from '../utils/motion';
+import { useMemo } from 'react';
 
 const Hero = ({ data }) => {
+  console.log('Hero render', data);
+  
+  const typeSequence = useMemo(() => {
+    const occupationArray = Array.isArray(data.occupation) ? data.occupation : [];
+    const seq = [];
+    occupationArray.forEach(occupation => {
+      seq.push(occupation, 1500);
+    });
+    return seq;
+  }, [data.occupation]);
   if (!data) return null;
-
-  // Use the occupation array directly from data
-  const occupationArray = Array.isArray(data.occupation) ? data.occupation : [];
-  // Create the sequence for TypeAnimation
-  const typeSequence = [];
-  occupationArray.forEach(occupation => {
-    typeSequence.push(occupation, 1500);
-  });
-
   return (
     <section id="hero" className="relative h-screen flex items-center justify-center overflow-hidden bg-white text-black dark:bg-darkBlue dark:text-lightestSlate">
       <div className="absolute inset-0 bg-white bg-gradient-to-b from-white to-slate-200 dark:bg-darkBlue dark:from-darkBlue dark:to-lightBlue opacity-80"></div>
