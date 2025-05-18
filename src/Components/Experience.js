@@ -1,22 +1,42 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { fadeIn } from '../utils/motion';
 
 const Experience = ({ data }) => {
+  // All hooks at the top
+  const [sortedActiveTab, setSortedActiveTab] = useState(0);
+  const scrollRef = useRef(null);
+  const [showRightArrow, setShowRightArrow] = useState(false);
   const [ref, inView] = useInView({
     threshold: 0.1,
     triggerOnce: true
   });
-  
-  // Initialize state hooks first (before any conditional returns)
-  const [sortedActiveTab, setSortedActiveTab] = useState(0);
-  
-  console.log("Experience data received:", data);
+
+  useEffect(() => {
+    const checkScroll = () => {
+      if (!scrollRef.current) return;
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      setShowRightArrow(scrollLeft + clientWidth < scrollWidth - 5);
+    };
+    checkScroll();
+    const refEl = scrollRef.current;
+    if (refEl) {
+      refEl.addEventListener('scroll', checkScroll);
+      window.addEventListener('resize', checkScroll);
+    }
+    return () => {
+      if (refEl) refEl.removeEventListener('scroll', checkScroll);
+      window.removeEventListener('resize', checkScroll);
+    };
+  }, [data?.work?.length]);
+
+  // Early return after all hooks
   if (!data || !data.work || data.work.length === 0) {
-    console.log("No work experience data found");
     return null;
   }
+
+  console.log("Experience data received:", data);
   
   // Helper function to extract date score for sorting from years string
   const getDateScore = (yearsString) => {
@@ -103,8 +123,13 @@ const Experience = ({ data }) => {
             variants={fadeIn('right', 'tween', 0.2, 1)}
             initial="hidden"
             animate={inView ? "show" : "hidden"}
-            className="flex md:flex-col overflow-x-auto md:overflow-x-visible scrollbar-hide"
+            className="flex md:flex-col overflow-x-auto md:overflow-x-visible scrollbar-thin scrollbar-thumb-green scrollbar-track-lightBlue relative pr-10"
+            style={{ WebkitOverflowScrolling: 'touch' }}
+            ref={scrollRef}
           >
+            {/* Fade overlay for scroll cue */}
+            <div className="absolute right-0 top-0 h-full w-8 pointer-events-none bg-gradient-to-l from-white/80 dark:from-darkBlue/80 to-transparent z-10 hidden sm:block" />
+            {/* Company buttons */}
             {sortedWork.map((job, index) => (
               <button
                 key={index}
@@ -119,6 +144,13 @@ const Experience = ({ data }) => {
               </button>
             ))}
           </motion.div>
+          
+          {/* Right arrow cue for mobile, outside scroll area */}
+          {showRightArrow && (
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 z-20 block md:hidden pointer-events-none">
+              <svg className="w-6 h-6 text-green animate-bounce-x" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+            </div>
+          )}
           
           {/* Tab Content */}
           <motion.div 

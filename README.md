@@ -1,70 +1,83 @@
-# Getting Started with Create React App
+# Stanley Luong | Software Engineer Portfolio
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern, responsive personal portfolio website built with **React** and **Tailwind CSS**, featuring live data powered by **Firebase**. Includes a secure admin dashboard for managing projects, certificates, skills, work experience, and education—all in real time.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚀 Features
 
-### `npm start`
+- **Modern UI/UX**: Clean, accessible, and mobile-friendly design using React and Tailwind CSS.
+- **Live Data**: All portfolio content (projects, skills, certificates, etc.) is managed in Firebase Firestore.
+- **Admin Dashboard**: Secure login for managing portfolio content (add, edit, delete) with instant updates.
+- **No Legacy Code**: No jQuery, no legacy CSS/JS, no local JSON fallback—100% modern stack.
+- **Animations**: Smooth transitions and section reveals using Framer Motion.
+- **Accessibility**: High color contrast, keyboard navigation, and screen reader friendly.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+---
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 🛠️ Tech Stack
 
-### `npm test`
+- **Frontend**: React, Tailwind CSS, Framer Motion
+- **Backend/Database**: Firebase Firestore, Firebase Auth, Firebase Storage
+- **Icons**: Font Awesome React
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 📦 Getting Started
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 1. **Clone the repository**
+```bash
+git clone https://github.com/stanleyluong/stanleyluong.github.io.git
+cd stanleyluong.github.io
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 2. **Install dependencies**
+```bash
+npm install
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 3. **Configure Firebase**
+- Create a Firebase project at [firebase.google.com](https://firebase.google.com/).
+- In the Firebase Console, add a web app and copy your config.
+- Create a `.env` file in the root with your Firebase credentials:
+  ```env
+  REACT_APP_FIREBASE_API_KEY=your-api-key
+  REACT_APP_FIREBASE_AUTH_DOMAIN=your-auth-domain
+  REACT_APP_FIREBASE_PROJECT_ID=your-project-id
+  REACT_APP_FIREBASE_STORAGE_BUCKET=your-storage-bucket
+  REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your-messaging-sender-id
+  REACT_APP_FIREBASE_APP_ID=your-app-id
+  REACT_APP_FIREBASE_MEASUREMENT_ID=your-measurement-id
+  ```
 
-### `npm run eject`
+### 4. **Run the app locally**
+```bash
+npm start
+```
+Visit [http://localhost:3000](http://localhost:3000)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+---
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🔒 Admin Dashboard
+- Go to `/admin` (e.g., `http://localhost:3000/admin`)
+- Log in with your Firebase Auth credentials (email/password)
+- Manage all portfolio content in real time
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+---
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## 🚀 Deployment
+- Build for production:
+  ```bash
+  npm run build
+  ```
+- Deploy the `build/` folder to your preferred static hosting (GitHub Pages, Vercel, Netlify, Firebase Hosting, etc.)
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🤝 Contributing
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 📄 License
+MIT

@@ -60,7 +60,7 @@ const About = ({ data }) => {
               and maintainable.
             </p>
             
-            <div className="mt-8">
+            <div className="mt-8 flex justify-center w-full">
               <a
                 href={data.resumedownload}
                 target="_blank"

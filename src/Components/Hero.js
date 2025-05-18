@@ -5,25 +5,15 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-scroll';
 import { TypeAnimation } from 'react-type-animation';
 import { fadeIn, textVariant } from '../utils/motion';
-import { useMemo } from 'react';
 
 const Hero = ({ data }) => {
-  console.log('Hero render', data);
+  const typeSequence = ['Software Engineer', 250, 'Full Stack Developer', 250, 'Data Scientist', 250, 'Cloud Architect', 250];
   
-  const typeSequence = useMemo(() => {
-    const occupationArray = Array.isArray(data.occupation) ? data.occupation : [];
-    const seq = [];
-    occupationArray.forEach(occupation => {
-      seq.push(occupation, 1500);
-    });
-    return seq;
-  }, [data.occupation]);
-  if (!data) return null;
   return (
-    <section id="hero" className="relative h-screen flex items-center justify-center overflow-hidden bg-white text-black dark:bg-darkBlue dark:text-lightestSlate">
+    <section id="hero" className="relative h-screen flex items-center justify-center overflow-hidden bg-white text-black dark:bg-darkBlue dark:text-lightestSlate pt-28 md:pt-36">
       <div className="absolute inset-0 bg-white bg-gradient-to-b from-white to-slate-200 dark:bg-darkBlue dark:from-darkBlue dark:to-lightBlue opacity-80"></div>
       
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
+      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto mt-8">
         <motion.div
           variants={textVariant(0.1)}
           initial="hidden"

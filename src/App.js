@@ -54,7 +54,7 @@ function App() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        {/* <Hero data={resumeData?.main} /> */}
+        <Hero data={resumeData?.main} />
         <About data={resumeData?.main} />
         <Experience data={resumeData?.resume} />
         <Skills data={resumeData?.resume} />

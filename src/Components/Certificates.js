@@ -1,7 +1,7 @@
 import { faChevronLeft, faChevronRight, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick-theme.css";
@@ -10,7 +10,7 @@ import { fadeIn } from '../utils/motion';
 
 const Certificates = ({ data }) => {
   const [ref, inView] = useInView({
-    threshold: 0.1,
+    threshold: 0.01,
     triggerOnce: true
   });
   
@@ -18,7 +18,33 @@ const Certificates = ({ data }) => {
   const [selectedCertificateIndex, setSelectedCertificateIndex] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   
-  if (!data || !data.certificates || data.certificates.length === 0) return null;
+  // Track mobile/desktop view
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+  
+  if (!data || !data.certificates) {
+    return (
+      <section id="certificates" className="relative py-24 bg-slate-100 dark:bg-darkBlue font-sans">
+        <div className="flex items-center justify-center h-40">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green"></div>
+        </div>
+      </section>
+    );
+  }
+  if (data.certificates.length === 0) {
+    return (
+      <section id="certificates" className="relative py-24 bg-slate-100 dark:bg-darkBlue font-sans">
+        <div className="flex items-center justify-center h-40">
+          <p className="text-lightSlate">No certificates found.</p>
+        </div>
+      </section>
+    );
+  }
 
   const openModal = (certificate, index) => {
     setSelectedCertificate(certificate);
@@ -120,7 +146,7 @@ const Certificates = ({ data }) => {
   };
 
   return (
-    <section id="certificates" className="relative py-24 bg-slate-100 dark:bg-darkBlue font-sans">
+    <section id="certificates" className="relative py-12 md:py-24 bg-slate-100 dark:bg-darkBlue font-sans">
       <motion.div
         ref={ref}
         className="max-w-7xl mx-auto px-6 md:px-12"
@@ -133,40 +159,65 @@ const Certificates = ({ data }) => {
         >
           <span className="text-teal-700 dark:text-green">06.</span> Certifications
         </motion.h2>
-        
+        {/* Fallback grid if Slider fails */}
         <motion.div
           variants={fadeIn('up', 'tween', 0.2, 1)}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
-          className="px-4 md:px-12 lg:px-16 pb-10" // Added more horizontal padding
+          className="px-4 md:px-12 lg:px-16 pb-10"
         >
-          <Slider {...settings}>
-            {data.certificates.map((certificate, index) => (
-              <div key={index} className="px-3 pb-8"> {/* Adjusted horizontal padding */}
-                <div 
-                  className="bg-white dark:bg-lightBlue dark:bg-opacity-30 rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl h-72 group w-full mx-auto"
-                  onClick={() => openModal(certificate, index)}
-                >
-                  <div className="relative h-48 overflow-hidden cursor-pointer"> {/* Slightly reduced height */}
+          {isMobile ? (
+            <div className="grid grid-cols-1 gap-6">
+              {data.certificates.map((certificate, index) => (
+                <div key={index} className="bg-white dark:bg-lightBlue dark:bg-opacity-30 rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl h-72 group w-full mx-auto">
+                  <div className="relative h-48 overflow-hidden cursor-pointer" onClick={() => openModal(certificate, index)}>
                     <img 
                       src={getImagePath(certificate.image)} 
                       alt={`${certificate.school} - ${certificate.course}`}
                       className="w-full h-full object-contain object-center transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <FontAwesomeIcon icon={faSearch} className="text-white text-3xl" /> {/* Larger icon */}
+                      <FontAwesomeIcon icon={faSearch} className="text-white text-3xl" />
                     </div>
                   </div>
                   <div className="p-4">
-                    <h3 className="text-xl font-semibold truncate text-gray-800 dark:text-lightestSlate font-sans"> {/* Increased font size */}
+                    <h3 className="text-xl font-semibold truncate text-gray-800 dark:text-lightestSlate font-sans">
                       {certificate.course}
                     </h3>
                     <p className="text-teal-700 dark:text-green text-base font-semibold">{certificate.school}</p>
                   </div>
                 </div>
-              </div>
-            ))}
-          </Slider>
+              ))}
+            </div>
+          ) : (
+            <Slider {...settings}>
+              {data.certificates.map((certificate, index) => (
+                <div key={index} className="px-3 pb-8">
+                  <div 
+                    className="bg-white dark:bg-lightBlue dark:bg-opacity-30 rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl h-72 group w-full mx-auto"
+                    onClick={() => openModal(certificate, index)}
+                  >
+                    <div className="relative h-48 overflow-hidden cursor-pointer">
+                      <img 
+                        src={getImagePath(certificate.image)} 
+                        alt={`${certificate.school} - ${certificate.course}`}
+                        className="w-full h-full object-contain object-center transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <FontAwesomeIcon icon={faSearch} className="text-white text-3xl" />
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <h3 className="text-xl font-semibold truncate text-gray-800 dark:text-lightestSlate font-sans">
+                        {certificate.course}
+                      </h3>
+                      <p className="text-teal-700 dark:text-green text-base font-semibold">{certificate.school}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </Slider>
+          )}
         </motion.div>
       </motion.div>
       

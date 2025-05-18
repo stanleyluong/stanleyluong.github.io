@@ -7,7 +7,8 @@ import { fadeIn } from '../utils/motion';
 
 const Projects = ({ data }) => {
   const [ref, inView] = useInView({
-    threshold: 0.1,
+    threshold: 0,
+    rootMargin: '-50% 0px',
     triggerOnce: true
   });
   

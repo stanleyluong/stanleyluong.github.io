@@ -44,11 +44,11 @@ const Navbar = ({ data }) => {
     <nav
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         scrolled
-          ? (dark ? 'bg-darkBlue bg-opacity-95 shadow-lg py-2' : 'bg-white shadow-lg py-2')
-          : (dark ? 'bg-transparent py-4' : 'bg-transparent py-4')
+          ? (dark ? 'bg-darkBlue bg-opacity-95 shadow-lg py-4' : 'bg-white shadow-lg py-4')
+          : (dark ? 'bg-transparent py-6' : 'bg-transparent py-6')
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center h-16">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center h-20">
         {/* Left: Logo */}
         <div className="flex items-center flex-shrink-0 mr-8">
           <Link
@@ -84,7 +84,7 @@ const Navbar = ({ data }) => {
         </div>
 
         {/* Right: Theme Toggle + Resume + Hamburger */}
-        <div className="flex items-center gap-x-6">
+        <div className="flex items-center gap-x-8">
           <button
             onClick={() => setDark(!dark)}
             className="p-2 rounded text-xl flex items-center justify-center focus:outline-none h-10 w-10"
