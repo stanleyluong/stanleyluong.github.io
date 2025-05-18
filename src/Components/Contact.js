@@ -1,31 +1,43 @@
+import emailjs from '@emailjs/browser';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { fadeIn } from '../utils/motion';
 
+const SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICE_ID;
+const PUBLIC_KEY = process.env.REACT_APP_EMAILJS_PUBLIC_KEY;
+const TEMPLATE_ID_NOTIFICATION = process.env.REACT_APP_EMAILJS_TEMPLATE_ID_NOTIFICATION;
+const TEMPLATE_ID_CONFIRMATION = process.env.REACT_APP_EMAILJS_TEMPLATE_ID_CONFIRMATION;
+
 const Contact = ({ data }) => {
   const [ref, inView] = useInView({ threshold: 0.1, triggerOnce: true });
-  const [formState, setFormState] = useState({ name: '', email: '', subject: '', message: '' });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
+  const formRef = useRef();
+  const [status, setStatus] = useState(null);
   if (!data) return null;
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormState(prev => ({ ...prev, [name]: value }));
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitStatus('success');
-      setFormState({ name: '', email: '', subject: '', message: '' });
-      setTimeout(() => setSubmitStatus(null), 5000);
-    }, 1500);
+    setStatus('loading');
+    // Send notification to you
+    emailjs.sendForm(
+      SERVICE_ID,
+      TEMPLATE_ID_NOTIFICATION,
+      formRef.current,
+      PUBLIC_KEY
+    ).then(() => {
+      // Send confirmation to submitter
+      emailjs.sendForm(
+        SERVICE_ID,
+        TEMPLATE_ID_CONFIRMATION,
+        formRef.current,
+        PUBLIC_KEY
+      ).then(() => {
+        setStatus('success');
+        formRef.current.reset();
+      }).catch(() => setStatus('error'));
+    }).catch(() => setStatus('error'));
   };
 
   return (
@@ -51,6 +63,7 @@ const Contact = ({ data }) => {
           I'm currently looking for new opportunities and my inbox is always open. Whether you have a question, a project proposal, or just want to say hi, I'll do my best to get back to you!
         </motion.p>
         <motion.form
+          ref={formRef}
           variants={fadeIn('up', 'tween', 0.3, 1)}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
@@ -65,8 +78,6 @@ const Contact = ({ data }) => {
                 id="name"
                 name="name"
                 required
-                value={formState.name}
-                onChange={handleChange}
                 className="w-full px-4 py-2 bg-gray-100 dark:bg-slate-800 border border-lightBlue dark:border-slate-600 rounded focus:border-teal-700 focus:outline-none text-gray-800 dark:text-lightestSlate placeholder-gray-400 dark:placeholder-lightestSlate"
               />
             </div>
@@ -77,8 +88,6 @@ const Contact = ({ data }) => {
                 id="email"
                 name="email"
                 required
-                value={formState.email}
-                onChange={handleChange}
                 className="w-full px-4 py-2 bg-gray-100 dark:bg-slate-800 border border-lightBlue dark:border-slate-600 rounded focus:border-teal-700 focus:outline-none text-gray-800 dark:text-lightestSlate placeholder-gray-400 dark:placeholder-lightestSlate"
               />
             </div>
@@ -90,8 +99,6 @@ const Contact = ({ data }) => {
               id="subject"
               name="subject"
               required
-              value={formState.subject}
-              onChange={handleChange}
               className="w-full px-4 py-2 bg-gray-100 dark:bg-slate-800 border border-lightBlue dark:border-slate-600 rounded focus:border-teal-700 focus:outline-none text-gray-800 dark:text-lightestSlate placeholder-gray-400 dark:placeholder-lightestSlate"
             />
           </div>
@@ -102,28 +109,27 @@ const Contact = ({ data }) => {
               name="message"
               rows="5"
               required
-              value={formState.message}
-              onChange={handleChange}
               className="w-full px-4 py-2 bg-gray-100 dark:bg-slate-800 border border-lightBlue dark:border-slate-600 rounded focus:border-teal-700 focus:outline-none text-gray-800 dark:text-lightestSlate placeholder-gray-400 dark:placeholder-lightestSlate resize-none"
             ></textarea>
           </div>
           <div className="flex justify-end">
             <button
               type="submit"
-              disabled={isSubmitting}
               className="btn-primary flex items-center space-x-2 border-teal-700 text-teal-700 hover:bg-teal-50 dark:border-green dark:text-green dark:hover:bg-green/10"
+              disabled={status === 'loading'}
             >
-              <span>Send Message</span>
-              {isSubmitting ? (
-                <div className="animate-spin h-4 w-4 border-2 border-white rounded-full border-t-transparent"></div>
-              ) : (
-                <FontAwesomeIcon icon={faPaperPlane} />
-              )}
+              <span>{status === 'loading' ? 'Sending...' : 'Send Message'}</span>
+              <FontAwesomeIcon icon={faPaperPlane} />
             </button>
           </div>
-          {submitStatus === 'success' && (
+          {status === 'success' && (
             <div className="mt-4 p-3 bg-teal-100 border border-teal-700 rounded text-teal-700 dark:bg-green dark:bg-opacity-20 dark:border-green dark:text-green">
-              Your message has been sent successfully! I'll get back to you soon.
+              Your message has been sent successfully! Thank you.
+            </div>
+          )}
+          {status === 'error' && (
+            <div className="mt-4 p-3 bg-red-100 border border-red-700 rounded text-red-700 dark:bg-red-900 dark:bg-opacity-20 dark:border-red-500 dark:text-red-400">
+              Something went wrong. Please try again.
             </div>
           )}
         </motion.form>

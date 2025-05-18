@@ -166,6 +166,7 @@ export const useFirebaseData = () => {
       isMounted = false;
       clearTimeout(timeoutId);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return { data, loading, error };
 };

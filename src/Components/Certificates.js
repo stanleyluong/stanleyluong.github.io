@@ -1,7 +1,7 @@
 import { faChevronLeft, faChevronRight, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
@@ -16,15 +16,6 @@ const Certificates = ({ data }) => {
   const [selectedCertificate, setSelectedCertificate] = useState(null);
   const [selectedCertificateIndex, setSelectedCertificateIndex] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
-  
-  // Track mobile/desktop view
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 640);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
   
   if (!data || !data.certificates) {
     return (
@@ -72,68 +63,6 @@ const Certificates = ({ data }) => {
     setSelectedCertificateIndex(prevIndex);
   };
   
-  // Custom arrow components for the slider
-  const PrevArrow = (props) => {
-    const { onClick } = props;
-    return (
-      <button 
-        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-lightBlue bg-opacity-50 text-green p-3 rounded-full -ml-5"
-        onClick={onClick}
-      >
-        <FontAwesomeIcon icon={faChevronLeft} />
-      </button>
-    );
-  };
-  
-  const NextArrow = (props) => {
-    const { onClick } = props;
-    return (
-      <button 
-        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-lightBlue bg-opacity-50 text-green p-3 rounded-full -mr-5"
-        onClick={onClick}
-      >
-        <FontAwesomeIcon icon={faChevronRight} />
-      </button>
-    );
-  };
-  
-  // Settings for the slider
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3, // Show 3 items for better balance
-    slidesToScroll: 1,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
-    dotsClass: "slick-dots custom-dots", // Custom class for dots
-    appendDots: dots => (
-      <div style={{ 
-        position: "relative",
-        padding: "30px 0", // Increased padding to move dots down
-        zIndex: 10
-      }}>
-        <ul style={{ margin: "0" }}>{dots}</ul>
-      </div>
-    ),
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        }
-      },
-      {
-        breakpoint: 640,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        }
-      }
-    ]
-  };
-
   // Handle both Firebase Storage URLs and local paths
   const getImagePath = (img) => {
     // If it's already a full URL (Firebase Storage or other), use it as is
