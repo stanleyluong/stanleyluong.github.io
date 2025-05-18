@@ -38,6 +38,19 @@
       }(window.location))
     </script>
 
+    <script>
+      // Set dark mode class on <html> before React loads, based on user or system preference
+      try {
+        const userPref = localStorage.getItem('theme');
+        const systemPref = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (userPref === 'dark' || (!userPref && systemPref)) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      } catch (e) {}
+    </script>
+
     <style>
       html, body {
         width: 100%;

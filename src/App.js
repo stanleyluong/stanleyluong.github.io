@@ -1,16 +1,16 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import ReactGA from 'react-ga';
-import useFirebaseData from './hooks/useFirebaseData';
 import About from './Components/About';
 import Certificates from './Components/Certificates';
 import Contact from './Components/Contact';
 import Experience from './Components/Experience';
-import Projects from './Components/Projects';
-import Skills from './Components/Skills';
 import Footer from './Components/Footer';
 import Hero from './Components/Hero';
 import Navbar from './Components/Navbar';
+import Projects from './Components/Projects';
+import Skills from './Components/Skills';
+import useFirebaseData from './hooks/useFirebaseData';
 
 function App() {
   const { data: firebaseData, loading: firebaseLoading } = useFirebaseData();
@@ -35,8 +35,8 @@ function App() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen bg-darkBlue">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-green"></div>
+      <div className="flex items-center justify-center h-screen bg-white dark:bg-darkBlue">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-teal-700 dark:border-green"></div>
       </div>
     );
   }

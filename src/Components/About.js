@@ -71,11 +71,10 @@ const About = ({ data }) => {
             className="relative mx-auto"
           >
             <div className="relative w-64 h-64 md:w-72 md:h-72 rounded-md overflow-hidden">
-              <div className="absolute inset-0 z-10 rounded-md dark:bg-green dark:opacity-20"></div>
               <img 
                 src={profilePic} 
                 alt={data.name} 
-                className="absolute inset-0 w-full h-full object-contain z-0 rounded-md dark:filter dark:grayscale dark:hover:filter-none transition-all duration-500"
+                className="absolute inset-0 w-full h-full object-contain z-0 rounded-md transition-all duration-500"
               />
             </div>
           </motion.div>

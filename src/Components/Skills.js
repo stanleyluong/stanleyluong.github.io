@@ -61,7 +61,7 @@ const Skills = ({ data }) => {
   };
 
   return (
-    <section id="skills" className="relative py-24 bg-slate-100 dark:bg-darkBlue font-sans">
+    <section id="skills" className="relative py-12 bg-slate-100 dark:bg-darkBlue font-sans">
       <motion.div
         ref={ref}
         className="max-w-7xl mx-auto px-6 md:px-12"
@@ -70,7 +70,7 @@ const Skills = ({ data }) => {
           variants={fadeIn('', '', 0.1, 1)}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
-          className="section-heading mb-16"
+          className="section-heading mb-8"
         >
           <span className="text-teal-700 dark:text-green">04.</span> Skills
         </motion.h2>

@@ -6,9 +6,9 @@ import { useInView } from 'react-intersection-observer';
 import { fadeIn } from '../utils/motion';
 
 const Projects = ({ data }) => {
-  const [ref, inView] = useInView({
+  const [gridRef, inView] = useInView({
     threshold: 0,
-    rootMargin: '-50% 0px',
+    rootMargin: '0px',
     triggerOnce: true
   });
   
@@ -115,9 +115,8 @@ const Projects = ({ data }) => {
   };
 
   return (
-    <section id="projects" className="relative py-24 bg-slate-100 dark:bg-darkBlue font-sans">
+    <section id="projects" className="relative py-12 bg-slate-100 dark:bg-darkBlue font-sans">
       <motion.div
-        ref={ref}
         className="max-w-7xl mx-auto px-6 md:px-12"
       >
         <motion.h2 
@@ -163,7 +162,7 @@ const Projects = ({ data }) => {
         )}
         
         {/* Projects Grid */}
-        <div ref={projectsGridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {displayProjects.map((project, index) => {
             // Use thumbnail if available, fallback to image
             const projectImage = project.thumbnail || project.image;
