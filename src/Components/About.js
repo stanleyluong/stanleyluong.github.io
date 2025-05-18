@@ -10,16 +10,8 @@ const About = ({ data }) => {
 
   if (!data) return null;
 
-  // Handle both Firebase and local image paths
-  console.log('About component - profile image data:', data.image);
-  
-  const profilePic = data.image && data.image.startsWith('http') 
-    ? data.image 
-    : data.image && data.image.startsWith('/') 
-      ? data.image 
-      : '/images/' + (data.image || 'profilepic.webp');
-  
-  console.log('About component - using profile image path:', profilePic);
+  // Hardcode the profile picture to the new image
+  const profilePic = '/images/ghibli_profile_pic.png';
   
   return (
     <section id="about" className="relative py-24 bg-slate-100 dark:bg-darkBlue font-sans">
@@ -83,9 +75,8 @@ const About = ({ data }) => {
               <img 
                 src={profilePic} 
                 alt={data.name} 
-                className="absolute inset-0 w-full h-full object-cover z-0 rounded-md dark:filter dark:grayscale dark:hover:filter-none transition-all duration-500"
+                className="absolute inset-0 w-full h-full object-contain z-0 rounded-md dark:filter dark:grayscale dark:hover:filter-none transition-all duration-500"
               />
-              <div className="absolute inset-0 border-2 border-green rounded-md transform translate-x-4 translate-y-4 -z-10"></div>
             </div>
           </motion.div>
         </div>
