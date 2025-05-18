@@ -134,13 +134,13 @@ const Projects = ({ data }) => {
           variants={fadeIn('down', 'spring', 0.2, 0.8)}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
-          className="flex flex-wrap justify-center gap-3 mb-12"
+          className="flex flex-wrap justify-center gap-1 mb-8"
         >
           {tags.map(([tag, count], index) => (
             <button
               key={index}
               onClick={() => handleTagClick(tag)}
-              className={`py-2 px-4 rounded-full font-mono text-base transition-all duration-300 ${
+              className={`py-1 px-2 rounded-full font-mono text-xs transition-all duration-300 ${
                 activeFilter === tag 
                   ? 'bg-teal-700 text-white dark:bg-green dark:text-darkBlue' 
                   : 'border border-teal-700 text-teal-700 hover:bg-teal-50 dark:border-green dark:text-green dark:hover:bg-green/10'
@@ -250,7 +250,7 @@ const Projects = ({ data }) => {
                       {project.tags.slice(0, 3).map((tag, index) => (
                         <span 
                           key={index} 
-                          className="px-2 py-0.5 text-xs bg-teal-50 text-teal-700 rounded-full dark:bg-green/10 dark:text-green"
+                          className="px-1.5 py-0.5 text-xs bg-teal-50 text-teal-700 rounded-full dark:bg-green/10 dark:text-green"
                         >
                           {tag}
                         </span>

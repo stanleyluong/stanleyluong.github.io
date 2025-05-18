@@ -10,10 +10,8 @@ const Hero = ({ data }) => {
   const typeSequence = ['Software Engineer', 250, 'Full Stack Developer', 250, 'Data Scientist', 250, 'Cloud Architect', 250];
   
   return (
-    <section id="hero" className="relative h-screen flex items-center justify-center overflow-hidden bg-white text-black dark:bg-darkBlue dark:text-lightestSlate pt-28 md:pt-36">
-      <div className="absolute inset-0 bg-white bg-gradient-to-b from-white to-slate-200 dark:bg-darkBlue dark:from-darkBlue dark:to-lightBlue opacity-80"></div>
-      
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto mt-8">
+    <section id="hero" className="relative min-h-screen flex flex-col items-center justify-center bg-white text-black dark:bg-darkBlue dark:text-lightestSlate pt-24">
+      <div className="w-full max-w-4xl px-6 text-center flex flex-col items-center justify-center">
         <motion.div
           variants={textVariant(0.1)}
           initial="hidden"
@@ -21,7 +19,6 @@ const Hero = ({ data }) => {
         >
           <h4 className="font-mono mb-5 md:text-lg text-teal-700 dark:text-green">Hi, my name is</h4>
         </motion.div>
-        
         <motion.div
           variants={textVariant(0.2)}
           initial="hidden"
@@ -31,7 +28,6 @@ const Hero = ({ data }) => {
             {data.name}
           </h1>
         </motion.div>
-        
         <motion.div
           variants={textVariant(0.3)}
           initial="hidden"
@@ -50,17 +46,15 @@ const Hero = ({ data }) => {
             </span>
           </h2>
         </motion.div>
-        
         <motion.div
           variants={fadeIn('up', 'tween', 0.4, 1)}
           initial="hidden"
           animate="show"
-          className="mt-16"
+          className="mt-2"
         >
           <p className="text-slate-700 dark:text-slate max-w-2xl mx-auto mb-12 text-lg">
             {data.bio}
           </p>
-          
           <div className="flex justify-center space-x-6">
             {data.social && data.social.map((network, index) => {
               let icon;
@@ -95,23 +89,17 @@ const Hero = ({ data }) => {
             </a>
           </div>
         </motion.div>
+        <div className="flex flex-col items-center mt-8">
+          <Link
+            to="about"
+            smooth={true}
+            duration={500}
+            className="cursor-pointer text-teal-700 dark:text-green animate-bounce"
+          >
+            <FontAwesomeIcon icon={faChevronDown} className="h-8 w-8" />
+          </Link>
+        </div>
       </div>
-      
-      <motion.div
-        variants={fadeIn('up', 'tween', 0.6, 1)}
-        initial="hidden"
-        animate="show"
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-      >
-        <Link
-          to="about"
-          smooth={true}
-          duration={500}
-          className="cursor-pointer text-teal-700 dark:text-green animate-bounce"
-        >
-          <FontAwesomeIcon icon={faChevronDown} className="h-8 w-8" />
-        </Link>
-      </motion.div>
     </section>
   );
 };
