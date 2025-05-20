@@ -94,6 +94,7 @@ const Hero = ({ data }) => {
             to="about"
             smooth={true}
             duration={500}
+            offset={-70}
             className="cursor-pointer text-teal-700 dark:text-green animate-bounce"
           >
             <FontAwesomeIcon icon={faChevronDown} className="h-8 w-8" />
