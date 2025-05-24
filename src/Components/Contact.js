@@ -44,13 +44,13 @@ const Contact = ({ data }) => {
     <section id="contact" className="relative pt-28 py-12 bg-slate-100 dark:bg-darkBlue font-sans scroll-mt-24">
       <motion.div
         ref={ref}
-        className="max-w-3xl mx-auto px-6 md:px-12"
+        className="max-w-7xl mx-auto px-6 md:px-12"
       >
-        <motion.h2
+        <motion.h2 
           variants={fadeIn('', '', 0.1, 1)}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
-          className="section-heading mb-6 flex items-center"
+          className="section-heading mb-8 flex items-center"
         >
           <FontAwesomeIcon icon={faEnvelope} className="text-teal-700 dark:text-green mr-3" />
           <span>Contact</span>
@@ -59,7 +59,7 @@ const Contact = ({ data }) => {
           variants={fadeIn('up', 'tween', 0.2, 1)}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
-          className="text-center mb-10 max-w-2xl mx-auto text-lg text-gray-800 dark:text-lightestSlate font-sans"
+          className="mb-10 max-w-4xl text-lg text-gray-800 dark:text-lightestSlate font-sans"
         >
           I'm currently looking for new opportunities and my inbox is always open. Whether you have a question, a project proposal, or just want to say hi, I'll do my best to get back to you!
         </motion.p>

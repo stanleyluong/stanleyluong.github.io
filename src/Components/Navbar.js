@@ -5,29 +5,34 @@ import {
   faTimes, faBars
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect, useState } from 'react'; 
-import { Link } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react'; 
+import { Link, useLocation } from 'react-router-dom';
 
 const Navbar = ({ data }) => {
   const [dark, setDark] = useState(() =>
     localStorage.theme === 'dark' ||
     (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
   );
-  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
+  const [activeTooltip, setActiveTooltip] = useState(null);
+  const tooltipTimeout = useRef(null);
+  
+  const showTooltip = (index) => {
+    clearTimeout(tooltipTimeout.current);
+    setActiveTooltip(index);
+  };
+  
+  const hideTooltip = () => {
+    tooltipTimeout.current = setTimeout(() => {
+      setActiveTooltip(null);
+    }, 200);
+  };
 
   const githubUrl = data?.social?.find(s => s.name.toLowerCase() === 'github')?.url;
   const linkedinUrl = data?.social?.find(s => s.name.toLowerCase() === 'linkedin')?.url;
   // Force English version with simplified language parameter
   const buyMeACoffeeUrl = "https://buymeacoffee.com/stanleyluong?l=en";
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 100);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   useEffect(() => {
     if (dark) {
@@ -47,11 +52,18 @@ const Navbar = ({ data }) => {
     { name: 'Certificates', path: '/certificates', icon: faAward },
     { name: 'Contact', path: '/contact', icon: faEnvelope },
   ];
+  
+  // Check if current path matches nav item
+  const isActive = (path) => {
+    return location.pathname === path;
+  };
   const resumeUrl = data?.resumedownload;
 
   return (
-    <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white dark:bg-darkBlue shadow-lg py-4' : 'bg-transparent py-6'}`}
+    <nav 
+      className={`fixed top-0 left-0 right-0 py-4 px-4 sm:px-6 lg:px-8 transition-all duration-300 z-50 ${
+        dark ? 'bg-darkBlue' : 'bg-darkGreen'
+      } shadow-lg`}
     >
       <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between xl:justify-center">
         {/* Single group for all desktop-visible icons */}
@@ -63,79 +75,156 @@ const Navbar = ({ data }) => {
             &lt;SL /&gt;
           </Link>
           {/* Main Nav Icons */}
-          {navItems.map((item) => (
-            <Link
-              key={item.name}
-              to={item.path}
-              className="flex items-center justify-center h-10 w-10 rounded text-xl text-lightSlate hover:text-green transition-colors duration-300 flex-shrink-0"
-              title={item.name}
-              aria-label={item.name}
-            >
-              <FontAwesomeIcon icon={item.icon} />
-            </Link>
+          {navItems.map((item, index) => (
+            <div key={item.name} className="relative group" onMouseEnter={() => showTooltip(index)} onMouseLeave={hideTooltip}>
+              <Link
+                to={item.path}
+                className={`flex items-center justify-center h-10 w-10 rounded text-xl transition-colors duration-300 flex-shrink-0 ${
+                  isActive(item.path) 
+                    ? (dark ? 'text-green' : 'text-[rgb(15_118_110)]')
+                    : 'text-lightSlate hover:text-green'
+                }`}
+                aria-label={item.name}
+              >
+                <FontAwesomeIcon icon={item.icon} />
+              </Link>
+              {/* Tooltip */}
+              <div 
+                className={`absolute left-1/2 transform -translate-x-1/2 top-full mt-2 px-3 py-1 text-xs font-mono text-white bg-gray-800 dark:bg-gray-700 rounded whitespace-nowrap transition-opacity duration-200 ${
+                  activeTooltip === index ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                }`}
+                style={{ 
+                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+                }}
+              >
+                {item.name}
+                <div className="absolute left-1/2 -top-1 w-2 h-2 bg-gray-800 dark:bg-gray-700 transform -translate-x-1/2 -rotate-45"></div>
+              </div>
+            </div>
           ))}
           {/* Spacer to push subsequent items to the right, if needed, or let justify-between handle it if this group is the only one on the left */}
           {/* <div className="flex-grow"></div> */}
 
           {/* Right-side Icons now part of the same group */}
           {githubUrl && (
-            <a 
-              href={githubUrl} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="flex items-center flex-shrink-0 h-10 px-3 rounded text-xl text-lightSlate hover:text-green transition-colors duration-300" 
-              aria-label="GitHub"
-            >
-              <FontAwesomeIcon icon={faGithub} />
-              <span className="ml-2 text-base">GitHub</span>
-            </a>
+            <div className="relative group" onMouseEnter={() => setActiveTooltip('github')} onMouseLeave={hideTooltip}>
+              <a 
+                href={githubUrl} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="flex items-center justify-center h-10 w-10 rounded text-xl text-lightSlate hover:text-green transition-colors duration-300 flex-shrink-0" 
+                aria-label="GitHub"
+              >
+                <FontAwesomeIcon icon={faGithub} />
+              </a>
+              <div 
+                className={`absolute left-1/2 transform -translate-x-1/2 top-full mt-2 px-3 py-1 text-xs font-mono text-white bg-gray-800 dark:bg-gray-700 rounded whitespace-nowrap transition-opacity duration-200 ${
+                  activeTooltip === 'github' ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                }`}
+                style={{ 
+                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+                }}
+              >
+                GitHub
+                <div className="absolute left-1/2 -top-1 w-2 h-2 bg-gray-800 dark:bg-gray-700 transform -translate-x-1/2 -rotate-45"></div>
+              </div>
+            </div>
           )}
           {linkedinUrl && (
-            <a 
-              href={linkedinUrl} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="flex items-center flex-shrink-0 h-10 px-3 rounded text-xl text-lightSlate hover:text-green transition-colors duration-300" 
-              aria-label="LinkedIn"
-            >
-              <FontAwesomeIcon icon={faLinkedin} />
-              <span className="ml-2 text-base">LinkedIn</span>
-            </a>
+            <div className="relative group" onMouseEnter={() => setActiveTooltip('linkedin')} onMouseLeave={hideTooltip}>
+              <a 
+                href={linkedinUrl} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="flex items-center justify-center h-10 w-10 rounded text-xl text-lightSlate hover:text-green transition-colors duration-300 flex-shrink-0" 
+                aria-label="LinkedIn"
+              >
+                <FontAwesomeIcon icon={faLinkedin} />
+              </a>
+              <div 
+                className={`absolute left-1/2 transform -translate-x-1/2 top-full mt-2 px-3 py-1 text-xs font-mono text-white bg-gray-800 dark:bg-gray-700 rounded whitespace-nowrap transition-opacity duration-200 ${
+                  activeTooltip === 'linkedin' ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                }`}
+                style={{ 
+                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+                }}
+              >
+                LinkedIn
+                <div className="absolute left-1/2 -top-1 w-2 h-2 bg-gray-800 dark:bg-gray-700 transform -translate-x-1/2 -rotate-45"></div>
+              </div>
+            </div>
           )}
-          <button
-            onClick={() => setDark(!dark)}
-            className="flex items-center justify-center p-2 rounded text-xl focus:outline-none h-10 w-10 text-lightSlate hover:text-green transition-colors duration-300 flex-shrink-0"
-            aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
-            title={dark ? "Switch to light mode" : "Switch to dark mode"}
-          >
-            <FontAwesomeIcon icon={dark ? faSun : faMoon} />
-          </button>
-          {resumeUrl && (
-            <a
-              href={resumeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`flex items-center justify-center flex-shrink-0 h-10 w-10 rounded text-xl text-lightSlate hover:text-green transition-colors duration-300`}
-              aria-label="Download Resume"
-              title="Download Resume"
+          <div className="relative group" onMouseEnter={() => setActiveTooltip('theme')} onMouseLeave={hideTooltip}>
+            <button
+              onClick={() => setDark(!dark)}
+              className="flex items-center justify-center p-2 rounded text-xl focus:outline-none h-10 w-10 text-lightSlate hover:text-green transition-colors duration-300 flex-shrink-0"
+              aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
             >
-              <FontAwesomeIcon icon={faFileArrowDown} />
-            </a>
+              <FontAwesomeIcon icon={dark ? faSun : faMoon} />
+            </button>
+            <div 
+              className={`absolute left-1/2 transform -translate-x-1/2 top-full mt-2 px-3 py-1 text-xs font-mono text-white bg-gray-800 dark:bg-gray-700 rounded whitespace-nowrap transition-opacity duration-200 ${
+                activeTooltip === 'theme' ? 'opacity-100' : 'opacity-0 pointer-events-none'
+              }`}
+              style={{ 
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+              }}
+            >
+              {dark ? 'Light Mode' : 'Dark Mode'}
+              <div className="absolute left-1/2 -top-1 w-2 h-2 bg-gray-800 dark:bg-gray-700 transform -translate-x-1/2 -rotate-45"></div>
+            </div>
+          </div>
+          {resumeUrl && (
+            <div className="relative group" onMouseEnter={() => setActiveTooltip('resume')} onMouseLeave={hideTooltip}>
+              <a
+                href={resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`flex items-center justify-center flex-shrink-0 h-10 w-10 rounded text-xl text-lightSlate hover:text-green transition-colors duration-300`}
+                aria-label="Download Resume"
+              >
+                <FontAwesomeIcon icon={faFileArrowDown} />
+              </a>
+              <div 
+                className={`absolute left-1/2 transform -translate-x-1/2 top-full mt-2 px-3 py-1 text-xs font-mono text-white bg-gray-800 dark:bg-gray-700 rounded whitespace-nowrap transition-opacity duration-200 ${
+                  activeTooltip === 'resume' ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                }`}
+                style={{ 
+                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+                }}
+              >
+                Download Resume
+                <div className="absolute left-1/2 -top-1 w-2 h-2 bg-gray-800 dark:bg-gray-700 transform -translate-x-1/2 -rotate-45"></div>
+              </div>
+            </div>
           )}
           {buyMeACoffeeUrl && (
-            <a
-              href={buyMeACoffeeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center hover:scale-110 transition-transform duration-300"
-              aria-label="Buy Me a Coffee"
-            >
-              <img
-                src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
-                alt="Buy Me A Coffee"
-                className="h-10"
-              />
-            </a>
+            <div className="relative group" onMouseEnter={() => setActiveTooltip('coffee')} onMouseLeave={hideTooltip}>
+              <a 
+                href={buyMeACoffeeUrl} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="hover:scale-110 transition-transform duration-300 flex items-center justify-center"
+                aria-label="Buy Me a Coffee"
+              >
+                <img
+                  src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+                  alt="Buy Me A Coffee"
+                  className="h-10"
+                />
+              </a>
+              <div 
+                className={`absolute left-1/2 transform -translate-x-1/2 top-full mt-2 px-3 py-1 text-xs font-mono text-white bg-gray-800 dark:bg-gray-700 rounded whitespace-nowrap transition-opacity duration-200 ${
+                  activeTooltip === 'coffee' ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                }`}
+                style={{ 
+                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+                }}
+              >
+                Buy Me a Coffee
+                <div className="absolute left-1/2 -top-1 w-2 h-2 bg-gray-800 dark:bg-gray-700 transform -translate-x-1/2 -rotate-45"></div>
+              </div>
+            </div>
           )}
         </div>
 
