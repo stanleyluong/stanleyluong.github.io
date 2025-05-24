@@ -65,9 +65,9 @@ const Navbar = ({ data }) => {
         dark ? 'bg-darkBlue' : 'bg-darkGreen'
       } shadow-lg`}
     >
-      <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between xl:justify-center">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
         {/* Single group for all desktop-visible icons */}
-        <div className="hidden xl:flex items-center gap-x-4">
+        <div className="hidden lg:flex items-center gap-x-4">
           <Link 
             to="/" 
             className="text-3xl font-bold text-teal-700 dark:text-green hover:brightness-110 transition-all duration-300 flex-shrink-0"
@@ -229,7 +229,7 @@ const Navbar = ({ data }) => {
         </div>
 
         {/* Mobile: Logo on the left, Toggles/Hamburger on the right */}
-        <div className="xl:hidden flex items-center justify-between w-full">
+        <div className="lg:hidden flex items-center justify-between w-full">
           <Link 
             to="/" 
             className="text-3xl font-bold text-teal-700 dark:text-green hover:brightness-110 transition-all duration-300 flex-shrink-0"
@@ -256,9 +256,9 @@ const Navbar = ({ data }) => {
           </div>
         </div>
 
-        {/* Mobile Menu (dropdown) */}
+        {/* Mobile Menu (dropdown) - Shows below lg breakpoint (1024px) */}
         {menuOpen && (
-          <div className="xl:hidden fixed inset-0 bg-darkBlue bg-opacity-95 backdrop-blur-sm z-40 flex flex-col items-center justify-center p-5">
+          <div className="lg:hidden fixed inset-0 bg-darkBlue bg-opacity-95 backdrop-blur-sm z-40 flex flex-col items-center justify-center p-5">
             <button
               className="absolute top-6 right-6 text-3xl text-lightSlate"
               onClick={() => setMenuOpen(false)}
