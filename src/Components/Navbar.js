@@ -61,19 +61,21 @@ const Navbar = ({ data }) => {
 
   return (
     <nav 
-      className={`fixed top-0 left-0 right-0 py-4 px-4 sm:px-6 lg:px-8 transition-all duration-300 z-50 ${
-        dark ? 'bg-darkBlue' : 'bg-darkGreen'
-      } shadow-lg`}
+      className={`fixed top-0 left-0 right-0 py-4 transition-all duration-300 z-50 ${
+        dark ? 'bg-darkBlue' : 'bg-white'
+      } shadow-lg backdrop-blur-sm`}
+      style={{
+        backgroundColor: dark ? 'rgba(10, 25, 47, 0.98)' : 'rgba(230, 241, 255, 0.98)',
+        zIndex: 1000,
+        borderBottom: dark ? 'none' : '1px solid rgba(0, 0, 0, 0.1)'
+      }}
     >
-      <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
-        {/* Single group for all desktop-visible icons */}
-        <div className="hidden lg:flex items-center gap-x-4">
-          <Link 
-            to="/" 
-            className="text-3xl font-bold text-teal-700 dark:text-green hover:brightness-110 transition-all duration-300 flex-shrink-0"
-          >
-            &lt;SL /&gt;
-          </Link>
+      <div className="max-w-4xl mx-auto px-6 flex items-center justify-between w-full">
+        {/* Left side - Empty div to balance the layout */}
+        <div className="hidden lg:block w-24"></div>
+        
+        {/* Center - Navigation Icons */}
+        <div className="hidden lg:flex items-center justify-center gap-x-6">
           {/* Main Nav Icons */}
           {navItems.map((item, index) => (
             <div key={item.name} className="relative group" onMouseEnter={() => showTooltip(index)} onMouseLeave={hideTooltip}>
@@ -86,7 +88,17 @@ const Navbar = ({ data }) => {
                 }`}
                 aria-label={item.name}
               >
-                <FontAwesomeIcon icon={item.icon} />
+                <FontAwesomeIcon 
+                  icon={item.icon} 
+                  className="w-5 h-5 flex items-center justify-center" 
+                  style={{
+                    width: '1.25rem',
+                    height: '1.25rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                />
               </Link>
               {/* Tooltip */}
               <div 
@@ -105,7 +117,10 @@ const Navbar = ({ data }) => {
           {/* Spacer to push subsequent items to the right, if needed, or let justify-between handle it if this group is the only one on the left */}
           {/* <div className="flex-grow"></div> */}
 
-          {/* Right-side Icons now part of the same group */}
+        </div>
+        
+        {/* Right-side Icons */}
+        <div className="hidden lg:flex items-center gap-x-4">
           {githubUrl && (
             <div className="relative group" onMouseEnter={() => setActiveTooltip('github')} onMouseLeave={hideTooltip}>
               <a 
@@ -237,41 +252,47 @@ const Navbar = ({ data }) => {
           >
             &lt;SL /&gt;
           </Link>
-          <div className="flex items-center gap-x-2"> {/* Reduced gap for mobile toggles */}
+          <div className="flex items-center">
             <button
               onClick={() => setDark(!dark)}
               className="p-2 rounded text-xl flex items-center justify-center focus:outline-none h-10 w-10 text-lightSlate hover:text-green transition-colors duration-300"
               aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
               title={dark ? "Switch to light mode" : "Switch to dark mode"}
+              style={{ transform: 'translateY(1px)' }}
             >
-              <FontAwesomeIcon icon={dark ? faSun : faMoon} />
+              <FontAwesomeIcon icon={dark ? faSun : faMoon} className="w-5 h-5" />
             </button>
             <button
-              className="p-2 rounded text-xl focus:outline-none h-10 w-10 text-lightSlate hover:text-green transition-colors duration-300"
+              className={`p-2 rounded text-xl flex items-center justify-center h-10 w-10 ${dark ? 'text-lightSlate' : 'text-gray-700'} hover:text-green transition-colors duration-300`}
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Open menu"
+              style={{ transform: 'translateY(1px)' }}
             >
-              <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} />
+              <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} className="w-5 h-5" />
             </button>
           </div>
         </div>
 
         {/* Mobile Menu (dropdown) - Shows below lg breakpoint (1024px) */}
         {menuOpen && (
-          <div className="lg:hidden fixed inset-0 bg-darkBlue bg-opacity-95 backdrop-blur-sm z-40 flex flex-col items-center justify-center p-5">
-            <button
-              className="absolute top-6 right-6 text-3xl text-lightSlate"
-              onClick={() => setMenuOpen(false)}
-              aria-label="Close menu"
-            >
-              &times;
-            </button>
+          <div 
+            className={`lg:hidden fixed inset-0 ${dark ? 'bg-darkBlue' : 'bg-white'} bg-opacity-95 backdrop-blur-sm z-40 flex flex-col items-center pt-8 px-5 pb-10 overflow-y-auto`}
+            style={{ 
+              top: '4rem', 
+              height: 'calc(100vh - 4rem)',
+              backgroundColor: dark ? 'rgba(10, 25, 47, 0.95)' : 'rgba(230, 241, 255, 0.95)',
+              borderTop: dark ? 'none' : '1px solid rgba(0, 0, 0, 0.1)'
+            }}>
             <ul className="flex flex-col items-center gap-y-8">
               {navItems.map((item) => (
                 <li key={item.name}>
                   <Link
                     to={item.path}
-                    className="font-mono text-2xl text-lightSlate hover:text-green transition-colors duration-200 flex items-center"
+                    className={`font-mono text-2xl transition-colors duration-200 flex items-center ${
+                      isActive(item.path) 
+                        ? (dark ? 'text-green' : 'text-teal-700')
+                        : (dark ? 'text-lightSlate' : 'text-gray-700')
+                    } hover:text-green`}
                     onClick={() => setMenuOpen(false)}
                     aria-label={item.name}
                   >
@@ -282,13 +303,13 @@ const Navbar = ({ data }) => {
               ))}
             </ul>
             {/* Social and External Links for Mobile Menu */}
-            <div className="mt-8 flex flex-col items-center gap-y-6">
+            <div className="mt-8 flex flex-col items-center gap-y-6 w-full">
               {githubUrl && (
                 <a 
                   href={githubUrl} 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-2xl text-lightSlate hover:text-green transition-colors duration-300 flex items-center"
+                  className={`text-2xl ${dark ? 'text-lightSlate' : 'text-gray-700'} hover:text-green transition-colors duration-300 flex items-center`}
                   aria-label="GitHub" 
                   onClick={() => setMenuOpen(false)}
                 >
@@ -301,7 +322,7 @@ const Navbar = ({ data }) => {
                   href={linkedinUrl} 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-2xl text-lightSlate hover:text-green transition-colors duration-300 flex items-center"
+                  className={`text-2xl ${dark ? 'text-lightSlate' : 'text-gray-700'} hover:text-green transition-colors duration-300 flex items-center`}
                   aria-label="LinkedIn" 
                   onClick={() => setMenuOpen(false)}
                 >
@@ -315,7 +336,7 @@ const Navbar = ({ data }) => {
                   href={resumeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-2xl text-lightSlate hover:text-green transition-colors duration-300 flex items-center justify-center"
+                  className={`text-2xl ${dark ? 'text-lightSlate' : 'text-gray-700'} hover:text-green transition-colors duration-300 flex items-center justify-center`}
                   aria-label="Download Resume"
                   title="Download Resume"
                   onClick={() => setMenuOpen(false)}
@@ -329,7 +350,7 @@ const Navbar = ({ data }) => {
                   href={buyMeACoffeeUrl} 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="hover:scale-110 transition-transform duration-300 flex items-center justify-center mt-2" // Added mt-2 for slight separation
+                  className={`hover:scale-110 transition-transform duration-300 flex items-center justify-center mt-2 w-full max-w-[200px]`} // Added mt-2 for slight separation
                   aria-label="Buy me a coffee" 
                   onClick={() => setMenuOpen(false)}
                 >

@@ -1,52 +1,22 @@
-import { faBriefcase, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faBriefcase } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FaUniversity, FaLaptopCode } from 'react-icons/fa'; // Keep these for fallback
 import { motion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { fadeIn } from '../utils/motion';
 
 const Experience = ({ data }) => {
   // All hooks at the top
   const [sortedActiveTab, setSortedActiveTab] = useState(0);
-  const scrollRef = useRef(null);
   const [ref, inView] = useInView({
     threshold: 0.1,
     triggerOnce: true
   });
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(false);
-  const [showScrollHint, setShowScrollHint] = useState(true);
+
 
   useEffect(() => {
-    // Check if scrolling is possible
-    const checkScroll = () => {
-      if (scrollRef.current) {
-        const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-        setCanScrollLeft(scrollLeft > 0);
-        setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 10);
-      }
-    };
-    
-    // Initial check
-    checkScroll();
-    
-    // Add event listener
-    const scrollElement = scrollRef.current;
-    if (scrollElement) {
-      scrollElement.addEventListener('scroll', checkScroll);
-    }
-    
-    // Auto-hide the scroll hint after 5 seconds
-    const timer = setTimeout(() => {
-      setShowScrollHint(false);
-    }, 5000);
-    
-    return () => {
-      if (scrollElement) {
-        scrollElement.removeEventListener('scroll', checkScroll);
-      }
-      clearTimeout(timer);
-    };
+    // Effect for any future scroll-related functionality
   }, [data?.work?.length, inView]);
 
   // Early return after all hooks
@@ -134,63 +104,73 @@ const Experience = ({ data }) => {
           <span>Experience</span>
         </motion.h2>
         
-        <div className="grid md:grid-cols-4 gap-8">
-          {/* Tabs */}
-          {/* Scroll controls - Only show on small screens */}
-          <div className="relative md:hidden mb-2">
-            {/* Left scroll button */}
-            <button 
-              onClick={() => scrollRef.current.scrollBy({left: -100, behavior: 'smooth'})} 
-              className={`absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-white dark:bg-darkBlue p-2 rounded-full shadow-md text-teal-700 dark:text-green border border-teal-100 dark:border-green/20 ${!canScrollLeft ? 'opacity-0 pointer-events-none' : 'opacity-100'} transition-opacity`}
-              aria-label="Scroll left"
-            >
-              <FontAwesomeIcon icon={faChevronLeft} size="xs" />
-            </button>
-            
-            {/* Right scroll button */}
-            <button 
-              onClick={() => scrollRef.current.scrollBy({left: 100, behavior: 'smooth'})} 
-              className={`absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-white dark:bg-darkBlue p-2 rounded-full shadow-md text-teal-700 dark:text-green border border-teal-100 dark:border-green/20 ${!canScrollRight ? 'opacity-0 pointer-events-none' : 'opacity-100'} transition-opacity`}
-              aria-label="Scroll right"
-            >
-              <FontAwesomeIcon icon={faChevronRight} size="xs" />
-            </button>
-            
-            {/* Scroll hint */}
-            <div className={`text-center text-xs text-teal-700 dark:text-green/70 font-mono transition-opacity duration-500 ${showScrollHint ? 'opacity-100' : 'opacity-0'}`}>
-              Swipe to see more companies
-            </div>
-          </div>
-          
+        <div className="grid md:grid-cols-4 gap-6">
+          {/* Company List with Icons */}
           <motion.div 
             variants={fadeIn('right', 'tween', 0.2, 1)}
             initial="hidden"
             animate={inView ? "show" : "hidden"}
-            className="flex md:flex-col overflow-x-auto md:overflow-x-visible scrollbar-thin scrollbar-thumb-green scrollbar-track-lightBlue relative md:pr-0 pr-4 pl-4 md:pl-0"
-            style={{ WebkitOverflowScrolling: 'touch' }}
-            ref={scrollRef}
+            className="flex flex-col space-y-2"
           >
-            {/* Fade overlay for scroll cue - both sides on mobile */}
-            <div className="absolute right-0 top-0 h-full w-10 pointer-events-none bg-gradient-to-l from-white dark:from-darkBlue to-transparent z-10 md:hidden" />
-            <div className="absolute left-0 top-0 h-full w-10 pointer-events-none bg-gradient-to-r from-white dark:from-darkBlue to-transparent z-10 md:hidden" />
-            
-            {/* Company buttons */}
-            {sortedWork.map((job, index) => (
-              <button
-                key={index}
-                onClick={() => handleTabClick(index)}
-                className={`whitespace-nowrap md:whitespace-normal py-3 px-4 font-mono text-sm text-left border-b-2 md:border-b-0 md:border-l-2 transition-all duration-300 ${
-                  sortedActiveTab === index 
-                    ? 'text-teal-700 dark:text-green border-teal-700 dark:border-green bg-teal-50 dark:bg-green/10' 
-                    : 'text-gray-800 dark:text-lightSlate border-gray-200 dark:border-lightBlue hover:text-teal-700 dark:hover:text-green hover:border-teal-700 dark:hover:border-green'
-                }`}
-              >
-                {job.company}
-              </button>
-            ))}
+            {sortedWork.map((job, index) => {
+              // Map company names to their respective icons
+              const getCompanyIcon = (company) => {
+                const companyLower = company.toLowerCase();
+                
+                // Map company names to their logo files
+                const logoMap = {
+                  'amazon': 'amazon_logo.jpeg',
+                  'meta': 'facebook_logo.jpeg',
+                  'facebook': 'facebook_logo.jpeg',
+                  'nike': 'nike_logo.jpeg',
+                  'crystal commerce': 'crystalcommerce_logo.jpeg',
+                  'democracy live': 'democracy_live_logo.jpeg',
+                  'flex fantasy': 'flexfantasy_logo.jpeg',
+                  'forsla': 'forsla_logo.jpeg'
+                };
+                
+                // Find matching logo
+                const logoKey = Object.keys(logoMap).find(key => companyLower.includes(key));
+                
+                if (logoKey) {
+                  return (
+                    <img 
+                      src={`/${logoMap[logoKey]}`} 
+                      alt={`${company} logo`}
+                      className="w-5 h-5 object-contain"
+                    />
+                  );
+                }
+                
+                // Fallback for universities/colleges
+                if (companyLower.includes('university') || companyLower.includes('college')) {
+                  return <FaUniversity className="text-blue-600" />;
+                }
+                
+                // Default icon
+                return <FaLaptopCode className="text-teal-500" />;
+              };
+
+              return (
+                <button
+                  key={index}
+                  onClick={() => handleTabClick(index)}
+                  className={`w-full flex items-center space-x-3 py-3 px-4 font-mono text-sm rounded transition-all duration-300 ${
+                    sortedActiveTab === index 
+                      ? 'text-teal-700 dark:text-green bg-teal-50 dark:bg-green/10 border border-teal-200 dark:border-green/20' 
+                      : 'text-gray-800 dark:text-lightSlate hover:bg-gray-100 dark:hover:bg-darkBlue/50 border border-transparent hover:border-gray-200 dark:hover:border-lightBlue/30'
+                  }`}
+                >
+                  <div className="w-5 h-5 flex-shrink-0">
+                    {getCompanyIcon(job.company)}
+                  </div>
+                  <span className="truncate ml-2">{job.company}</span>
+                </button>
+              );
+            })}
           </motion.div>
           
-          {/* Removed right arrow cue */}
+          {/* Content */}
           
           {/* Tab Content */}
           <motion.div 

@@ -1,8 +1,8 @@
 import emailjs from '@emailjs/browser';
-import { faEnvelope, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faPaperPlane, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { fadeIn } from '../utils/motion';
 
@@ -15,6 +15,25 @@ const Contact = ({ data }) => {
   const [ref, inView] = useInView({ threshold: 0.1, triggerOnce: true });
   const formRef = useRef();
   const [status, setStatus] = useState(null);
+  const [activeTab, setActiveTab] = useState('message');
+  const calendlyRef = useRef(null);
+  
+  useEffect(() => {
+    // Using direct iframe approach for better reliability
+    if (calendlyRef.current) {
+      const iframe = document.createElement('iframe');
+      iframe.src = 'https://calendly.com/stanleyluong/30min';
+      iframe.frameBorder = '0';
+      iframe.width = '100%';
+      iframe.height = '100%';
+      iframe.style.minHeight = '700px';
+      iframe.style.border = 'none';
+      iframe.style.borderRadius = '0.5rem';
+      calendlyRef.current.innerHTML = '';
+      calendlyRef.current.appendChild(iframe);
+    }
+  }, []);
+  
   if (!data) return null;
 
   const handleSubmit = (e) => {
@@ -59,18 +78,48 @@ const Contact = ({ data }) => {
           variants={fadeIn('up', 'tween', 0.2, 1)}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
-          className="mb-10 max-w-4xl text-lg text-gray-800 dark:text-lightestSlate font-sans"
+          className="mb-6 max-w-4xl text-lg text-gray-800 dark:text-lightestSlate font-sans"
         >
-          I'm currently looking for new opportunities and my inbox is always open. Whether you have a question, a project proposal, or just want to say hi, I'll do my best to get back to you!
+          I'm currently looking for new opportunities. Feel free to send me a message or schedule a meeting directly!
         </motion.p>
-        <motion.form
-          ref={formRef}
-          variants={fadeIn('up', 'tween', 0.3, 1)}
-          initial="hidden"
-          animate={inView ? "show" : "hidden"}
-          onSubmit={handleSubmit}
-          className="bg-white dark:bg-lightBlue rounded-lg p-8 shadow-lg"
+        
+        {/* Tab Navigation */}
+        <motion.div 
+          variants={fadeIn('up', 'tween', 0.2, 1)}
+          className="flex border-b border-gray-200 dark:border-gray-700 mb-6"
         >
+          <button
+            onClick={() => setActiveTab('message')}
+            className={`py-2 px-4 font-medium text-sm flex items-center space-x-2 ${
+              activeTab === 'message' 
+                ? 'text-teal-700 dark:text-green border-b-2 border-teal-700 dark:border-green' 
+                : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+            }`}
+          >
+            <FontAwesomeIcon icon={faEnvelope} />
+            <span>Send Message</span>
+          </button>
+          <button
+            onClick={() => setActiveTab('schedule')}
+            className={`py-2 px-4 font-medium text-sm flex items-center space-x-2 ${
+              activeTab === 'schedule' 
+                ? 'text-teal-700 dark:text-green border-b-2 border-teal-700 dark:border-green' 
+                : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+            }`}
+          >
+            <FontAwesomeIcon icon={faCalendarAlt} />
+            <span>Schedule a Meeting</span>
+          </button>
+        </motion.div>
+        {activeTab === 'message' ? (
+          <motion.form
+            ref={formRef}
+            variants={fadeIn('up', 'tween', 0.3, 1)}
+            initial="hidden"
+            animate={inView ? "show" : "hidden"}
+            onSubmit={handleSubmit}
+            className="bg-white dark:bg-lightBlue rounded-lg p-8 shadow-lg"
+          >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
               <label htmlFor="name" className="block font-bold mb-2 text-gray-800 dark:text-lightestSlate">Name</label>
@@ -133,10 +182,25 @@ const Contact = ({ data }) => {
               Something went wrong. Please try again.
             </div>
           )}
-        </motion.form>
+          </motion.form>
+        ) : (
+          <div className="w-full">
+            <div className="bg-white dark:bg-lightBlue rounded-lg shadow-lg overflow-hidden">
+              <div 
+                ref={calendlyRef} 
+                className="w-full"
+                style={{ minHeight: '700px' }}
+              />
+            </div>
+            <p className="mt-4 text-sm text-gray-600 dark:text-gray-300 text-center">
+              Can't find a time that works for you? <a href={`mailto:${data.email}`} className="text-teal-700 dark:text-green underline">Email me</a> to arrange another time.
+            </p>
+          </div>
+        )}
+        
         <div className="text-center mt-10">
           <p className="text-gray-800 dark:text-lightestSlate">
-            Alternatively, you can email me directly at{' '}
+            Or email me directly at{' '}
             <a href={`mailto:${data.email}`} className="text-teal-700 dark:text-green underline">{data.email}</a>
           </p>
         </div>
