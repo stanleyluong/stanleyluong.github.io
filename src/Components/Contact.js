@@ -1,5 +1,5 @@
 import emailjs from '@emailjs/browser';
-import { faEnvelope, faPaperPlane, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
@@ -15,196 +15,199 @@ const Contact = ({ data }) => {
   const [ref, inView] = useInView({ threshold: 0.1, triggerOnce: true });
   const formRef = useRef();
   const [status, setStatus] = useState(null);
-  const [activeTab, setActiveTab] = useState('message');
   const calendlyRef = useRef(null);
-  
+
   useEffect(() => {
-    // Using direct iframe approach for better reliability
     if (calendlyRef.current) {
+      // Clear any existing content
+      calendlyRef.current.innerHTML = '';
+      
+      // Create a container for the iframe
+      const container = document.createElement('div');
+      container.style.width = '100%';
+      container.style.height = '100%';
+      container.style.minHeight = '650px';
+      container.style.borderRadius = '0.5rem';
+      container.style.overflow = 'hidden';
+      
+      // Create the iframe
       const iframe = document.createElement('iframe');
       iframe.src = 'https://calendly.com/stanleyluong/30min';
-      iframe.frameBorder = '0';
       iframe.width = '100%';
-      iframe.height = '100%';
-      iframe.style.minHeight = '700px';
+      iframe.height = '810px';  // Increased fixed height
+      iframe.frameBorder = '0';
       iframe.style.border = 'none';
       iframe.style.borderRadius = '0.5rem';
-      calendlyRef.current.innerHTML = '';
-      calendlyRef.current.appendChild(iframe);
+      iframe.style.overflow = 'hidden';
+      iframe.allowFullscreen = true;
+      iframe.allow = 'encrypted-media';
+      iframe.scrolling = 'no';  // Prevent inner scrollbar
+      
+      container.appendChild(iframe);
+      calendlyRef.current.appendChild(container);
+      
+      // Cleanup function
+      return () => {
+        if (calendlyRef.current) {
+          calendlyRef.current.innerHTML = '';
+        }
+      };
     }
   }, []);
-  
-  if (!data) return null;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setStatus('loading');
-    // Send notification to you
+    
     emailjs.sendForm(
       SERVICE_ID,
       TEMPLATE_ID_NOTIFICATION,
-      formRef.current,
+      e.target,
       PUBLIC_KEY
-    ).then(() => {
-      // Send confirmation to submitter
-      emailjs.sendForm(
+    )
+    .then(() => {
+      return emailjs.sendForm(
         SERVICE_ID,
         TEMPLATE_ID_CONFIRMATION,
-        formRef.current,
+        e.target,
         PUBLIC_KEY
-      ).then(() => {
-        setStatus('success');
-        formRef.current.reset();
-      }).catch(() => setStatus('error'));
-    }).catch(() => setStatus('error'));
+      );
+    })
+    .then(() => {
+      setStatus('success');
+      formRef.current.reset();
+    })
+    .catch((error) => {
+      console.error('Error sending email:', error);
+      setStatus('error');
+    });
   };
 
+  if (!data) return null;
+
   return (
-    <section id="contact" className="relative pt-28 py-12 bg-slate-100 dark:bg-darkBlue font-sans scroll-mt-24">
-      <motion.div
-        ref={ref}
-        className="max-w-7xl mx-auto px-6 md:px-12"
-      >
-        <motion.h2 
-          variants={fadeIn('', '', 0.1, 1)}
+    <section id="contact" className="relative w-full py-20 bg-gray-50 dark:bg-darkBlue">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          ref={ref}
           initial="hidden"
-          animate={inView ? "show" : "hidden"}
-          className="section-heading mb-8 flex items-center"
-        >
-          <FontAwesomeIcon icon={faEnvelope} className="text-teal-700 dark:text-green mr-3" />
-          <span>Contact</span>
-        </motion.h2>
-        <motion.p
+          animate={inView ? 'show' : 'hidden'}
           variants={fadeIn('up', 'tween', 0.2, 1)}
-          initial="hidden"
-          animate={inView ? "show" : "hidden"}
-          className="mb-6 max-w-4xl text-lg text-gray-800 dark:text-lightestSlate font-sans"
+          className="max-w-6xl mx-auto"
         >
-          I'm currently looking for new opportunities. Feel free to send me a message or schedule a meeting directly!
-        </motion.p>
-        
-        {/* Tab Navigation */}
-        <motion.div 
-          variants={fadeIn('up', 'tween', 0.2, 1)}
-          className="flex border-b border-gray-200 dark:border-gray-700 mb-6"
-        >
-          <button
-            onClick={() => setActiveTab('message')}
-            className={`py-2 px-4 font-medium text-sm flex items-center space-x-2 ${
-              activeTab === 'message' 
-                ? 'text-teal-700 dark:text-green border-b-2 border-teal-700 dark:border-green' 
-                : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
-            }`}
-          >
-            <FontAwesomeIcon icon={faEnvelope} />
-            <span>Send Message</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('schedule')}
-            className={`py-2 px-4 font-medium text-sm flex items-center space-x-2 ${
-              activeTab === 'schedule' 
-                ? 'text-teal-700 dark:text-green border-b-2 border-teal-700 dark:border-green' 
-                : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
-            }`}
-          >
-            <FontAwesomeIcon icon={faCalendarAlt} />
-            <span>Schedule a Meeting</span>
-          </button>
-        </motion.div>
-        {activeTab === 'message' ? (
-          <motion.form
-            ref={formRef}
-            variants={fadeIn('up', 'tween', 0.3, 1)}
-            initial="hidden"
-            animate={inView ? "show" : "hidden"}
-            onSubmit={handleSubmit}
-            className="bg-white dark:bg-lightBlue rounded-lg p-8 shadow-lg"
-          >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div>
-              <label htmlFor="name" className="block font-bold mb-2 text-gray-800 dark:text-lightestSlate">Name</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                required
-                className="w-full px-4 py-2 bg-gray-100 dark:bg-slate-800 border border-lightBlue dark:border-slate-600 rounded focus:border-teal-700 focus:outline-none text-gray-800 dark:text-lightestSlate placeholder-gray-400 dark:placeholder-lightestSlate"
-              />
-            </div>
-            <div>
-              <label htmlFor="email" className="block font-bold mb-2 text-gray-800 dark:text-lightestSlate">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-                className="w-full px-4 py-2 bg-gray-100 dark:bg-slate-800 border border-lightBlue dark:border-slate-600 rounded focus:border-teal-700 focus:outline-none text-gray-800 dark:text-lightestSlate placeholder-gray-400 dark:placeholder-lightestSlate"
-              />
-            </div>
-          </div>
-          <div className="mb-6">
-            <label htmlFor="subject" className="block font-bold mb-2 text-gray-800 dark:text-lightestSlate">Subject</label>
-            <input
-              type="text"
-              id="subject"
-              name="subject"
-              required
-              className="w-full px-4 py-2 bg-gray-100 dark:bg-slate-800 border border-lightBlue dark:border-slate-600 rounded focus:border-teal-700 focus:outline-none text-gray-800 dark:text-lightestSlate placeholder-gray-400 dark:placeholder-lightestSlate"
-            />
-          </div>
-          <div className="mb-6">
-            <label htmlFor="message" className="block font-bold mb-2 text-gray-800 dark:text-lightestSlate">Message</label>
-            <textarea
-              id="message"
-              name="message"
-              rows="5"
-              required
-              className="w-full px-4 py-2 bg-gray-100 dark:bg-slate-800 border border-lightBlue dark:border-slate-600 rounded focus:border-teal-700 focus:outline-none text-gray-800 dark:text-lightestSlate placeholder-gray-400 dark:placeholder-lightestSlate resize-none"
-            ></textarea>
-          </div>
-          <div className="flex justify-end">
-            <button
-              type="submit"
-              className="btn-primary flex items-center space-x-2 border-teal-700 text-teal-700 hover:bg-teal-50 dark:border-green dark:text-green dark:hover:bg-green/10"
-              disabled={status === 'loading'}
-            >
-              <span>{status === 'loading' ? 'Sending...' : 'Send Message'}</span>
-              <FontAwesomeIcon icon={faPaperPlane} />
-            </button>
-          </div>
-          {status === 'success' && (
-            <div className="mt-4 p-3 bg-teal-100 border border-teal-700 rounded text-teal-700 dark:bg-green dark:bg-opacity-20 dark:border-green dark:text-green">
-              Your message has been sent successfully! Thank you.
-            </div>
-          )}
-          {status === 'error' && (
-            <div className="mt-4 p-3 bg-red-100 border border-red-700 rounded text-red-700 dark:bg-red-900 dark:bg-opacity-20 dark:border-red-500 dark:text-red-400">
-              Something went wrong. Please try again.
-            </div>
-          )}
-          </motion.form>
-        ) : (
-          <div className="w-full">
-            <div className="bg-white dark:bg-lightBlue rounded-lg shadow-lg overflow-hidden">
-              <div 
-                ref={calendlyRef} 
-                className="w-full"
-                style={{ minHeight: '700px' }}
-              />
-            </div>
-            <p className="mt-4 text-sm text-gray-600 dark:text-gray-300 text-center">
-              Can't find a time that works for you? <a href={`mailto:${data.email}`} className="text-teal-700 dark:text-green underline">Email me</a> to arrange another time.
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              Get In Touch
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300">
+              Have a question or want to work together? Feel free to reach out!
             </p>
           </div>
-        )}
-        
-        <div className="text-center mt-10">
-          <p className="text-gray-800 dark:text-lightestSlate">
-            Or email me directly at{' '}
-            <a href={`mailto:${data.email}`} className="text-teal-700 dark:text-green underline">{data.email}</a>
-          </p>
-        </div>
-      </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Contact Form */}
+            <div className="bg-white dark:bg-lightBlue rounded-lg shadow-lg p-6">
+              <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-6">
+                Send a Message
+              </h3>
+              
+              {status === 'success' && (
+                <div className="mb-4 p-3 bg-teal-100 border border-teal-700 rounded text-teal-700 dark:bg-green dark:bg-opacity-20 dark:border-green dark:text-green">
+                  Your message has been sent successfully! Thank you.
+                </div>
+              )}
+              
+              {status === 'error' && (
+                <div className="mb-4 p-3 bg-red-100 border border-red-700 rounded text-red-700 dark:bg-red-900 dark:bg-opacity-20 dark:border-red-500 dark:text-red-400">
+                    Something went wrong. Please try again.
+                </div>
+              )}
+              
+              {status !== 'loading' ? (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      name="from_name"
+                      id="name"
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 dark:bg-gray-700 dark:text-white"
+                      placeholder="Your name"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      name="reply_to"
+                      id="email"
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 dark:bg-gray-700 dark:text-white"
+                      placeholder="your.email@example.com"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Message
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={4}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 dark:bg-gray-700 dark:text-white"
+                      placeholder="Your message"
+                    />
+                  </div>
+
+                  <div>
+                    <button
+                      type="submit"
+                      className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-700 hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 dark:bg-green dark:hover:bg-teal-600 dark:text-darkBlue"
+                    >
+                      <FontAwesomeIcon icon={faPaperPlane} className="mr-2" />
+                      Send Message
+                    </button>
+                  </div>
+                </form>
+              ) : (
+                <div className="text-center py-12">
+                  <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-teal-700 dark:border-green"></div>
+                </div>
+              )}
+            </div>
+
+            {/* Calendly Widget */}
+            <div className="bg-white dark:bg-lightBlue rounded-lg shadow-lg p-6">
+              <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-6">
+                Schedule a Call
+              </h3>
+              <div className="w-full bg-white dark:bg-lightBlue rounded-lg shadow-lg overflow-hidden" style={{ minHeight: '800px' }}>
+                <div 
+                  ref={calendlyRef}
+                  className="w-full h-full"
+                />
+              </div>
+            </div>
+          </div>
+          
+          <div className="text-center mt-12">
+            <p className="text-gray-800 dark:text-lightestSlate">
+              Or email me directly at{' '}
+              <a href={`mailto:${data.email}`} className="text-teal-700 dark:text-green underline">
+                {data.email}
+              </a>
+            </p>
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 };
