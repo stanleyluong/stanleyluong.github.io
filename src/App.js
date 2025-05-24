@@ -1,14 +1,15 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import ReactGA from 'react-ga';
-import About from './Components/About';
+import { Route, Routes } from 'react-router-dom';
 import Certificates from './Components/Certificates';
 import Contact from './Components/Contact';
 import Experience from './Components/Experience';
 import Footer from './Components/Footer';
-import Hero from './Components/Hero';
+import Home from './Components/Home';
 import Navbar from './Components/Navbar';
 import Projects from './Components/Projects';
+import ProjectDetail from './Components/ProjectDetail';
 import Skills from './Components/Skills';
 import useFirebaseData from './hooks/useFirebaseData';
 
@@ -20,7 +21,6 @@ function App() {
   useEffect(() => {
     if (!firebaseLoading) {
       if (firebaseData && (firebaseData.main || firebaseData.resume || firebaseData.portfolio)) {
-        console.log('firebaseData:', firebaseData);
         setResumeData(firebaseData);
       }
       setLoading(false);
@@ -41,28 +41,26 @@ function App() {
     );
   }
 
-  // App component now just returns its content, without Router or Routes
-  console.log('resumeData:', resumeData);
-  console.log('resumeData.resume:', resumeData?.resume);
-  console.log('resumeData.resume.certificates:', resumeData?.resume?.certificates);
   return (
-    <div className="min-h-screen bg-white text-black dark:bg-darkBlue dark:text-lightestSlate">
+    <div className="min-h-screen bg-white text-black dark:bg-darkBlue dark:text-lightestSlate flex flex-col">
       <Navbar data={resumeData?.main} />
-      
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
+        className="flex-grow"
       >
-        <Hero data={resumeData?.main} />
-        <About data={resumeData?.main} />
-        <Experience data={resumeData?.resume} />
-        <Skills data={resumeData?.resume} />
-        <Projects data={resumeData?.portfolio} />
-        <Certificates data={resumeData?.resume} />
-        <Contact data={resumeData?.main} />
+        <Routes>
+          <Route path="/projects" element={<Projects data={resumeData?.portfolio} />} />
+          <Route path="/project/:id" element={<ProjectDetail />} />
+          <Route path="/experience" element={<Experience data={resumeData?.resume} />} />
+          <Route path="/skills" element={<Skills data={resumeData?.resume} />} />
+          <Route path="/certificates" element={<Certificates data={resumeData?.resume} />} />
+          <Route path="/contact" element={<Contact data={resumeData?.main} />} />
+          <Route path="/" element={<Home data={resumeData} />} />
+          <Route path="*" element={<Home data={resumeData} />} />
+        </Routes>
       </motion.div>
-      
       <Footer data={resumeData?.main} />
     </div>
   );

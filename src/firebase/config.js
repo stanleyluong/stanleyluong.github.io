@@ -23,13 +23,9 @@ try {
     const parsedConfig = JSON.parse(storedConfig);
     if (parsedConfig && parsedConfig.apiKey && parsedConfig.projectId) {
       configToUse = parsedConfig;
-      console.log('Using Firebase config from localStorage:', parsedConfig.projectId);
     }
-  } else {
-    console.log('Using default Firebase config');
   }
 } catch (e) {
-  console.warn('Error reading Firebase config from localStorage:', e);
   // Reset the config if there was an error
   localStorage.removeItem('firebase_config');
 }
@@ -40,15 +36,12 @@ try {
   // Check if we have the minimum required configuration
   if (!configToUse.apiKey || configToUse.apiKey === "YOUR_API_KEY" || 
       !configToUse.projectId || configToUse.projectId === "YOUR_PROJECT_ID") {
-    console.warn('Firebase config is missing required fields or using placeholder values');
     throw new Error('Invalid Firebase configuration');
   }
   
   // Try to initialize the app
   app = initializeApp(configToUse);
-  console.log('Firebase app initialized successfully with project:', configToUse.projectId);
 } catch (error) {
-  console.error('Failed to initialize Firebase app:', error);
   // Create a dummy app to prevent crashes
   app = { name: 'dummy-app-placeholder' };
 }
@@ -58,9 +51,7 @@ let db, storage, auth;
 
 try {
   db = getFirestore(app);
-  console.log('Firestore initialized');
 } catch (error) {
-  console.error('Failed to initialize Firestore:', error);
   // Create a dummy Firestore object that will fail gracefully
   db = {
     collection: () => ({ get: () => Promise.reject(new Error('Firestore not available')) }),
@@ -70,17 +61,13 @@ try {
 
 try {
   storage = getStorage(app);
-  console.log('Firebase Storage initialized');
 } catch (error) {
-  console.error('Failed to initialize Firebase Storage:', error);
   storage = {};
 }
 
 try {
   auth = getAuth(app);
-  console.log('Firebase Auth initialized');
 } catch (error) {
-  console.error('Failed to initialize Firebase Auth:', error);
   auth = {};
 }
 
@@ -89,14 +76,12 @@ try {
 // if (window.location.hostname === 'localhost') {
 //   const { connectStorageEmulator } = require('firebase/storage');
 //   connectStorageEmulator(storage, 'localhost', 9199);
-//   console.log('Connected to Firebase Storage emulator');
 // }
 
 // Helper function to allow manually setting the config (for development)
 export const setFirebaseConfig = (config) => {
   try {
     localStorage.setItem('firebase_config', JSON.stringify(config));
-    alert('Firebase config saved. Please refresh the page to apply the new config.');
   } catch (e) {
     console.error('Failed to save Firebase config:', e);
     alert('Failed to save Firebase config: ' + e.message);

@@ -1,4 +1,4 @@
-import { faChevronLeft, faChevronRight, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faChevronRight, faSearch, faTimes, faAward } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
@@ -74,7 +74,7 @@ const Certificates = ({ data }) => {
   };
 
   return (
-    <section id="certificates" className="relative py-12 md:py-24 bg-slate-100 dark:bg-darkBlue font-sans">
+    <section id="certificates" className="relative pt-28 py-12 bg-slate-100 dark:bg-darkBlue font-sans scroll-mt-24">
       <motion.div
         ref={ref}
         className="max-w-7xl mx-auto px-6 md:px-12"
@@ -83,9 +83,10 @@ const Certificates = ({ data }) => {
           variants={fadeIn('', '', 0.1, 1)}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
-          className="section-heading mb-16"
+          className="section-heading mb-16 flex items-center"
         >
-          <span className="text-teal-700 dark:text-green">06.</span> Certifications
+          <FontAwesomeIcon icon={faAward} className="text-teal-700 dark:text-green mr-3" />
+          <span>Certificates</span>
         </motion.h2>
         <motion.div
           variants={fadeIn('up', 'tween', 0.2, 1)}

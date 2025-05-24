@@ -7,9 +7,12 @@ import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <BrowserRouter>
+    <BrowserRouter future={{
+      v7_startTransition: true,
+      v7_relativeSplatPath: true
+    }}>
       <Routes>
-        <Route path="/" element={<App />} />
+        <Route path="/*" element={<App />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>
     </BrowserRouter>

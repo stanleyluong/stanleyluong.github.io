@@ -10,25 +10,18 @@ export const useFirebaseData = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log('Attempting to fetch data from Firebase...');
         const result = {};
 
         // Fetch main profile data
         try {
           const mainDoc = await getDoc(doc(db, 'main', 'profile'));
           if (mainDoc.exists()) {
-            console.log('Main profile data fetched successfully');
             result.main = mainDoc.data();
           } else {
-            console.log('Main profile document does not exist - trying fallback');
-            
             // Try to get profile directly from the profile collection as fallback
             const profileSnapshot = await getDocs(collection(db, 'profile'));
             if (!profileSnapshot.empty) {
-              console.log('Profile data fetched from profile collection');
               result.main = profileSnapshot.docs[0].data();
-            } else {
-              console.log('No profile data found in either location');
             }
           }
         } catch (err) {
@@ -47,7 +40,6 @@ export const useFirebaseData = () => {
             id: doc.id,
             ...doc.data()
           }));
-          console.log(`Education data: ${educationSnapshot.docs.length} records`);
         } catch (err) {
           console.error('Error fetching education data:', err);
         }
@@ -60,7 +52,6 @@ export const useFirebaseData = () => {
             id: doc.id,
             ...doc.data()
           }));
-          console.log(`Work data: ${workSnapshot.docs.length} records`);
         } catch (err) {
           console.error('Error fetching work data:', err);
         }
@@ -73,7 +64,6 @@ export const useFirebaseData = () => {
             id: doc.id,
             ...doc.data()
           }));
-          console.log(`Skills data: ${skillsSnapshot.docs.length} records`);
         } catch (err) {
           console.error('Error fetching skills data:', err);
         }
@@ -86,7 +76,6 @@ export const useFirebaseData = () => {
             id: doc.id,
             ...doc.data()
           }));
-          console.log(`Certificates data: ${certificatesSnapshot.docs.length} records`);
         } catch (err) {
           console.error('Error fetching certificates data:', err);
         }
@@ -127,7 +116,6 @@ export const useFirebaseData = () => {
           });
           
           result.portfolio = { projects };
-          console.log(`Projects data: ${projects.length} records`);
         } catch (err) {
           console.error('Error fetching projects data:', err);
         }
@@ -136,10 +124,7 @@ export const useFirebaseData = () => {
         if (Object.keys(result).length > 0 &&
             (result.main || (result.resume && Object.keys(result.resume).length > 0) || 
              (result.portfolio && result.portfolio.projects && result.portfolio.projects.length > 0))) {
-          console.log('Setting Firebase data');
           setData(result);
-        } else {
-          console.log('Not enough Firebase data retrieved to use');
         }
       } catch (err) {
         console.error('Error fetching data from Firebase:', err);

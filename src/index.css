@@ -6,10 +6,11 @@
   html {
     scroll-behavior: smooth;
     font-size: 18px; /* Increase base font size from default 16px to 18px */
+    @apply h-full;
   }
   
   body {
-    @apply bg-darkBlue text-lightSlate font-sans;
+    @apply bg-darkBlue text-lightSlate font-sans h-full;
     margin: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -48,6 +49,10 @@
   section {
     @apply py-24 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto;
   }
+}
+
+#root {
+  height: 100%;
 }
 
 @layer components {

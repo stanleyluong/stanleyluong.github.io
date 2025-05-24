@@ -1,15 +1,23 @@
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import CertificatesView from './AdminViews/CertificatesView'; // Added import
+import DashboardView from './AdminViews/DashboardView'; // Added import
+import EducationView from './AdminViews/EducationView'; // Added import
+import ProfileView from './AdminViews/ProfileView'; // Added import
+import ProjectsView from './AdminViews/ProjectsView'; // Added import
+import SettingsView from './AdminViews/SettingsView'; // Added import
+import SkillsView from './AdminViews/SkillsView'; // Added import
+import WorkView from './AdminViews/WorkView'; // Added import
 import {
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  getDoc,
-  getDocs,
-  orderBy,
-  query,
-  setDoc,
-  updateDoc
+    addDoc,
+    collection,
+    deleteDoc,
+    doc,
+    getDoc,
+    getDocs,
+    orderBy,
+    query,
+    setDoc,
+    updateDoc
 } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { useCallback, useEffect, useState } from 'react';
@@ -106,17 +114,12 @@ const Admin = () => {
  const fetchProjects = useCallback(async () => {
   setProjectsLoading(true);
   try {
-    console.log('Fetching projects from Firestore...');
-    console.log('Firebase config:', db._app.options);
-    console.log('Current user:', auth.currentUser?.email || 'No user');
-    
     // Verify database connection
     try {
       const testDoc = await addDoc(collection(db, "connection_test"), {
         timestamp: new Date(),
         message: "Testing connection"
       });
-      console.log("Database connection test successful:", testDoc.id);
       // Delete test doc to keep database clean
       await deleteDoc(doc(db, "connection_test", testDoc.id));
     } catch (connError) {
@@ -125,11 +128,9 @@ const Admin = () => {
     }
     
     const projectsCollection = collection(db, 'projects');
-    console.log('Projects collection reference:', projectsCollection);
     
     // First try to get all projects without ordering
     const simpleSnapshot = await getDocs(projectsCollection);
-    console.log('Got projects snapshot, empty?', simpleSnapshot.empty, 'size:', simpleSnapshot.size);
     
     let projectsList = [];
     
@@ -142,9 +143,7 @@ const Admin = () => {
           id: doc.id,
           ...doc.data()
         }));
-        console.log('Projects with ordering:', projectsList.length);
       } catch (orderError) {
-        console.warn('Error ordering projects by createdAt - using unordered data instead:', orderError);
         projectsList = simpleSnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
@@ -154,7 +153,6 @@ const Admin = () => {
       console.warn('No projects found in the collection. Collection might be empty or permissions issue.');
     }
     
-    console.log('Setting projects state:', projectsList);
     setProjects(projectsList);
     return projectsList; // Return the data for chaining
   } catch (error) {
@@ -164,7 +162,7 @@ const Admin = () => {
   } finally {
     setProjectsLoading(false);
   }
-},[auth.currentUser?.email, showMessage]);
+},[showMessage]);
 
 // Fetch certificates from Firestore
 const fetchCertificates = useCallback(async () => {
@@ -277,7 +275,6 @@ const fetchEducation = useCallback(async () => {
       });
       
       setEducation(sortedList);
-      console.log(`Education data: ${educationList.length} records`);
     }
   } catch (error) {
     console.error('Error fetching education:', error);
@@ -843,7 +840,6 @@ const fetchEducation = useCallback(async () => {
   const testDatabaseWrite = async () => {
     try {
       console.log("Testing database write capability...");
-      console.log("Firebase config:", db._app.options);
       showMessage("Testing database write and connection...", "info");
       
       // Check Firebase config
@@ -853,17 +849,12 @@ const fetchEducation = useCallback(async () => {
       }
       
       // Try to write a test document
-      const testDoc = await addDoc(collection(db, "test"), {
+      await addDoc(collection(db, "test"), {
         message: "Test write successful",
         timestamp: new Date()
       });
       
-      console.log("Database write successful!", testDoc.id);
       showMessage("Database write successful! Try adding content now.", "success");
-      
-      // Try to read it back
-      const docSnap = await getDoc(doc(db, "test", testDoc.id));
-      console.log("Read test document:", docSnap.exists() ? docSnap.data() : "Document not found");
       
       // Show collections info
       const collections = ['projects', 'certificates', 'skills', 'work', 'education'];
@@ -872,538 +863,16 @@ const fetchEducation = useCallback(async () => {
       for (const collectionName of collections) {
         try {
           const snapshot = await getDocs(collection(db, collectionName));
-          console.log(`Collection ${collectionName}: ${snapshot.size} documents`);
           showMessage(`${collectionName}: ${snapshot.size} documents found`, "info");
         } catch (err) {
-          console.error(`Error checking ${collectionName}:`, err);
           showMessage(`Error checking ${collectionName}: ${err.message}`, "error");
         }
       }
       
     } catch (error) {
-      console.error("Database test failed:", error);
       showMessage("Database test failed: " + error.message, "error");
     }
   };
-  
-  // Dashboard view
-  const renderDashboard = () => (
-    <div className="bg-lightBlue bg-opacity-30 p-6 rounded-lg">
-      <h3 className="text-2xl font-semibold text-lightestSlate mb-6">Dashboard</h3>
-      
-      {/* Admin controls */}
-      <div className="mb-6 bg-green-900 bg-opacity-30 p-4 rounded-lg border border-green">
-        <h4 className="text-lg font-medium text-green mb-2">Admin Controls</h4>
-        <div className="flex flex-wrap gap-3 mb-3">
-          <button
-            onClick={loadAllData}
-            className="py-3 px-6 bg-green-600 text-white rounded-lg hover:bg-green-700 font-bold shadow-md"
-          >
-            🔄 Reload All Data
-          </button>
-        </div>
-      </div>
-      
-      {/* Database connection test */}
-      <div className="mb-6 bg-lightBlue bg-opacity-50 p-4 rounded-lg">
-        <h4 className="text-lg font-medium text-green mb-2">Database Tools</h4>
-        <p className="text-lightSlate mb-3">
-          If you're seeing 0 entries across all categories, there might be a database connection issue.
-        </p>
-
-        <div className="bg-yellow-800 bg-opacity-20 p-3 rounded-md mb-4 border border-yellow-500">
-          <h5 className="text-yellow-400 font-medium mb-2">Troubleshooting Steps</h5>
-          <ol className="list-decimal list-inside text-lightSlate space-y-1">
-            <li>Click the "Test Database Connection" button below to verify Firebase connectivity</li>
-            <li>Check the browser console (F12) for any error messages</li>
-            <li>If connection is successful but no data appears, use "Migrate ALL Data from JSON"</li>
-            <li>If you navigate back and forth and data disappears, click "Reload All Data" at the top</li>
-            <li>If problems persist, try clearing your browser's cache and cookies</li>
-          </ol>
-        </div>
-
-        <div className="flex flex-wrap gap-3 mb-3">
-          <button
-            onClick={testDatabaseWrite}
-            className="py-3 px-6 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-bold shadow-md"
-          >
-            🔄 Test Database Connection
-          </button>
-        </div>
-      </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="bg-lightBlue bg-opacity-50 p-4 rounded-lg">
-          <h4 className="text-lg font-medium text-green mb-2">Projects</h4>
-          <p className="text-lightSlate">{projects.length} projects in database</p>
-          <button
-            onClick={() => setActiveView('projects')}
-            className="mt-4 py-1 px-3 text-sm bg-green bg-opacity-20 text-green rounded hover:bg-opacity-30"
-          >
-            Manage Projects
-          </button>
-        </div>
-        
-        <div className="bg-lightBlue bg-opacity-50 p-4 rounded-lg">
-          <h4 className="text-lg font-medium text-green mb-2">Certificates</h4>
-          <p className="text-lightSlate">{certificates.length} certificates in database</p>
-          <button
-            onClick={() => setActiveView('certificates')}
-            className="mt-4 py-1 px-3 text-sm bg-green bg-opacity-20 text-green rounded hover:bg-opacity-30"
-          >
-            Manage Certificates
-          </button>
-        </div>
-        
-        <div className="bg-lightBlue bg-opacity-50 p-4 rounded-lg">
-          <h4 className="text-lg font-medium text-green mb-2">Skills</h4>
-          <p className="text-lightSlate">{skills.length} skills in database</p>
-          <button
-            onClick={() => setActiveView('skills')}
-            className="mt-4 py-1 px-3 text-sm bg-green bg-opacity-20 text-green rounded hover:bg-opacity-30"
-          >
-            Manage Skills
-          </button>
-        </div>
-        
-        <div className="bg-lightBlue bg-opacity-50 p-4 rounded-lg">
-          <h4 className="text-lg font-medium text-green mb-2">Work Experience</h4>
-          <p className="text-lightSlate">{workExperience.length} work entries in database</p>
-          <button
-            onClick={() => setActiveView('work')}
-            className="mt-4 py-1 px-3 text-sm bg-green bg-opacity-20 text-green rounded hover:bg-opacity-30"
-          >
-            Manage Work Experience
-          </button>
-        </div>
-        
-        <div className="bg-lightBlue bg-opacity-50 p-4 rounded-lg">
-          <h4 className="text-lg font-medium text-green mb-2">Education</h4>
-          <p className="text-lightSlate">{education.length} education entries in database</p>
-          <button
-            onClick={() => setActiveView('education')}
-            className="mt-4 py-1 px-3 text-sm bg-green bg-opacity-20 text-green rounded hover:bg-opacity-30"
-          >
-            Manage Education
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-  
-  // Projects view
-  const renderProjects = () => (
-    <div className="bg-lightBlue bg-opacity-30 p-6 rounded-lg">
-      <div className="flex justify-between items-center mb-6">
-        <h3 className="text-2xl font-semibold text-lightestSlate">Manage Projects</h3>
-        <button
-          onClick={() => {
-            if (showCreateForm) {
-              setShowCreateForm(false);
-              setEditingProject(null);
-              setNewProject({
-                title: '',
-                category: '',
-                url: '',
-                images: []
-              });
-            } else {
-              setShowCreateForm(true);
-              setEditingProject(null);
-              setNewProject({
-                title: '',
-                category: '',
-                url: '',
-                images: []
-              });
-            }
-          }}
-          className="p-2 bg-green bg-opacity-20 text-green rounded-full hover:bg-opacity-30"
-        >
-          {showCreateForm ? (
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-            </svg>
-          )}
-        </button>
-      </div>
-      
-      {/* Create/Edit Project Form - Only show when creating new project */}
-      {showCreateForm && (
-        <div className="mb-8 bg-lightBlue bg-opacity-50 p-4 rounded-lg">
-          <h4 className="text-lg font-medium text-green mb-4">Create New Project</h4>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div>
-              <label className="block text-lightSlate mb-1">Title</label>
-              <input
-                type="text"
-                value={newProject.title}
-                onChange={(e) => setNewProject({...newProject, title: e.target.value})}
-                className="w-full p-2 bg-darkBlue border border-lightBlue rounded"
-              />
-            </div>
-            
-            <div>
-              <label className="block text-lightSlate mb-1">Category</label>
-              <input
-                type="text"
-                value={newProject.category}
-                onChange={(e) => setNewProject({...newProject, category: e.target.value})}
-                className="w-full p-2 bg-darkBlue border border-lightBlue rounded"
-              />
-            </div>
-            
-            <div>
-              <label className="block text-lightSlate mb-1">URL (Website or leave empty)</label>
-              <input
-                type="text"
-                value={newProject.url}
-                onChange={(e) => setNewProject({...newProject, url: e.target.value})}
-                className="w-full p-2 bg-darkBlue border border-lightBlue rounded"
-              />
-            </div>
-          </div>
-          
-          {/* Thumbnail Upload */}
-          <div className="mb-4">
-            <label className="block text-lightSlate mb-1">Thumbnail Image</label>
-            <div className="flex items-center">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => handleProjectImageUpload(e, true)}
-                className="hidden"
-                id="thumbnail-upload"
-                disabled={uploadingImages}
-              />
-              <label
-                htmlFor="thumbnail-upload"
-                className="cursor-pointer py-2 px-4 bg-green bg-opacity-20 text-green rounded hover:bg-opacity-30"
-              >
-                Upload Thumbnail
-              </label>
-              
-              {newProject.thumbnail && (
-                <div className="ml-4 flex items-center">
-                  <img 
-                    src={newProject.thumbnail} 
-                    alt="Thumbnail" 
-                    className="h-10 w-10 object-cover rounded"
-                  />
-                  <span className="ml-2 text-lightSlate text-sm">Thumbnail uploaded</span>
-                </div>
-              )}
-            </div>
-          </div>
-          
-          {/* Gallery Images Upload */}
-          <div className="mb-4">
-            <label className="block text-lightSlate mb-1">Gallery Images</label>
-            <div className="flex items-center">
-              <input
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={(e) => handleProjectImageUpload(e, false)}
-                className="hidden"
-                id="gallery-upload"
-                disabled={uploadingImages}
-              />
-              <label
-                htmlFor="gallery-upload"
-                className="cursor-pointer py-2 px-4 bg-green bg-opacity-20 text-green rounded hover:bg-opacity-30"
-              >
-                Upload Gallery Images
-              </label>
-              
-              {uploadingImages && (
-                <div className="ml-4 flex items-center">
-                  <div className="w-40 h-2 bg-darkBlue rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-green"
-                      style={{ width: `${uploadProgress}%` }}
-                    ></div>
-                  </div>
-                  <span className="ml-2 text-lightSlate text-sm">{uploadProgress}%</span>
-                </div>
-              )}
-            </div>
-            
-            {/* Gallery Preview */}
-            {newProject.images && newProject.images.length > 0 && (
-              <div className="mt-4">
-                <h5 className="text-lightSlate text-sm mb-2">Gallery Images ({newProject.images.length})</h5>
-                <div className="flex flex-wrap gap-2">
-                  {newProject.images.map((img, index) => (
-                    <div key={index} className="relative">
-                      <img 
-                        src={img} 
-                        alt={`Gallery ${index}`} 
-                        className="h-16 w-16 object-cover rounded"
-                      />
-                      <button
-                        onClick={() => {
-                          const newImages = [...newProject.images];
-                          newImages.splice(index, 1);
-                          setNewProject({...newProject, images: newImages});
-                        }}
-                        className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
-                      >
-                        ×
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-          
-          <div className="flex justify-end gap-3 mt-6">
-            <button
-              onClick={() => {
-                setShowCreateForm(false);
-                setNewProject({
-                  title: '',
-                  category: '',
-                  url: '',
-                  images: []
-                });
-              }}
-              className="py-2 px-4 border border-lightSlate text-lightSlate rounded hover:bg-lightBlue hover:bg-opacity-30"
-            >
-              Cancel
-            </button>
-            
-            <button
-              onClick={saveNewProject}
-              disabled={loading}
-              className="py-2 px-4 bg-green text-darkBlue rounded hover:bg-opacity-90"
-            >
-              {loading ? 'Saving...' : 'Create Project'}
-            </button>
-          </div>
-        </div>
-      )}
-      
-      {/* Projects List */}
-      <div>
-        <h4 className="text-lg font-medium text-green mb-4">Projects List</h4>
-        
-        {projectsLoading ? (
-          <div className="text-center py-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-green mx-auto"></div>
-            <p className="mt-2 text-lightSlate">Loading projects...</p>
-          </div>
-        ) : projects.length === 0 ? (
-          <p className="text-center py-8 text-lightSlate">No projects found. Create your first project above.</p>
-        ) : (
-          <div className="space-y-4">
-            {projects.map(project => (
-              <div key={project.id} className="bg-lightBlue bg-opacity-20 p-4 rounded-lg">
-                {editingProject?.id === project.id ? (
-                  // Edit Form
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-lightSlate mb-1">Title</label>
-                        <input
-                          type="text"
-                          value={editingProject.title}
-                          onChange={(e) => setEditingProject({...editingProject, title: e.target.value})}
-                          className="w-full p-2 bg-darkBlue border border-lightBlue rounded"
-                        />
-                      </div>
-                      
-                      <div>
-                        <label className="block text-lightSlate mb-1">Category</label>
-                        <input
-                          type="text"
-                          value={editingProject.category}
-                          onChange={(e) => setEditingProject({...editingProject, category: e.target.value})}
-                          className="w-full p-2 bg-darkBlue border border-lightBlue rounded"
-                        />
-                      </div>
-                      
-                      <div>
-                        <label className="block text-lightSlate mb-1">URL (Website or leave empty)</label>
-                        <input
-                          type="text"
-                          value={editingProject.url}
-                          onChange={(e) => setEditingProject({...editingProject, url: e.target.value})}
-                          className="w-full p-2 bg-darkBlue border border-lightBlue rounded"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Thumbnail Upload */}
-                    <div>
-                      <label className="block text-lightSlate mb-1">Thumbnail Image</label>
-                      <div className="flex items-center">
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleProjectImageUpload(e, true)}
-                          className="hidden"
-                          id={`thumbnail-upload-${project.id}`}
-                          disabled={uploadingImages}
-                        />
-                        <label
-                          htmlFor={`thumbnail-upload-${project.id}`}
-                          className="cursor-pointer py-2 px-4 bg-green bg-opacity-20 text-green rounded hover:bg-opacity-30"
-                        >
-                          Upload Thumbnail
-                        </label>
-                        
-                        {editingProject.thumbnail && (
-                          <div className="ml-4 flex items-center">
-                            <img 
-                              src={editingProject.thumbnail} 
-                              alt="Thumbnail" 
-                              className="h-10 w-10 object-cover rounded"
-                            />
-                            <span className="ml-2 text-lightSlate text-sm">Thumbnail uploaded</span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Gallery Images Upload */}
-                    <div>
-                      <label className="block text-lightSlate mb-1">Gallery Images</label>
-                      <div className="flex items-center">
-                        <input
-                          type="file"
-                          accept="image/*"
-                          multiple
-                          onChange={(e) => handleProjectImageUpload(e, false)}
-                          className="hidden"
-                          id={`gallery-upload-${project.id}`}
-                          disabled={uploadingImages}
-                        />
-                        <label
-                          htmlFor={`gallery-upload-${project.id}`}
-                          className="cursor-pointer py-2 px-4 bg-green bg-opacity-20 text-green rounded hover:bg-opacity-30"
-                        >
-                          Upload Gallery Images
-                        </label>
-                        
-                        {uploadingImages && (
-                          <div className="ml-4 flex items-center">
-                            <div className="w-40 h-2 bg-darkBlue rounded-full overflow-hidden">
-                              <div 
-                                className="h-full bg-green"
-                                style={{ width: `${uploadProgress}%` }}
-                              ></div>
-                            </div>
-                            <span className="ml-2 text-lightSlate text-sm">{uploadProgress}%</span>
-                          </div>
-                        )}
-                      </div>
-                      
-                      {/* Gallery Preview */}
-                      {editingProject.images && editingProject.images.length > 0 && (
-                        <div className="mt-4">
-                          <h5 className="text-lightSlate text-sm mb-2">Gallery Images ({editingProject.images.length})</h5>
-                          <div className="flex flex-wrap gap-2">
-                            {editingProject.images.map((img, index) => (
-                              <div key={index} className="relative">
-                                <img 
-                                  src={img} 
-                                  alt={`Gallery ${index}`} 
-                                  className="h-16 w-16 object-cover rounded"
-                                />
-                                <button
-                                  onClick={() => {
-                                    const newImages = [...editingProject.images];
-                                    newImages.splice(index, 1);
-                                    setEditingProject({...editingProject, images: newImages});
-                                  }}
-                                  className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
-                                >
-                                  ×
-                                </button>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="flex justify-end gap-3">
-                      <button
-                        onClick={() => setEditingProject(null)}
-                        className="py-2 px-4 border border-lightSlate text-lightSlate rounded hover:bg-lightBlue hover:bg-opacity-30"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        onClick={updateProject}
-                        disabled={loading}
-                        className="py-2 px-4 bg-green text-darkBlue rounded hover:bg-opacity-90"
-                      >
-                        {loading ? 'Saving...' : 'Update Project'}
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  // Project Display
-                  <div className="flex flex-wrap md:flex-nowrap gap-4">
-                    {/* Thumbnail */}
-                    <div className="w-24 h-24 bg-darkBlue rounded overflow-hidden flex-shrink-0">
-                      {project.thumbnail ? (
-                        <img src={project.thumbnail} alt={project.title} className="w-full h-full object-cover" />
-                      ) : project.image ? (
-                        <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-lightSlate text-xs">No image</div>
-                      )}
-                    </div>
-                    
-                    {/* Project Info */}
-                    <div className="flex-grow">
-                      <h5 className="text-lg font-medium text-lightestSlate">{project.title}</h5>
-                      <p className="text-sm text-green mb-2">{project.category}</p>
-                      {project.url && (
-                        <p className="text-xs text-lightSlate mb-1 truncate">
-                          URL: {project.url.substring(0, 50)}{project.url.length > 50 ? '...' : ''}
-                        </p>
-                      )}
-                      <p className="text-xs text-lightSlate">
-                        {project.images && project.images.length > 0 ? 
-                          `${project.images.length} gallery images` : 
-                          'No gallery images'}
-                      </p>
-                    </div>
-                    
-                    {/* Actions */}
-                    <div className="flex flex-col justify-center gap-2">
-                      <button
-                        onClick={() => setEditingProject(project)}
-                        className="py-1 px-3 text-sm bg-green bg-opacity-20 text-green rounded hover:bg-opacity-30"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => deleteProject(project.id)}
-                        className="py-1 px-3 text-sm bg-red-500 bg-opacity-20 text-red-400 rounded hover:bg-opacity-30"
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
   
   // Save a new certificate to Firestore
   const saveNewCertificate = async () => {
@@ -1864,998 +1333,140 @@ const fetchEducation = useCallback(async () => {
     }
   };
 
-  // Certificates view
-  const renderCertificates = () => (
-    <div className="bg-lightBlue bg-opacity-30 p-6 rounded-lg">
-      <h3 className="text-2xl font-semibold text-lightestSlate mb-6">Manage Certificates</h3>
-      
-      {/* Create/Edit Certificate Form */}
-      <div className="mb-8 bg-lightBlue bg-opacity-50 p-4 rounded-lg">
-        <h4 className="text-lg font-medium text-green mb-4">
-          {editingCertificate ? 'Edit Certificate' : 'Add New Certificate'}
-        </h4>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-          <div>
-            <label className="block text-lightSlate mb-1">School / Institution</label>
-            <input
-              type="text"
-              value={editingCertificate ? editingCertificate.school : newCertificate.school}
-              onChange={(e) => {
-                if (editingCertificate) {
-                  setEditingCertificate({...editingCertificate, school: e.target.value});
-                } else {
-                  setNewCertificate({...newCertificate, school: e.target.value});
-                }
-              }}
-              className="w-full p-2 bg-darkBlue border border-lightBlue rounded"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-lightSlate mb-1">Course / Certificate Name</label>
-            <input
-              type="text"
-              value={editingCertificate ? editingCertificate.course : newCertificate.course}
-              onChange={(e) => {
-                if (editingCertificate) {
-                  setEditingCertificate({...editingCertificate, course: e.target.value});
-                } else {
-                  setNewCertificate({...newCertificate, course: e.target.value});
-                }
-              }}
-              className="w-full p-2 bg-darkBlue border border-lightBlue rounded"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-lightSlate mb-1">Date (Optional)</label>
-            <input
-              type="text"
-              value={editingCertificate ? editingCertificate.date || '' : newCertificate.date || ''}
-              onChange={(e) => {
-                if (editingCertificate) {
-                  setEditingCertificate({...editingCertificate, date: e.target.value});
-                } else {
-                  setNewCertificate({...newCertificate, date: e.target.value});
-                }
-              }}
-              placeholder="e.g., 2023 or May 2023"
-              className="w-full p-2 bg-darkBlue border border-lightBlue rounded"
-            />
-          </div>
-        </div>
-        
-        {/* Certificate Image Upload */}
-        <div className="mb-4">
-          <label className="block text-lightSlate mb-1">Certificate Image</label>
-          <div className="flex items-center">
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => handleImageUpload(e, 'certificate')}
-              className="hidden"
-              id="certificate-upload"
-              disabled={uploadingImages}
-            />
-            <label
-              htmlFor="certificate-upload"
-              className="cursor-pointer py-2 px-4 bg-green bg-opacity-20 text-green rounded hover:bg-opacity-30"
-            >
-              Upload Certificate Image
-            </label>
-            
-            {uploadingImages && (
-              <div className="ml-4 flex items-center">
-                <div className="w-40 h-2 bg-darkBlue rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-green"
-                    style={{ width: `${uploadProgress}%` }}
-                  ></div>
-                </div>
-                <span className="ml-2 text-lightSlate text-sm">{uploadProgress}%</span>
-              </div>
-            )}
-            
-            {(editingCertificate?.image || newCertificate.image) && (
-              <div className="ml-4 flex items-center">
-                <img 
-                  src={editingCertificate?.image || newCertificate.image} 
-                  alt="Certificate" 
-                  className="h-10 w-16 object-cover rounded"
-                />
-                <span className="ml-2 text-lightSlate text-sm">Image uploaded</span>
-              </div>
-            )}
-          </div>
-        </div>
-        
-        <div className="flex justify-end gap-3 mt-6">
-          {editingCertificate && (
-            <button
-              onClick={() => setEditingCertificate(null)}
-              className="py-2 px-4 border border-lightSlate text-lightSlate rounded hover:bg-lightBlue hover:bg-opacity-30"
-            >
-              Cancel
-            </button>
-          )}
-          
-          <button
-            onClick={editingCertificate ? updateCertificate : saveNewCertificate}
-            disabled={loading}
-            className="py-2 px-4 bg-green text-darkBlue rounded hover:bg-opacity-90"
-          >
-            {loading ? 'Saving...' : (editingCertificate ? 'Update Certificate' : 'Add Certificate')}
-          </button>
-        </div>
-      </div>
-      
-      {/* Certificates List */}
-      <div>
-        <h4 className="text-lg font-medium text-green mb-4">Certificates List</h4>
-        
-        {certificatesLoading ? (
-          <div className="text-center py-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-green mx-auto"></div>
-            <p className="mt-2 text-lightSlate">Loading certificates...</p>
-          </div>
-        ) : certificates.length === 0 ? (
-          <p className="text-center py-8 text-lightSlate">No certificates found. Add your first certificate above.</p>
-        ) : (
-          <div className="space-y-4">
-            {certificates.map(certificate => (
-              <div key={certificate.id} className="bg-lightBlue bg-opacity-20 p-4 rounded-lg flex flex-wrap md:flex-nowrap gap-4">
-                {/* Certificate Image */}
-                <div className="w-32 h-20 bg-darkBlue rounded overflow-hidden flex-shrink-0">
-                  {certificate.image ? (
-                    <img src={certificate.image} alt={certificate.course} className="w-full h-full object-cover" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-lightSlate text-xs">No image</div>
-                  )}
-                </div>
-                
-                {/* Certificate Info */}
-                <div className="flex-grow">
-                  <h5 className="text-lg font-medium text-lightestSlate">{certificate.course}</h5>
-                  <p className="text-sm text-green mb-1">{certificate.school}</p>
-                  {certificate.date && (
-                    <p className="text-xs text-lightSlate">{certificate.date}</p>
-                  )}
-                </div>
-                
-                {/* Actions */}
-                <div className="flex flex-col justify-center gap-2">
-                  <button
-                    onClick={() => setEditingCertificate(certificate)}
-                    className="py-1 px-3 text-sm bg-green bg-opacity-20 text-green rounded hover:bg-opacity-30"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => deleteCertificate(certificate.id)}
-                    className="py-1 px-3 text-sm bg-red-500 bg-opacity-20 text-red-400 rounded hover:bg-opacity-30"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-  
-  // Settings view
-  const renderSettings = () => (
-    <div className="bg-lightBlue bg-opacity-30 p-6 rounded-lg">
-      <h3 className="text-2xl font-semibold text-lightestSlate mb-6">Settings</h3>
-      
-      {/* Firebase Configuration Settings */}
-      <div className="mb-6">
-        <h4 className="text-lg font-medium text-green mb-4">Firebase Configuration</h4>
-        
-        <button 
-          onClick={() => setShowConfigForm(!showConfigForm)}
-          className="text-green underline mb-4"
-        >
-          {showConfigForm ? 'Hide Firebase Config Form' : 'Show Firebase Config Form'}
-        </button>
-        
-        {showConfigForm && (
-          <div className="mt-4">
-            <p className="text-lightSlate mb-4">
-              Enter your Firebase configuration in JSON format below:
-            </p>
-            <textarea
-              value={configText}
-              onChange={(e) => setConfigText(e.target.value)}
-              placeholder={`{
-  "apiKey": "your-api-key",
-  "authDomain": "your-project.firebaseapp.com",
-  "projectId": "your-project-id",
-  "storageBucket": "your-project.appspot.com",
-  "messagingSenderId": "your-messaging-id",
-  "appId": "your-app-id"
-}`}
-              className="w-full h-48 p-2 bg-darkBlue text-lightestSlate rounded-md mb-4 font-mono text-sm"
-            />
-            <button
-              onClick={handleUpdateFirebaseConfig}
-              className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-darkBlue bg-green hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-            >
-              Update Firebase Config
-            </button>
-          </div>
-        )}
-      </div>
-      
-      {/* CORS Configuration Help */}
-      <div>
-        <h4 className="text-lg font-medium text-green mb-4">CORS Configuration Help</h4>
-        
-        <p className="text-lightSlate mb-2">
-          If you're experiencing CORS issues with Firebase Storage, follow these steps:
-        </p>
-        
-        <ol className="list-decimal pl-5 space-y-1 mt-2 text-lightSlate">
-          <li>Go to <a href="https://console.firebase.google.com/project/stanleyluong-1377a/storage" target="_blank" rel="noopener noreferrer" className="text-green underline">Firebase Console → Storage</a></li>
-          <li>Click on the "Rules" tab</li>
-          <li>Update the rules to allow public read access:</li>
-          <code className="bg-darkBlue p-2 rounded mt-1 block overflow-x-auto text-xs whitespace-pre">
-{`rules_version = '2';
-service firebase.storage {
-  match /b/{bucket}/o {
-    match /{allPaths=**} {
-      allow read;
-      allow write: if request.auth != null;
-    }
-  }
-}`}
-          </code>
-          <li>Configure CORS (very important for uploads):</li>
-          <ol className="list-decimal pl-5 space-y-1 mt-2">
-            <li>Create a file named <code className="bg-darkBlue p-1 rounded">cors.json</code> with this content:</li>
-            <code className="bg-darkBlue p-2 rounded mt-1 block overflow-x-auto text-xs whitespace-pre">
-{`[
-  {
-    "origin": ["*"],
-    "method": ["GET", "HEAD", "PUT", "POST", "DELETE", "OPTIONS"],
-    "responseHeader": ["Content-Type", "Content-Length", "Content-Encoding", "Content-Disposition", "Authorization", "X-Requested-With"],
-    "maxAgeSeconds": 3600
-  }
-]`}
-            </code>
-            <li>If you have the Google Cloud SDK installed, run:</li>
-            <code className="bg-darkBlue p-2 rounded mt-1 block overflow-x-auto text-xs">
-              gcloud storage buckets update gs://stanleyluong-1377a.firebasestorage.app --cors-file=cors.json
-            </code>
-            <li>To verify the configuration:</li>
-            <code className="bg-darkBlue p-2 rounded mt-1 block overflow-x-auto text-xs">
-              gcloud storage buckets describe gs://stanleyluong-1377a.firebasestorage.app --format=json
-            </code>
-          </ol>
-        </ol>
-      </div>
-    </div>
-  );
-  
-  // Profile view
-  const renderProfile = () => (
-    <div className="bg-lightBlue bg-opacity-30 p-6 rounded-lg">
-      <h3 className="text-2xl font-semibold text-lightestSlate mb-6">Profile Information</h3>
-      
-      {profileLoading ? (
-        <div className="text-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-green mx-auto"></div>
-          <p className="mt-2 text-lightSlate">Loading profile...</p>
-        </div>
-      ) : !profile ? (
-        <p className="text-center py-8 text-lightSlate">No profile information found.</p>
-      ) : (
-        <div className="mb-8 bg-lightBlue bg-opacity-50 p-4 rounded-lg">
-          {!editingProfile ? (
-            // Profile display view
-            <div>
-              <div className="flex justify-between items-start mb-6">
-                <div>
-                  <h4 className="text-xl font-medium text-lightestSlate">{profile.name}</h4>
-                  <p className="text-green">
-                    {Array.isArray(profile.occupation) 
-                      ? profile.occupation.join(', ') 
-                      : typeof profile.occupation === 'string' 
-                        ? profile.occupation 
-                        : ''}
-                  </p>
-                </div>
-                <button
-                  onClick={() => setEditingProfile(true)}
-                  className="py-2 px-4 bg-green bg-opacity-20 text-green rounded hover:bg-opacity-30"
-                >
-                  Edit Profile
-                </button>
-              </div>
-              
-              {profile.image && (
-                <div className="flex items-center mb-4">
-                  <img 
-                    src={profile.image} 
-                    alt={profile.name} 
-                    className="w-24 h-24 rounded-full object-cover border-2 border-green"
-                  />
-                </div>
-              )}
-              
-              <div className="space-y-4 mt-6">
-                <div>
-                  <h5 className="text-lg font-medium text-green mb-1">About</h5>
-                  <p className="text-lightSlate">{profile.bio}</p>
-                </div>
-                
-                <div>
-                  <h5 className="text-lg font-medium text-green mb-1">Contact Information</h5>
-                  <p className="text-lightSlate mb-1"><span className="text-lightestSlate">Email:</span> {profile.email}</p>
-                  {profile.phone && <p className="text-lightSlate mb-1"><span className="text-lightestSlate">Phone:</span> {profile.phone}</p>}
-                  {profile.website && <p className="text-lightSlate mb-1"><span className="text-lightestSlate">Website:</span> {profile.website}</p>}
-                  {profile.address && (
-                    <p className="text-lightSlate">
-                      <span className="text-lightestSlate">Location:</span> 
-                      {profile.address.city}{profile.address.state ? `, ${profile.address.state}` : ''}
-                    </p>
-                  )}
-                </div>
-              </div>
-            </div>
-          ) : (
-            // Profile edit form
-            <div>
-              <h4 className="text-lg font-medium text-green mb-4">Edit Profile</h4>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <label className="block text-lightSlate mb-1">Name</label>
-                  <input
-                    type="text"
-                    value={profile.name}
-                    onChange={(e) => setProfile({...profile, name: e.target.value})}
-                    className="w-full p-2 bg-darkBlue border border-lightBlue rounded"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-lightSlate mb-1">Email</label>
-                  <input
-                    type="email"
-                    value={profile.email}
-                    onChange={(e) => setProfile({...profile, email: e.target.value})}
-                    className="w-full p-2 bg-darkBlue border border-lightBlue rounded"
-                  />
-                </div>
-                
-                <div className="md:col-span-2">
-                  <label className="block text-lightSlate mb-1">Bio</label>
-                  <textarea
-                    value={profile.bio}
-                    onChange={(e) => setProfile({...profile, bio: e.target.value})}
-                    rows={5}
-                    className="w-full p-2 bg-darkBlue border border-lightBlue rounded"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-lightSlate mb-1">City</label>
-                  <input
-                    type="text"
-                    value={profile.address?.city || ''}
-                    onChange={(e) => setProfile({
-                      ...profile, 
-                      address: {...(profile.address || {}), city: e.target.value}
-                    })}
-                    className="w-full p-2 bg-darkBlue border border-lightBlue rounded"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-lightSlate mb-1">State</label>
-                  <input
-                    type="text"
-                    value={profile.address?.state || ''}
-                    onChange={(e) => setProfile({
-                      ...profile, 
-                      address: {...(profile.address || {}), state: e.target.value}
-                    })}
-                    className="w-full p-2 bg-darkBlue border border-lightBlue rounded"
-                  />
-                </div>
-              </div>
-              
-              {/* Profile image upload button */}
-              <div className="mb-6">
-                <label className="block text-lightSlate mb-1">Profile Image</label>
-                <div className="flex items-center">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => handleImageUpload(e, 'profile')}
-                    className="hidden"
-                    id="profile-upload"
-                    disabled={uploadingImages}
-                  />
-                  <label
-                    htmlFor="profile-upload"
-                    className="cursor-pointer py-2 px-4 bg-green bg-opacity-20 text-green rounded hover:bg-opacity-30"
-                  >
-                    Upload Profile Image
-                  </label>
-                  
-                  {uploadingImages && (
-                    <div className="ml-4 flex items-center">
-                      <div className="w-40 h-2 bg-darkBlue rounded-full overflow-hidden">
-                        <div 
-                          className="h-full bg-green"
-                          style={{ width: `${uploadProgress}%` }}
-                        ></div>
-                      </div>
-                      <span className="ml-2 text-lightSlate text-sm">{uploadProgress}%</span>
-                    </div>
-                  )}
-                  
-                  {profile.image && (
-                    <div className="ml-4 flex items-center">
-                      <img 
-                        src={profile.image} 
-                        alt="Profile" 
-                        className="h-10 w-10 rounded-full object-cover"
-                      />
-                      <span className="ml-2 text-lightSlate text-sm">Profile image</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-              
-              <div className="flex justify-end gap-3 mt-6">
-                <button
-                  onClick={() => setEditingProfile(false)}
-                  className="py-2 px-4 border border-lightSlate text-lightSlate rounded hover:bg-lightBlue hover:bg-opacity-30"
-                >
-                  Cancel
-                </button>
-                
-                <button
-                  onClick={updateProfile}
-                  disabled={loading}
-                  className="py-2 px-4 bg-green text-darkBlue rounded hover:bg-opacity-90"
-                >
-                  {loading ? 'Saving...' : 'Save Profile'}
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-    </div>
-  );
-  
-  // Skills view
-  const renderSkills = () => (
-    <div className="bg-lightBlue bg-opacity-30 p-6 rounded-lg">
-      <div className="flex justify-between items-center mb-6">
-        <h3 className="text-2xl font-semibold text-lightestSlate">Manage Skills</h3>
-        <button
-          onClick={() => {
-            if (showCreateForm) {
-              setShowCreateForm(false);
-              setEditingSkill(null);
-              setNewSkill({
-                name: '',
-                category: 'Frontend'
-              });
-            } else {
-              setShowCreateForm(true);
-              setEditingSkill(null);
-              setNewSkill({
-                name: '',
-                category: 'Frontend'
-              });
-            }
-          }}
-          className="p-2 bg-green bg-opacity-20 text-green rounded-full hover:bg-opacity-30"
-        >
-          {showCreateForm ? (
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-            </svg>
-          )}
-        </button>
-      </div>
-      
-      {/* Create New Skill Form */}
-      {showCreateForm && (
-        <div className="mb-8 bg-lightBlue bg-opacity-50 p-4 rounded-lg">
-          <h4 className="text-lg font-medium text-green mb-4">Create New Skill</h4>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-            <div className="flex flex-col">
-              <label className="block text-lightSlate mb-2">Skill Name</label>
-              <input
-                type="text"
-                value={newSkill.name}
-                onChange={(e) => setNewSkill({...newSkill, name: e.target.value})}
-                placeholder="e.g., JavaScript, React, Python"
-                className="w-full p-2 bg-darkBlue border border-lightBlue rounded"
-              />
-            </div>
-            
-            <div className="flex flex-col">
-              <label className="block text-lightSlate mb-2">Category</label>
-              <select
-                value={newSkill.category}
-                onChange={(e) => setNewSkill({...newSkill, category: e.target.value})}
-                className="w-full p-2 bg-darkBlue border border-lightBlue rounded"
-              >
-                <option value="Frontend">Frontend</option>
-                <option value="Backend">Backend</option>
-                <option value="Tools & DevOps">Tools & DevOps</option>
-                <option value="Other Skills">Other Skills</option>
-              </select>
-            </div>
-          </div>
-          
-          <div className="flex justify-end gap-3 mt-6">
-            <button
-              onClick={() => {
-                setShowCreateForm(false);
-                setNewSkill({
-                  name: '',
-                  category: 'Frontend'
-                });
-              }}
-              className="py-2 px-4 border border-lightSlate text-lightSlate rounded hover:bg-lightBlue hover:bg-opacity-30"
-            >
-              Cancel
-            </button>
-            
-            <button
-              onClick={saveNewSkill}
-              disabled={loading}
-              className="py-2 px-4 bg-green text-darkBlue rounded hover:bg-opacity-90"
-            >
-              {loading ? 'Saving...' : 'Create Skill'}
-            </button>
-          </div>
-        </div>
-      )}
-      
-      {/* Skills List */}
-      <div>
-        {/* Removed redundant Skills List heading */}
-        {skillsLoading ? (
-          <div className="text-center py-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-green mx-auto"></div>
-            <p className="mt-2 text-lightSlate">Loading skills...</p>
-          </div>
-        ) : skills.length === 0 ? (
-          <p className="text-center py-8 text-lightSlate">No skills found. Create your first skill above.</p>
-        ) : (
-          <div className="space-y-4">
-            {/* Group skills by category */}
-            {['Frontend', 'Backend', 'Tools & DevOps', 'Other Skills'].map(category => {
-              const categorySkills = skills.filter(skill => skill.category === category);
-              if (categorySkills.length === 0) return null;
-              
-              return (
-                <div key={category} className="mb-6">
-                  <h5 className="text-lg font-medium text-green mb-3 border-b border-lightBlue pb-2">{category}</h5>
-                  <div className="space-y-3">
-                    {categorySkills.map(skill => (
-                      <div key={skill.id} className="bg-lightBlue bg-opacity-20 p-4 rounded-lg">
-                        {editingSkill?.id === skill.id ? (
-                          // Edit Form
-                          <div className="space-y-4">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                              <div>
-                                <label className="block text-lightSlate mb-1">Skill Name</label>
-                                <input
-                                  type="text"
-                                  value={editingSkill.name}
-                                  onChange={(e) => setEditingSkill({...editingSkill, name: e.target.value})}
-                                  className="w-full p-2 bg-darkBlue border border-lightBlue rounded"
-                                />
-                              </div>
-                              
-                              <div>
-                                <label className="block text-lightSlate mb-1">Category</label>
-                                <select
-                                  value={editingSkill.category}
-                                  onChange={(e) => setEditingSkill({...editingSkill, category: e.target.value})}
-                                  className="w-full p-2 bg-darkBlue border border-lightBlue rounded"
-                                >
-                                  <option value="Frontend">Frontend</option>
-                                  <option value="Backend">Backend</option>
-                                  <option value="Tools & DevOps">Tools & DevOps</option>
-                                  <option value="Other Skills">Other Skills</option>
-                                </select>
-                              </div>
-                            </div>
-
-                            <div className="flex justify-end gap-3">
-                              <button
-                                onClick={() => setEditingSkill(null)}
-                                className="py-2 px-4 border border-lightSlate text-lightSlate rounded hover:bg-lightBlue hover:bg-opacity-30"
-                              >
-                                Cancel
-                              </button>
-                              <button
-                                onClick={updateSkill}
-                                disabled={loading}
-                                className="py-2 px-4 bg-green text-darkBlue rounded hover:bg-opacity-90"
-                              >
-                                {loading ? 'Saving...' : 'Update Skill'}
-                              </button>
-                            </div>
-                          </div>
-                        ) : (
-                          // Skill Display
-                          <div className="flex items-center justify-between">
-                            <span className="text-lightestSlate">{skill.name}</span>
-                            
-                            <div className="flex gap-2">
-                              <button
-                                onClick={() => setEditingSkill(skill)}
-                                className="py-1 px-3 text-sm bg-green bg-opacity-20 text-green rounded hover:bg-opacity-30"
-                              >
-                                Edit
-                              </button>
-                              <button
-                                onClick={() => deleteSkill(skill.id)}
-                                className="py-1 px-3 text-sm bg-red-500 bg-opacity-20 text-red-400 rounded hover:bg-opacity-30"
-                              >
-                                Delete
-                              </button>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-
-  // Work Experience view
-  const renderWork = () => (
-    <div className="bg-lightBlue bg-opacity-30 p-6 rounded-lg">
-      <h3 className="text-2xl font-semibold text-lightestSlate mb-6">Manage Work Experience</h3>
-      
-      {/* Create/Edit Work Form */}
-      <div className="mb-8 bg-lightBlue bg-opacity-50 p-4 rounded-lg">
-        <h4 className="text-lg font-medium text-green mb-4">
-          {editingWork ? 'Edit Work Experience' : 'Add New Work Experience'}
-        </h4>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-          <div>
-            <label className="block text-lightSlate mb-1">Company Name</label>
-            <input
-              type="text"
-              value={editingWork ? editingWork.company : newWork.company}
-              onChange={(e) => {
-                if (editingWork) {
-                  setEditingWork({...editingWork, company: e.target.value});
-                } else {
-                  setNewWork({...newWork, company: e.target.value});
-                }
-              }}
-              className="w-full p-2 bg-darkBlue border border-lightBlue rounded"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-lightSlate mb-1">Job Title</label>
-            <input
-              type="text"
-              value={editingWork ? editingWork.title : newWork.title}
-              onChange={(e) => {
-                if (editingWork) {
-                  setEditingWork({...editingWork, title: e.target.value});
-                } else {
-                  setNewWork({...newWork, title: e.target.value});
-                }
-              }}
-              className="w-full p-2 bg-darkBlue border border-lightBlue rounded"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-lightSlate mb-1">Years</label>
-            <input
-              type="text"
-              value={editingWork ? editingWork.years : newWork.years}
-              onChange={(e) => {
-                if (editingWork) {
-                  setEditingWork({...editingWork, years: e.target.value});
-                } else {
-                  setNewWork({...newWork, years: e.target.value});
-                }
-              }}
-              placeholder="e.g., 2019 - Present"
-              className="w-full p-2 bg-darkBlue border border-lightBlue rounded"
-            />
-          </div>
-        </div>
-        
-        <div className="mb-4">
-          <label className="block text-lightSlate mb-1">Description (use bullet points with •)</label>
-          <textarea
-            value={editingWork ? editingWork.description : newWork.description}
-            onChange={(e) => {
-              if (editingWork) {
-                setEditingWork({...editingWork, description: e.target.value});
-              } else {
-                setNewWork({...newWork, description: e.target.value});
-              }
-            }}
-            rows={6}
-            placeholder="• Developed responsive web applications using React&#10;• Implemented user authentication with Firebase&#10;• Optimized site performance by 40%"
-            className="w-full p-2 bg-darkBlue border border-lightBlue rounded font-mono text-sm"
-          />
-          <p className="text-xs text-lightSlate mt-1">Each bullet point should start with • and be on a new line</p>
-        </div>
-        
-        <div className="flex justify-end gap-3 mt-6">
-          {editingWork && (
-            <button
-              onClick={() => setEditingWork(null)}
-              className="py-2 px-4 border border-lightSlate text-lightSlate rounded hover:bg-lightBlue hover:bg-opacity-30"
-            >
-              Cancel
-            </button>
-          )}
-          
-          <button
-            onClick={editingWork ? updateWork : saveNewWork}
-            disabled={loading}
-            className="py-2 px-4 bg-green text-darkBlue rounded hover:bg-opacity-90"
-          >
-            {loading ? 'Saving...' : (editingWork ? 'Update Work Experience' : 'Add Work Experience')}
-          </button>
-        </div>
-      </div>
-      
-      {/* Work Experience List */}
-      <div>
-        <h4 className="text-lg font-medium text-green mb-4">Work Experience List</h4>
-        
-        {workLoading ? (
-          <div className="text-center py-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-green mx-auto"></div>
-            <p className="mt-2 text-lightSlate">Loading work experience...</p>
-          </div>
-        ) : workExperience.length === 0 ? (
-          <p className="text-center py-8 text-lightSlate">No work experience found. Add your first work experience above.</p>
-        ) : (
-          <div className="space-y-6">
-            {workExperience.map(work => (
-              <div key={work.id} className="bg-lightBlue bg-opacity-20 p-4 rounded-lg">
-                <div className="flex flex-wrap justify-between items-start mb-4">
-                  <div className="mb-2 md:mb-0">
-                    <h5 className="text-lg font-medium text-lightestSlate">{work.title}</h5>
-                    <p className="text-green">{work.company}</p>
-                    <p className="text-lightSlate text-sm">{work.years}</p>
-                  </div>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => setEditingWork(work)}
-                      className="py-1 px-3 text-sm bg-green bg-opacity-20 text-green rounded hover:bg-opacity-30"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => deleteWork(work.id)}
-                      className="py-1 px-3 text-sm bg-red-500 bg-opacity-20 text-red-400 rounded hover:bg-opacity-30"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-                
-                <div className="text-lightSlate">
-                  {work.description && typeof work.description === 'string' 
-                    ? work.description.split('\n').map((item, i) => (
-                        <p key={i} className="mb-1">{item}</p>
-                      ))
-                    : Array.isArray(work.description)
-                      ? work.description.map((item, i) => (
-                          <p key={i} className="mb-1">{item}</p>
-                        ))
-                      : <p className="mb-1">No description available</p>
-                  }
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-
-  // Education view
-  const renderEducation = () => (
-    <div className="bg-lightBlue bg-opacity-30 p-6 rounded-lg">
-      <h3 className="text-2xl font-semibold text-lightestSlate mb-6">Manage Education</h3>
-      
-      {/* Create/Edit Education Form */}
-      <div className="mb-8 bg-lightBlue bg-opacity-50 p-4 rounded-lg">
-        <h4 className="text-lg font-medium text-green mb-4">
-          {editingEducation ? 'Edit Education' : 'Add New Education'}
-        </h4>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-          <div>
-            <label className="block text-lightSlate mb-1">School / University</label>
-            <input
-              type="text"
-              value={editingEducation ? editingEducation.school : newEducation.school}
-              onChange={(e) => {
-                if (editingEducation) {
-                  setEditingEducation({...editingEducation, school: e.target.value});
-                } else {
-                  setNewEducation({...newEducation, school: e.target.value});
-                }
-              }}
-              className="w-full p-2 bg-darkBlue border border-lightBlue rounded"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-lightSlate mb-1">Degree / Certification</label>
-            <input
-              type="text"
-              value={editingEducation ? editingEducation.degree : newEducation.degree}
-              onChange={(e) => {
-                if (editingEducation) {
-                  setEditingEducation({...editingEducation, degree: e.target.value});
-                } else {
-                  setNewEducation({...newEducation, degree: e.target.value});
-                }
-              }}
-              className="w-full p-2 bg-darkBlue border border-lightBlue rounded"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-lightSlate mb-1">Graduation Year</label>
-            <input
-              type="text"
-              value={editingEducation ? editingEducation.graduated : newEducation.graduated}
-              onChange={(e) => {
-                if (editingEducation) {
-                  setEditingEducation({...editingEducation, graduated: e.target.value});
-                } else {
-                  setNewEducation({...newEducation, graduated: e.target.value});
-                }
-              }}
-              placeholder="e.g., 2018"
-              className="w-full p-2 bg-darkBlue border border-lightBlue rounded"
-            />
-          </div>
-        </div>
-        
-        <div className="mb-4">
-          <label className="block text-lightSlate mb-1">Description (Optional)</label>
-          <textarea
-            value={editingEducation ? editingEducation.description : newEducation.description}
-            onChange={(e) => {
-              if (editingEducation) {
-                setEditingEducation({...editingEducation, description: e.target.value});
-              } else {
-                setNewEducation({...newEducation, description: e.target.value});
-              }
-            }}
-            rows={4}
-            placeholder="Add any additional information about the education"
-            className="w-full p-2 bg-darkBlue border border-lightBlue rounded"
-          />
-        </div>
-        
-        <div className="flex justify-end gap-3 mt-6">
-          {editingEducation && (
-            <button
-              onClick={() => setEditingEducation(null)}
-              className="py-2 px-4 border border-lightSlate text-lightSlate rounded hover:bg-lightBlue hover:bg-opacity-30"
-            >
-              Cancel
-            </button>
-          )}
-          
-          <button
-            onClick={editingEducation ? updateEducation : saveNewEducation}
-            disabled={loading}
-            className="py-2 px-4 bg-green text-darkBlue rounded hover:bg-opacity-90"
-          >
-            {loading ? 'Saving...' : (editingEducation ? 'Update Education' : 'Add Education')}
-          </button>
-        </div>
-      </div>
-      
-      {/* Education List */}
-      <div>
-        <h4 className="text-lg font-medium text-green mb-4">Education List</h4>
-        
-        {educationLoading ? (
-          <div className="text-center py-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-green mx-auto"></div>
-            <p className="mt-2 text-lightSlate">Loading education...</p>
-          </div>
-        ) : education.length === 0 ? (
-          <p className="text-center py-8 text-lightSlate">No education entries found. Add your first education entry above.</p>
-        ) : (
-          <div className="space-y-6">
-            {education.map(edu => (
-              <div key={edu.id} className="bg-lightBlue bg-opacity-20 p-4 rounded-lg">
-                <div className="flex flex-wrap justify-between items-start mb-4">
-                  <div className="mb-2 md:mb-0">
-                    <h5 className="text-lg font-medium text-lightestSlate">{edu.school}</h5>
-                    <p className="text-green">{edu.degree}</p>
-                    <p className="text-lightSlate text-sm">Graduated: {edu.graduated}</p>
-                  </div>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => setEditingEducation(edu)}
-                      className="py-1 px-3 text-sm bg-green bg-opacity-20 text-green rounded hover:bg-opacity-30"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => deleteEducation(edu.id)}
-                      className="py-1 px-3 text-sm bg-red-500 bg-opacity-20 text-red-400 rounded hover:bg-opacity-30"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-                
-                {edu.description && (
-                  <div className="text-lightSlate">
-                    <p>{edu.description}</p>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-
   // Render the active view content
   const renderContent = () => {
     switch (activeView) {
       case 'profile':
-        return renderProfile();
+        return (
+          <ProfileView
+            profile={profile}
+            profileLoading={profileLoading}
+            editingProfile={editingProfile}
+            setEditingProfile={setEditingProfile}
+            setProfile={setProfile}
+            uploadingImages={uploadingImages}
+            uploadProgress={uploadProgress}
+            handleImageUpload={handleImageUpload}
+            updateProfile={updateProfile}
+            loading={loading}
+            showMessage={showMessage}
+          />
+        );
       case 'projects':
-        return renderProjects();
+        return (
+          <ProjectsView
+            projects={projects}
+            projectsLoading={projectsLoading}
+            editingProject={editingProject}
+            setEditingProject={setEditingProject}
+            showCreateForm={showCreateForm}
+            setShowCreateForm={setShowCreateForm}
+            newProject={newProject}
+            setNewProject={setNewProject}
+            uploadingImages={uploadingImages}
+            uploadProgress={uploadProgress}
+            handleProjectImageUpload={handleProjectImageUpload}
+            saveNewProject={saveNewProject}
+            updateProject={updateProject}
+            deleteProject={deleteProject}
+            loading={loading}
+            showMessage={showMessage}
+          />
+        );
       case 'certificates':
-        return renderCertificates();
+        return (
+          <CertificatesView
+            certificates={certificates}
+            certificatesLoading={certificatesLoading}
+            editingCertificate={editingCertificate}
+            setEditingCertificate={setEditingCertificate}
+            newCertificate={newCertificate}
+            setNewCertificate={setNewCertificate}
+            uploadingImages={uploadingImages}
+            uploadProgress={uploadProgress}
+            handleImageUpload={handleImageUpload}
+            saveNewCertificate={saveNewCertificate}
+            updateCertificate={updateCertificate}
+            deleteCertificate={deleteCertificate}
+            loading={loading}
+            showMessage={showMessage}
+          />
+        );
       case 'skills':
-        return renderSkills();
+        return (
+          <SkillsView
+            skills={skills}
+            skillsLoading={skillsLoading}
+            editingSkill={editingSkill}
+            setEditingSkill={setEditingSkill}
+            showCreateForm={showCreateForm}
+            setShowCreateForm={setShowCreateForm}
+            newSkill={newSkill}
+            setNewSkill={setNewSkill}
+            saveNewSkill={saveNewSkill}
+            updateSkill={updateSkill}
+            deleteSkill={deleteSkill}
+            loading={loading}
+            showMessage={showMessage}
+          />
+        );
       case 'work':
-        return renderWork();
+        return (
+          <WorkView
+            workExperience={workExperience}
+            workLoading={workLoading}
+            editingWork={editingWork}
+            setEditingWork={setEditingWork}
+            newWork={newWork}
+            setNewWork={setNewWork}
+            saveNewWork={saveNewWork}
+            updateWork={updateWork}
+            deleteWork={deleteWork}
+            loading={loading}
+            showMessage={showMessage}
+          />
+        );
       case 'education':
-        return renderEducation();
+        return (
+          <EducationView
+            education={education}
+            educationLoading={educationLoading}
+            editingEducation={editingEducation}
+            setEditingEducation={setEditingEducation}
+            newEducation={newEducation}
+            setNewEducation={setNewEducation}
+            saveNewEducation={saveNewEducation}
+            updateEducation={updateEducation}
+            deleteEducation={deleteEducation}
+            loading={loading}
+            showMessage={showMessage}
+          />
+        );
       case 'settings':
-        return renderSettings();
+        return (
+          <SettingsView
+            showConfigForm={showConfigForm}
+            setShowConfigForm={setShowConfigForm}
+            configText={configText}
+            setConfigText={setConfigText}
+            handleUpdateFirebaseConfig={handleUpdateFirebaseConfig}
+            showMessage={showMessage}
+          />
+        );
       default:
-        return renderDashboard();
+        return (
+          <DashboardView
+            projects={projects}
+            certificates={certificates}
+            skills={skills}
+            workExperience={workExperience}
+            education={education}
+            setActiveView={setActiveView}
+            loadAllData={loadAllData}
+            testDatabaseWrite={testDatabaseWrite}
+            showMessage={showMessage}
+          />
+        );
     }
   };
   

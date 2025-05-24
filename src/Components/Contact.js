@@ -1,5 +1,5 @@
 import emailjs from '@emailjs/browser';
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
 import { useRef, useState } from 'react';
@@ -41,7 +41,7 @@ const Contact = ({ data }) => {
   };
 
   return (
-    <section id="contact" className="relative py-24 bg-slate-100 dark:bg-darkBlue font-sans">
+    <section id="contact" className="relative pt-28 py-12 bg-slate-100 dark:bg-darkBlue font-sans scroll-mt-24">
       <motion.div
         ref={ref}
         className="max-w-3xl mx-auto px-6 md:px-12"
@@ -50,9 +50,10 @@ const Contact = ({ data }) => {
           variants={fadeIn('', '', 0.1, 1)}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
-          className="section-heading mb-6"
+          className="section-heading mb-6 flex items-center"
         >
-          <span className="text-teal-700 dark:text-green">07.</span> Get In Touch
+          <FontAwesomeIcon icon={faEnvelope} className="text-teal-700 dark:text-green mr-3" />
+          <span>Contact</span>
         </motion.h2>
         <motion.p
           variants={fadeIn('up', 'tween', 0.2, 1)}

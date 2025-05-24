@@ -1,3 +1,5 @@
+import { faToolbox } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { fadeIn } from '../utils/motion';
@@ -8,9 +10,7 @@ const Skills = ({ data }) => {
     triggerOnce: true
   });
   
-  console.log("Skills data received:", data);
   if (!data || !data.skills) {
-    console.log("No skills data found");
     return null;
   }
   
@@ -61,7 +61,7 @@ const Skills = ({ data }) => {
   };
 
   return (
-    <section id="skills" className="relative py-12 bg-slate-100 dark:bg-darkBlue font-sans">
+    <section id="skills" className="relative pt-28 py-12 bg-slate-100 dark:bg-darkBlue font-sans scroll-mt-24">
       <motion.div
         ref={ref}
         className="max-w-7xl mx-auto px-6 md:px-12"
@@ -70,9 +70,10 @@ const Skills = ({ data }) => {
           variants={fadeIn('', '', 0.1, 1)}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
-          className="section-heading mb-8"
+          className="section-heading mb-8 flex items-center"
         >
-          <span className="text-teal-700 dark:text-green">04.</span> Skills
+          <FontAwesomeIcon icon={faToolbox} className="text-teal-700 dark:text-green mr-3" />
+          <span>Skills</span>
         </motion.h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

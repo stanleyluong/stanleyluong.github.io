@@ -1,3 +1,5 @@
+import { faBriefcase, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
@@ -7,37 +9,51 @@ const Experience = ({ data }) => {
   // All hooks at the top
   const [sortedActiveTab, setSortedActiveTab] = useState(0);
   const scrollRef = useRef(null);
-  const [showRightArrow, setShowRightArrow] = useState(false);
   const [ref, inView] = useInView({
     threshold: 0.1,
     triggerOnce: true
   });
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+  const [showScrollHint, setShowScrollHint] = useState(true);
 
   useEffect(() => {
+    // Check if scrolling is possible
     const checkScroll = () => {
-      if (!scrollRef.current) return;
-      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-      setShowRightArrow(scrollLeft + clientWidth < scrollWidth - 5);
+      if (scrollRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+        setCanScrollLeft(scrollLeft > 0);
+        setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 10);
+      }
     };
+    
+    // Initial check
     checkScroll();
-    const refEl = scrollRef.current;
-    if (refEl) {
-      refEl.addEventListener('scroll', checkScroll);
-      window.addEventListener('resize', checkScroll);
+    
+    // Add event listener
+    const scrollElement = scrollRef.current;
+    if (scrollElement) {
+      scrollElement.addEventListener('scroll', checkScroll);
     }
+    
+    // Auto-hide the scroll hint after 5 seconds
+    const timer = setTimeout(() => {
+      setShowScrollHint(false);
+    }, 5000);
+    
     return () => {
-      if (refEl) refEl.removeEventListener('scroll', checkScroll);
-      window.removeEventListener('resize', checkScroll);
+      if (scrollElement) {
+        scrollElement.removeEventListener('scroll', checkScroll);
+      }
+      clearTimeout(timer);
     };
-  }, [data?.work?.length]);
+  }, [data?.work?.length, inView]);
 
   // Early return after all hooks
   if (!data || !data.work || data.work.length === 0) {
     return null;
   }
 
-  console.log("Experience data received:", data);
-  
   // Helper function to extract date score for sorting from years string
   const getDateScore = (yearsString) => {
     if (!yearsString) return 0;
@@ -103,7 +119,7 @@ const Experience = ({ data }) => {
   };
 
   return (
-    <section id="experience" className="relative py-24 bg-slate-100 dark:bg-darkBlue font-sans">
+    <section id="experience" className="relative pt-28 py-12 bg-slate-100 dark:bg-darkBlue font-sans scroll-mt-24">
       <motion.div
         ref={ref}
         className="max-w-6xl mx-auto px-6 md:px-12"
@@ -112,23 +128,52 @@ const Experience = ({ data }) => {
           variants={fadeIn('', '', 0.1, 1)}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
-          className="section-heading mb-16"
+          className="section-heading mb-16 flex items-center"
         >
-          <span className="text-teal-700 dark:text-green">03.</span> Where I've Worked
+          <FontAwesomeIcon icon={faBriefcase} className="text-teal-700 dark:text-green mr-3" />
+          <span>Experience</span>
         </motion.h2>
         
         <div className="grid md:grid-cols-4 gap-8">
           {/* Tabs */}
+          {/* Scroll controls - Only show on small screens */}
+          <div className="relative md:hidden mb-2">
+            {/* Left scroll button */}
+            <button 
+              onClick={() => scrollRef.current.scrollBy({left: -100, behavior: 'smooth'})} 
+              className={`absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-white dark:bg-darkBlue p-2 rounded-full shadow-md text-teal-700 dark:text-green border border-teal-100 dark:border-green/20 ${!canScrollLeft ? 'opacity-0 pointer-events-none' : 'opacity-100'} transition-opacity`}
+              aria-label="Scroll left"
+            >
+              <FontAwesomeIcon icon={faChevronLeft} size="xs" />
+            </button>
+            
+            {/* Right scroll button */}
+            <button 
+              onClick={() => scrollRef.current.scrollBy({left: 100, behavior: 'smooth'})} 
+              className={`absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-white dark:bg-darkBlue p-2 rounded-full shadow-md text-teal-700 dark:text-green border border-teal-100 dark:border-green/20 ${!canScrollRight ? 'opacity-0 pointer-events-none' : 'opacity-100'} transition-opacity`}
+              aria-label="Scroll right"
+            >
+              <FontAwesomeIcon icon={faChevronRight} size="xs" />
+            </button>
+            
+            {/* Scroll hint */}
+            <div className={`text-center text-xs text-teal-700 dark:text-green/70 font-mono transition-opacity duration-500 ${showScrollHint ? 'opacity-100' : 'opacity-0'}`}>
+              Swipe to see more companies
+            </div>
+          </div>
+          
           <motion.div 
             variants={fadeIn('right', 'tween', 0.2, 1)}
             initial="hidden"
             animate={inView ? "show" : "hidden"}
-            className="flex md:flex-col overflow-x-auto md:overflow-x-visible scrollbar-thin scrollbar-thumb-green scrollbar-track-lightBlue relative pr-10"
+            className="flex md:flex-col overflow-x-auto md:overflow-x-visible scrollbar-thin scrollbar-thumb-green scrollbar-track-lightBlue relative md:pr-0 pr-4 pl-4 md:pl-0"
             style={{ WebkitOverflowScrolling: 'touch' }}
             ref={scrollRef}
           >
-            {/* Fade overlay for scroll cue */}
-            <div className="absolute right-0 top-0 h-full w-8 pointer-events-none bg-gradient-to-l from-white/80 dark:from-darkBlue/80 to-transparent z-10 hidden sm:block" />
+            {/* Fade overlay for scroll cue - both sides on mobile */}
+            <div className="absolute right-0 top-0 h-full w-10 pointer-events-none bg-gradient-to-l from-white dark:from-darkBlue to-transparent z-10 md:hidden" />
+            <div className="absolute left-0 top-0 h-full w-10 pointer-events-none bg-gradient-to-r from-white dark:from-darkBlue to-transparent z-10 md:hidden" />
+            
             {/* Company buttons */}
             {sortedWork.map((job, index) => (
               <button
@@ -145,12 +190,7 @@ const Experience = ({ data }) => {
             ))}
           </motion.div>
           
-          {/* Right arrow cue for mobile, outside scroll area */}
-          {showRightArrow && (
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 z-20 block md:hidden pointer-events-none">
-              <svg className="w-6 h-6 text-green animate-bounce-x" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
-            </div>
-          )}
+          {/* Removed right arrow cue */}
           
           {/* Tab Content */}
           <motion.div 
