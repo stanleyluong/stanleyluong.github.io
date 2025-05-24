@@ -1,9 +1,10 @@
-import emailjs from '@emailjs/browser';
-import { faEnvelope, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { motion } from 'framer-motion';
-import { useCallback, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
+import emailjs from '@emailjs/browser';
+import { InlineWidget } from 'react-calendly';
 import { fadeIn } from '../utils/motion';
 
 const SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICE_ID;
@@ -16,67 +17,6 @@ const Contact = ({ data }) => {
   const formRef = useRef();
   const [status, setStatus] = useState(null);
   const [activeTab, setActiveTab] = useState('message'); // 'message' or 'schedule'
-  const calendlyRef = useRef(null);
-
-  const initializeCalendly = useCallback(() => {
-    if (window.Calendly && calendlyRef.current) {
-      // Clear any existing widget
-      if (calendlyRef.current.firstChild) {
-        calendlyRef.current.innerHTML = '';
-      }
-      
-      // Create new iframe
-      const iframe = document.createElement('iframe');
-      iframe.src = 'https://calendly.com/stanleyluong/30min';
-      iframe.width = '100%';
-      iframe.height = '810px';
-      iframe.frameBorder = '0';
-      iframe.style.border = 'none';
-      iframe.style.borderRadius = '0.5rem';
-      iframe.style.minHeight = '650px';
-      iframe.scrolling = 'no';
-      
-      calendlyRef.current.appendChild(iframe);
-      return true;
-    }
-    return false;
-  }, []);
-
-  // Load Calendly script once when component mounts
-  useEffect(() => {
-    if (!window.Calendly) {
-      const script = document.createElement('script');
-      script.src = 'https://assets.calendly.com/assets/external/widget.js';
-      script.async = true;
-      script.onload = () => {
-        if (activeTab === 'schedule') {
-          initializeCalendly();
-        }
-      };
-      document.body.appendChild(script);
-      
-      return () => {
-        if (script && script.parentNode) {
-          document.body.removeChild(script);
-        }
-      };
-    }
-  }, [activeTab, initializeCalendly]);
-  
-  // Reinitialize Calendly when switching to the schedule tab
-  useEffect(() => {
-    if (activeTab === 'schedule') {
-      // Small delay to ensure the DOM is updated
-      const timer = setTimeout(() => {
-        if (!initializeCalendly() && window.Calendly) {
-          // If first attempt fails but Calendly is loaded, try again after a short delay
-          setTimeout(initializeCalendly, 500);
-        }
-      }, 50);
-      
-      return () => clearTimeout(timer);
-    }
-  }, [activeTab, initializeCalendly]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -109,14 +49,14 @@ const Contact = ({ data }) => {
   if (!data) return null;
 
   return (
-    <section id="contact" className="relative w-full py-20 bg-gray-50 dark:bg-darkBlue">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="relative w-full py-12 md:py-20 bg-white dark:bg-darkBlue">
+      <div className="w-full px-4 sm:px-6 lg:px-8 mx-auto">
         <motion.div
           ref={ref}
           initial="hidden"
           animate={inView ? 'show' : 'hidden'}
           variants={fadeIn('up', 'tween', 0.2, 1)}
-          className="max-w-6xl mx-auto"
+          className="w-full max-w-6xl mx-auto"
         >
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
@@ -127,7 +67,7 @@ const Contact = ({ data }) => {
             </p>
           </div>
 
-          <div className="flex flex-col w-full">
+          <div className="w-full">
             {/* Tabs */}
             <div className="flex mb-6 border-b border-gray-200 dark:border-gray-700">
               <button
@@ -153,7 +93,7 @@ const Contact = ({ data }) => {
             </div>
             
             {/* Tab Content */}
-            <div className="bg-white dark:bg-lightBlue rounded-lg shadow-lg p-6">
+            {/* <div className="bg-white dark:bg-lightBlue rounded-lg shadow-lg p-4 sm:p-6 border border-gray-200 dark:border-gray-700 w-full"> */}
               {activeTab === 'message' ? (
                 <>
                   <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-6">
@@ -233,19 +173,20 @@ const Contact = ({ data }) => {
                   )}
                 </>
               ) : (
-                <>
-                  <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-6">
-                    Schedule a Call
-                  </h3>
-                  <div className="w-full bg-white dark:bg-lightBlue rounded-lg shadow-lg overflow-hidden" style={{ minHeight: '650px' }}>
-                    <div 
-                      ref={calendlyRef}
-                      className="w-full h-full"
+                  // <div className="w-full bg-white dark:bg-lightBlue rounded-lg shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700" style={{ minHeight: '650px' }}>
+                    <InlineWidget
+                      url="https://calendly.com/stanleyluong/30min"
+                      styles={{
+                        height: '900px',
+                        width: '100%',
+                        border: 'none',
+                        borderRadius: '0.5rem',
+                        overflow: 'hidden',
+                      }}
                     />
-                  </div>
-                </>
+                  // </div>
               )}
-            </div>
+            {/* </div> */}
           </div>
           
           <div className="text-center mt-12">
